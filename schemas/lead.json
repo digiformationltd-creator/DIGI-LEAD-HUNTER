@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VerifiedLead",
+  "type": "object",
+  "required": [
+    "id",
+    "business_name",
+    "category",
+    "priority",
+    "build_readiness"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "business_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "P1",
+        "P2",
+        "P3",
+        "EXCLUDED"
+      ]
+    },
+    "build_readiness": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "whatsapp_status": {
+      "type": "string",
+      "enum": [
+        "WHATSAPP_VERIFIED",
+        "WHATSAPP_POSSIBLE",
+        "PHONE_ONLY",
+        "UNKNOWN"
+      ]
+    },
+    "website_status": {
+      "type": "string",
+      "enum": [
+        "NO_WEBSITE",
+        "OFFICIAL_WEBSITE",
+        "OUTDATED_WEAK",
+        "UNCLEAR"
+      ]
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DiscoveryCandidate",
+  "type": "object",
+  "required": [
+    "id",
+    "business_name",
+    "category",
+    "location"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "business_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "google_maps_url": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rating": {
+      "type": "number"
+    },
+    "review_count": {
+      "type": "integer"
+    }
+  }
+}

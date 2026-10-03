@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+.pytest_cache/
+
+# Node / Frontend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Runtime data & Generated packages (Keep structure, ignore generated contents)
+data/database/*.db
+data/packages/*.zip
+data/packages/*_PACK/
+data/logs/*.log
+*.log
+
+# Sensitive environment variables
+.env
+.env.local
+
+# Operating System
+.DS_Store
+Thumbs.db
+desktop.ini

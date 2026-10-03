@@ -1,0 +1,54 @@
+DIGI FORMATION LIMITED SOURCE-AVAILABLE LICENSE
+(Personal & Internal Use License)
+
+Version 1.0 — October 2026
+Copyright (c) 2026 Digi Formation Limited. All Rights Reserved.
+Product Identity: Digi Biz OS — Lead Hunter
+
+==============================================================================
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+==============================================================================
+
+1. DEFINITIONS
+"Licensor" refers to Digi Formation Limited.
+"Software" refers to the Lead Hunter application, Control Center, algorithms,
+prompts, agent specifications, and associated documentation.
+"Product Identity" includes the names "Digi Formation Limited", "Digi Biz OS",
+and the official logos and brand assets provided in this repository.
+
+2. PERMITTED RIGHTS (ALLOWED)
+Subject to the terms of this License, Licensor grants you a non-exclusive,
+royalty-free, worldwide license to:
+  a. Download and inspect the source code of the Software.
+  b. Compile, install, and execute the Software locally for your own personal use.
+  c. Compile, install, and execute the Software locally for your own internal
+     agency or business lead generation workflow.
+  d. Modify the source code solely for your own private, non-commercial,
+     internal use, provided that all original branding, logos, copyright
+     notices, and contact information remain fully intact and unaltered.
+
+3. RESTRICTIONS (NOT ALLOWED)
+Without explicit prior written permission from Digi Formation Limited, you may NOT:
+  a. Sell, lease, license, or sublicense the Software or modified versions.
+  b. Offer the Software as a hosted service, Software-as-a-Service (SaaS),
+     Application Service Provider (ASP), or paid cloud API.
+  c. White-label the Software or present it as an independent third-party tool.
+  d. Rebrand the Software under any other commercial identity.
+  e. Remove, obscure, or alter any Digi Formation Limited or Digi Biz OS
+     branding, official logos, author notices, or copyright notices.
+  f. Distribute modified copies commercially or package the Software as a
+     competing commercial product.
+  g. Claim original authorship or copyright ownership of the Software.
+
+4. ATTRIBUTION REQUIREMENT
+All permitted copies, forks, or private distributions must prominently retain:
+  "Digi Formation Limited — Digi Biz OS Architecture"
+along with the official contact references and copyright notices.
+
+5. DISCLAIMER OF WARRANTY
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE.

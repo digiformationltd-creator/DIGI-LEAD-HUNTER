@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpportunityPackageManifest",
+  "type": "object",
+  "required": [
+    "package_id",
+    "business_name",
+    "priority",
+    "files",
+    "creator"
+  ],
+  "properties": {
+    "package_id": {
+      "type": "string"
+    },
+    "business_name": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "creator": {
+      "type": "string"
+    }
+  }
+}
