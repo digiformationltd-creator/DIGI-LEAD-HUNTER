@@ -26,7 +26,6 @@ class Orchestrator:
         self.packaging = PackagingService()
 
     def start_run(self, req: Dict[str, Any]) -> str:
-        """Initializes run record and spawns asynchronous execution."""
         run_id = f"run_{uuid.uuid4().hex[:12]}"
         now_str = datetime.now().isoformat()
 
@@ -39,27 +38,28 @@ class Orchestrator:
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             run_id, now_str, now_str, "INITIALIZING",
-            req.get("category"), req.get("location"), req.get("radius", 10),
+            req.get("category"), req.get("location"), req.get("radius", 50),
             req.get("target_count", 15), json.dumps(req.get("priority_filters", ["P1", "P2", "P3"])),
             req.get("research_depth", "Standard"), req.get("package_mode", "Full Package")
         ))
         conn.commit()
         conn.close()
 
-        self._log_event(run_id, "INITIALIZING", f"Initialized Lead Hunter run for {req.get('category')} in {req.get('location')}.")
+        scope_desc = f"{req.get('scope', 'CITY')} Scope ({req.get('radius', 50)} KM)"
+        self._log_event(run_id, "INITIALIZING", f"Initialized Lead Hunter search for {req.get('category')} in {req.get('location')}, {req.get('country', 'Pakistan')} [{scope_desc}]. 100% Shariah filter active.")
 
-        # Spawn background execution thread
         t = threading.Thread(target=self._execute_pipeline, args=(run_id, req), daemon=True)
         t.start()
 
         return run_id
 
     def _execute_pipeline(self, run_id: str, req: Dict[str, Any]):
-        """Executes full multi-stage pipeline."""
         category = req.get("category")
         location = req.get("location")
+        country = req.get("country", "Pakistan")
+        scope = req.get("scope", "CITY")
         target_count = req.get("target_count", 15)
-        radius = req.get("radius", 10)
+        radius = req.get("radius", 50)
         prio_filters = req.get("priority_filters", ["P1", "P2", "P3"])
 
         p1_count = 0
@@ -70,22 +70,27 @@ class Orchestrator:
         excluded_count = 0
 
         try:
-            # Stage 1: Discovery
+            # Stage 1: Discovery with Shariah & Scope Filtering
             self._update_run_status(run_id, "DISCOVERING")
-            self._log_event(run_id, "DISCOVERING", f"Scanning Google Maps & Public registries for {category} in {location}...")
+            self._log_event(run_id, "DISCOVERING", f"Scanning Google Maps for {category} in {location}, {country} (Scope: {radius} KM)...")
             
-            candidates = self.discovery.discover_candidates(category, location, radius, target_count)
-            self._log_event(run_id, "DISCOVERING", f"Discovered {len(candidates)} prospective business candidates.")
+            candidates = self.discovery.discover_candidates(
+                category=category,
+                location=location,
+                country=country,
+                scope=scope,
+                radius_km=radius,
+                target_count=target_count
+            )
+            self._log_event(run_id, "DISCOVERING", f"Discovered {len(candidates)} verified Shariah-compliant business candidates.")
 
             # Stage 2 to 7 for each candidate
             self._update_run_status(run_id, "VERIFYING")
             
             for cand in candidates:
                 try:
-                    # Verification
                     verified_lead, evidence_list = self.verification.verify_candidate(cand)
 
-                    # Classification
                     priority, readiness, missing_info = self.classification.classify_lead(verified_lead)
                     verified_lead["priority"] = priority
                     verified_lead["build_readiness"] = readiness
@@ -96,18 +101,13 @@ class Orchestrator:
                         self._log_event(run_id, "CLASSIFYING", f"Excluded: {verified_lead['business_name']} ({priority})")
                         continue
 
-                    # Business & Asset Intelligence
                     intel = self.intelligence.enrich_lead(verified_lead)
                     verified_lead["offerings"] = intel.get("offerings", [])
                     verified_lead["visual_signals"] = intel.get("visual_signals", {})
 
-                    # Website Planning
                     plan = self.planning.generate_plan(verified_lead, intel)
-
-                    # Packaging & ZIP Generation
                     package = self.packaging.create_package(verified_lead, plan, evidence_list, intel)
 
-                    # Persist Lead to Database
                     lead_id = self._save_lead_record(run_id, verified_lead, plan, package, evidence_list, intel.get("assets", []))
                     
                     if priority == "P1":
@@ -118,13 +118,12 @@ class Orchestrator:
                         p3_count += 1
                     qualified_count += 1
 
-                    self._log_event(run_id, "PACKAGING", f"Generated {priority} Opportunity Pack for: {verified_lead['business_name']}")
+                    self._log_event(run_id, "PACKAGING", f"Generated {priority} Halal Opportunity Pack for: {verified_lead['business_name']}")
 
                 except Exception as lead_err:
                     failed_count += 1
                     self._log_event(run_id, "ERROR", f"Failed processing candidate {cand.get('business_name')}: {str(lead_err)}", level="ERROR")
 
-            # Finalize Run
             self._update_run_status(
                 run_id, "COMPLETED",
                 lead_count=len(candidates), qualified_count=qualified_count,
@@ -143,7 +142,6 @@ class Orchestrator:
         now_str = datetime.now().isoformat()
         lead_id = lead["id"]
 
-        # 1. Lead Record
         cursor.execute("""
         INSERT OR REPLACE INTO leads (
             id, run_id, business_name, category, address, location, google_maps_url,
@@ -164,7 +162,6 @@ class Orchestrator:
             now_str, now_str
         ))
 
-        # 2. Evidence Records
         for ev in evidence_list:
             cursor.execute("""
             INSERT INTO lead_evidence (lead_id, claim, value, evidence_level, source, source_url, observed_at, notes)
@@ -175,7 +172,6 @@ class Orchestrator:
                 ev.get("observed_at"), ev.get("notes")
             ))
 
-        # 3. Plan Record
         cursor.execute("""
         INSERT OR REPLACE INTO website_plans (
             id, lead_id, plan_type, target_audience, objectives, cta_strategy,
@@ -191,7 +187,6 @@ class Orchestrator:
             plan["markdown_content"], now_str
         ))
 
-        # 4. Package Record
         cursor.execute("""
         INSERT OR REPLACE INTO packages (
             id, lead_id, business_name, priority, version, zip_filename, zip_path, zip_size_bytes, is_valid, created_at
@@ -209,7 +204,6 @@ class Orchestrator:
     def _update_run_status(self, run_id: str, status: str, **kwargs):
         conn = get_connection()
         cursor = conn.cursor()
-        
         updates = ["status = ?"]
         params = [status]
 

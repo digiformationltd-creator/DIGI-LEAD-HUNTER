@@ -6,19 +6,22 @@ from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 
 class RunCreateRequest(BaseModel):
-    category: str = Field(..., description="Business category (e.g. Restaurants, Hotels, Dentists, Salons)")
-    location: str = Field(..., description="City or area (e.g. Lahore, London, Manchester, New York)")
-    radius: int = Field(10, description="Radius in kilometers")
+    category: str = Field(..., description="Business category (e.g. Restaurants, Clinics, Boutiques, Auto Workshops)")
+    location: str = Field(..., description="Target City or Area")
+    country: Optional[str] = Field("Pakistan", description="Country (e.g. Pakistan, United Kingdom, USA, UAE, Worldwide)")
+    scope: Optional[str] = Field("CITY", description="CITY, COUNTRY, or WORLDWIDE")
+    radius: int = Field(50, description="Radius in KM: 5, 50, 100, 1000, 5000, or 0 (Worldwide)")
     target_count: int = Field(15, description="Target lead count")
     priority_filters: List[str] = Field(default_factory=lambda: ["P1", "P2", "P3"])
     research_depth: str = Field("Standard", description="Standard or Deep")
     package_mode: str = Field("Full Package", description="Full Package, Evidence, or Website Plan")
+    shariah_compliant_only: bool = Field(True, description="Strictly exclude interest, alcohol, gambling, and haram businesses")
     specific_business: Optional[str] = None
 
 class LeadEvidenceItem(BaseModel):
     claim: str
     value: Optional[str] = None
-    evidence_level: str # E1_DIRECT, E2_STRONG, E3_INFERRED, E4_UNCERTAIN
+    evidence_level: str
     source: str
     source_url: Optional[str] = None
     observed_at: str
@@ -35,16 +38,16 @@ class LeadResponse(BaseModel):
     phone: Optional[str] = None
     phone_normalized: Optional[str] = None
     whatsapp_number: Optional[str] = None
-    whatsapp_status: str # WHATSAPP_VERIFIED, WHATSAPP_POSSIBLE, PHONE_ONLY, UNKNOWN
+    whatsapp_status: str
     website_url: Optional[str] = None
-    website_status: str # NO_WEBSITE, OFFICIAL_WEBSITE, OUTDATED_WEAK, UNCLEAR
+    website_status: str
     website_audit: Optional[Dict[str, Any]] = None
     rating: Optional[float] = None
     review_count: Optional[int] = None
     business_hours: Optional[str] = None
     description: Optional[str] = None
-    priority: str # P1, P2, P3, EXCLUDED
-    build_readiness: int # 0-100%
+    priority: str
+    build_readiness: int
     missing_info: Optional[List[str]] = None
     offerings: Optional[List[str]] = None
     visual_signals: Optional[Dict[str, Any]] = None
@@ -53,6 +56,7 @@ class LeadResponse(BaseModel):
     updated_at: str
     has_package: bool = False
     evidence_count: int = 0
+    is_shariah_compliant: bool = True
 
 class RunEventItem(BaseModel):
     stage: str
@@ -68,6 +72,8 @@ class RunDetailResponse(BaseModel):
     status: str
     category: str
     location: str
+    country: Optional[str] = "Pakistan"
+    scope: Optional[str] = "CITY"
     radius: int
     target_count: int
     priority_filters: List[str]

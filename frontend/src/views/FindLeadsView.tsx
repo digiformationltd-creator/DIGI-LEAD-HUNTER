@@ -1,31 +1,71 @@
 import React, { useState } from 'react';
-import { Search, MapPin, Tag, Sliders, Play, Sparkles, CheckCircle2 } from 'lucide-react';
+import { 
+  Search, 
+  MapPin, 
+  Tag, 
+  Globe, 
+  Play, 
+  Sparkles, 
+  ShieldCheck, 
+  CheckCircle2, 
+  AlertCircle 
+} from 'lucide-react';
 
 interface FindLeadsViewProps {
   onStartRun: (params: any) => void;
 }
 
 export const FindLeadsView: React.FC<FindLeadsViewProps> = ({ onStartRun }) => {
-  const [category, setCategory] = useState('Restaurants');
+  const [category, setCategory] = useState('Halal Restaurants & Dining');
+  const [country, setCountry] = useState('Pakistan');
   const [location, setLocation] = useState('Lahore');
-  const [radius, setRadius] = useState(10);
-  const [targetCount, setTargetCount] = useState(15);
+  const [scope, setScope] = useState<'CITY' | 'COUNTRY' | 'WORLDWIDE'>('CITY');
+  const [radius, setRadius] = useState<number>(50);
+  const [targetCount, setTargetCount] = useState<number>(15);
   const [p1, setP1] = useState(true);
   const [p2, setP2] = useState(true);
   const [p3, setP3] = useState(true);
   const [depth, setDepth] = useState('Standard');
   const [packageMode, setPackageMode] = useState('Full Package');
 
-  const popularCategories = [
-    'Restaurants', 'Cafes', 'Hotels', 'Salons & Spas', 
-    'Clinics & Dentists', 'Gyms & Fitness', 'Auto Workshops', 
-    'Furniture Stores', 'Real Estate', 'Boutiques'
+  const radiusTiers = [
+    { value: 5, label: '5 KM', subtitle: 'Hyper-Local' },
+    { value: 50, label: '50 KM', subtitle: 'City-Wide' },
+    { value: 100, label: '100 KM', subtitle: 'Regional' },
+    { value: 1000, label: '1,000 KM', subtitle: 'Country-Wide' },
+    { value: 5000, label: '5,000 KM', subtitle: 'Continental' },
+    { value: 0, label: 'Worldwide', subtitle: 'Global Scope' }
   ];
 
-  const popularLocations = [
-    'Lahore', 'Karachi', 'Islamabad', 'London', 'Manchester', 
-    'Birmingham', 'New York', 'Dubai'
+  const halalCategories = [
+    'Halal Restaurants & Dining',
+    'Clinics & Medical Centers',
+    'Dental Care & Dentists',
+    'Boutiques & Modest Fashion',
+    'Salons & Grooming Care',
+    'Auto Repair & Workshops',
+    'Furniture & Home Decor',
+    'Schools & Academies',
+    'Gyms & Sports Fitness',
+    'Real Estate & Construction',
+    'IT & Software Services'
   ];
+
+  const countryCityMap: Record<string, string[]> = {
+    'Pakistan': ['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan', 'Peshawar'],
+    'United Kingdom': ['London', 'Manchester', 'Birmingham', 'Leeds', 'Glasgow', 'Bradford'],
+    'United States': ['New York', 'Chicago', 'Houston', 'Dallas', 'Los Angeles'],
+    'United Arab Emirates': ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'],
+    'Saudi Arabia': ['Riyadh', 'Jeddah', 'Dammam', 'Makkah', 'Madinah'],
+    'Canada': ['Toronto', 'Vancouver', 'Calgary', 'Montreal'],
+    'Worldwide': ['London', 'New York', 'Dubai', 'Lahore', 'Toronto']
+  };
+
+  const handleCountryChange = (c: string) => {
+    setCountry(c);
+    const cities = countryCityMap[c] || ['Main City'];
+    setLocation(cities[0]);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,11 +77,14 @@ export const FindLeadsView: React.FC<FindLeadsViewProps> = ({ onStartRun }) => {
     onStartRun({
       category,
       location,
+      country,
+      scope: radius === 0 ? 'WORLDWIDE' : radius >= 1000 ? 'COUNTRY' : 'CITY',
       radius: Number(radius),
       target_count: Number(targetCount),
       priority_filters: prios,
       research_depth: depth,
-      package_mode: packageMode
+      package_mode: packageMode,
+      shariah_compliant_only: true
     });
   };
 
@@ -50,33 +93,48 @@ export const FindLeadsView: React.FC<FindLeadsViewProps> = ({ onStartRun }) => {
       <div>
         <div className="inline-flex items-center space-x-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-400">
           <Sparkles className="h-3.5 w-3.5" />
-          <span>Automated Google Maps Discovery Engine</span>
+          <span>Shariah-Compliant Discovery Engine</span>
         </div>
         <h2 className="text-2xl font-extrabold tracking-tight text-white mt-2">
-          Find Local Business Website Opportunities
+          Find Local & Global Website Opportunities
         </h2>
         <p className="text-xs text-slate-400 mt-1">
-          Specify the business niche and target city. The engine discovers local businesses on Google Maps, validates WhatsApp numbers, verifies website status, and generates complete opportunity packages.
+          Target businesses across customizable radii from 5 KM to 5,000 KM or Worldwide. All searches strictly enforce Shariah compliance, automatically excluding un-Islamic business activities.
         </p>
       </div>
 
+      {/* Shariah Compliance Guarantee Banner */}
+      <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-4 flex items-start space-x-3.5 backdrop-blur-md">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400 flex-shrink-0 mt-0.5">
+          <ShieldCheck className="h-5 w-5" />
+        </div>
+        <div className="space-y-0.5 text-xs">
+          <h4 className="font-bold text-emerald-300 flex items-center space-x-2">
+            <span>100% Shariah-Compliant & Ethical Filter Active (شرعی اصولوں کے مطابق صرف حلال کاروبار)</span>
+          </h4>
+          <p className="text-slate-300 leading-relaxed text-[11px]">
+            The engine automatically filters out and discards any prohibited trades including interest/riba (conventional banks, moneylenders), gambling/casinos/betting, alcohol/bars/nightclubs, and adult entertainment. Only strictly permissible (Halal) businesses are captured.
+          </p>
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit} className="rounded-3xl border border-slate-800 bg-[#0F172A]/80 p-8 shadow-2xl backdrop-blur-xl space-y-6">
-        {/* Category Input & Quick Presets */}
+        {/* Category Input & Halal Presets */}
         <div className="space-y-2">
           <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-1.5">
             <Tag className="h-4 w-4 text-blue-400" />
-            <span>Target Category</span>
+            <span>Permissible Business Category (حلال بزنس کیٹیگری)</span>
           </label>
           <input
             type="text"
             required
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            placeholder="e.g. Restaurants, Dentists, Salons, Car Repair"
+            placeholder="e.g. Halal Restaurants, Dental Clinics, Modest Fashion, Auto Workshops"
             className="w-full rounded-2xl border border-slate-700 bg-slate-900/90 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none"
           />
           <div className="flex flex-wrap gap-1.5 pt-1">
-            {popularCategories.map((cat) => (
+            {halalCategories.map((cat) => (
               <button
                 type="button"
                 key={cat}
@@ -93,120 +151,109 @@ export const FindLeadsView: React.FC<FindLeadsViewProps> = ({ onStartRun }) => {
           </div>
         </div>
 
-        {/* Location Input & Quick Presets */}
-        <div className="space-y-2">
-          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-1.5">
-            <MapPin className="h-4 w-4 text-emerald-400" />
-            <span>Target Location / City</span>
+        {/* Country & Location Selectors */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-1.5">
+              <Globe className="h-4 w-4 text-sky-400" />
+              <span>Target Country (ملک کا انتخاب)</span>
+            </label>
+            <select
+              value={country}
+              onChange={(e) => handleCountryChange(e.target.value)}
+              className="w-full rounded-2xl border border-slate-700 bg-slate-900/90 px-4 py-3 text-sm text-white focus:border-blue-500 focus:outline-none"
+            >
+              <option value="Pakistan">Pakistan (پاکستان)</option>
+              <option value="United Kingdom">United Kingdom (UK)</option>
+              <option value="United States">United States (USA)</option>
+              <option value="United Arab Emirates">United Arab Emirates (UAE)</option>
+              <option value="Saudi Arabia">Saudi Arabia (KSA)</option>
+              <option value="Canada">Canada</option>
+              <option value="Worldwide">Worldwide / Global Scope</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-1.5">
+              <MapPin className="h-4 w-4 text-emerald-400" />
+              <span>Target City / Region (شہر یا علاقہ)</span>
+            </label>
+            <input
+              type="text"
+              required
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="e.g. Lahore, London, Dubai, New York"
+              className="w-full rounded-2xl border border-slate-700 bg-slate-900/90 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none"
+            />
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {(countryCityMap[country] || []).map((city) => (
+                <button
+                  type="button"
+                  key={city}
+                  onClick={() => setLocation(city)}
+                  className={`rounded-lg px-2.5 py-0.5 text-[11px] transition-colors ${
+                    location === city
+                      ? 'bg-emerald-600 text-white font-semibold'
+                      : 'bg-slate-800/80 text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {city}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Radius & Geographic Scope Selectors (5km, 50km, 100km, 1000km, 5000km, Worldwide) */}
+        <div className="space-y-3 pt-2">
+          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+            Geographic Scope & Search Radius (فاصلہ اور دائرہ کار)
           </label>
-          <input
-            type="text"
-            required
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="e.g. Lahore, London, Manchester, New York"
-            className="w-full rounded-2xl border border-slate-700 bg-slate-900/90 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none"
-          />
-          <div className="flex flex-wrap gap-1.5 pt-1">
-            {popularLocations.map((loc) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+            {radiusTiers.map((tier) => (
               <button
                 type="button"
-                key={loc}
-                onClick={() => setLocation(loc)}
-                className={`rounded-lg px-2.5 py-1 text-xs transition-colors ${
-                  location === loc
-                    ? 'bg-emerald-600 text-white font-semibold'
-                    : 'bg-slate-800/80 text-slate-400 hover:text-slate-200'
+                key={tier.value}
+                onClick={() => setRadius(tier.value)}
+                className={`rounded-xl border p-3 text-center transition-all ${
+                  radius === tier.value
+                    ? 'border-blue-500 bg-blue-600/20 text-blue-300 shadow-md shadow-blue-500/10'
+                    : 'border-slate-800 bg-slate-900/40 text-slate-400 hover:border-slate-700 hover:text-slate-200'
                 }`}
               >
-                {loc}
+                <div className="font-extrabold text-sm text-white">{tier.label}</div>
+                <div className="text-[10px] text-slate-400 mt-0.5">{tier.subtitle}</div>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Sliders & Parameters */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-4 space-y-2">
-            <div className="flex justify-between text-xs font-semibold">
-              <span className="text-slate-300">Search Radius</span>
-              <span className="text-blue-400 font-bold">{radius} KM</span>
-            </div>
-            <input
-              type="range"
-              min="2"
-              max="40"
-              value={radius}
-              onChange={(e) => setRadius(Number(e.target.value))}
-              className="w-full accent-blue-500 cursor-pointer"
-            />
-            <p className="text-[11px] text-slate-500">Scan distance from target city center.</p>
+        {/* Lead Target Count Slider */}
+        <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-4 space-y-2">
+          <div className="flex justify-between text-xs font-semibold">
+            <span className="text-slate-300">Target Lead Count</span>
+            <span className="text-emerald-400 font-bold">{targetCount} Leads</span>
           </div>
-
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-4 space-y-2">
-            <div className="flex justify-between text-xs font-semibold">
-              <span className="text-slate-300">Target Lead Count</span>
-              <span className="text-emerald-400 font-bold">{targetCount} Leads</span>
-            </div>
-            <input
-              type="range"
-              min="5"
-              max="50"
-              step="5"
-              value={targetCount}
-              onChange={(e) => setTargetCount(Number(e.target.value))}
-              className="w-full accent-emerald-500 cursor-pointer"
-            />
-            <p className="text-[11px] text-slate-500">Maximum candidates to discover and qualify.</p>
-          </div>
-        </div>
-
-        {/* Priority Toggles */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-4 space-y-3">
-          <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
-            Opportunity Priority Filters
-          </span>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <label className={`flex items-start space-x-3 rounded-xl border p-3 cursor-pointer transition-all ${
-              p1 ? 'border-emerald-500/40 bg-emerald-950/20 text-emerald-300' : 'border-slate-800 bg-slate-900/30 text-slate-400'
-            }`}>
-              <input type="checkbox" checked={p1} onChange={(e) => setP1(e.target.checked)} className="mt-0.5 rounded text-emerald-500" />
-              <div>
-                <div className="font-bold text-xs text-white">Priority 1 (Ready)</div>
-                <p className="text-[11px] text-slate-400 mt-0.5">No website + WhatsApp verified + Rich public assets.</p>
-              </div>
-            </label>
-
-            <label className={`flex items-start space-x-3 rounded-xl border p-3 cursor-pointer transition-all ${
-              p2 ? 'border-amber-500/40 bg-amber-950/20 text-amber-300' : 'border-slate-800 bg-slate-900/30 text-slate-400'
-            }`}>
-              <input type="checkbox" checked={p2} onChange={(e) => setP2(e.target.checked)} className="mt-0.5 rounded text-amber-500" />
-              <div>
-                <div className="font-bold text-xs text-white">Priority 2 (Consult)</div>
-                <p className="text-[11px] text-slate-400 mt-0.5">No website + WhatsApp + Limited public assets.</p>
-              </div>
-            </label>
-
-            <label className={`flex items-start space-x-3 rounded-xl border p-3 cursor-pointer transition-all ${
-              p3 ? 'border-blue-500/40 bg-blue-950/20 text-blue-300' : 'border-slate-800 bg-slate-900/30 text-slate-400'
-            }`}>
-              <input type="checkbox" checked={p3} onChange={(e) => setP3(e.target.checked)} className="mt-0.5 rounded text-blue-500" />
-              <div>
-                <div className="font-bold text-xs text-white">Priority 3 (Redesign)</div>
-                <p className="text-[11px] text-slate-400 mt-0.5">Existing website with outdated layout or poor mobile UX.</p>
-              </div>
-            </label>
-          </div>
+          <input
+            type="range"
+            min="5"
+            max="50"
+            step="5"
+            value={targetCount}
+            onChange={(e) => setTargetCount(Number(e.target.value))}
+            className="w-full accent-emerald-500 cursor-pointer"
+          />
         </div>
 
         {/* Submit Button */}
         <div className="pt-2">
           <button
             type="submit"
-            className="flex w-full items-center justify-center space-x-2 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 py-4 font-bold text-white shadow-2xl shadow-blue-600/30 transition-all text-base hover:scale-[1.01]"
+            className="flex w-full items-center justify-center space-x-2 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 py-4 font-bold text-white shadow-2xl shadow-blue-600/30 transition-all text-base hover:scale-[1.01]"
           >
             <Play className="h-5 w-5 fill-white" />
-            <span>START END-TO-END LEAD HUNT PIPELINE</span>
+            <span>RUN HALAL LEAD HUNT PIPELINE</span>
           </button>
         </div>
       </form>

@@ -13,7 +13,6 @@ PACKAGES_DIR = DATA_DIR / "packages"
 ASSETS_DIR = DATA_DIR / "assets"
 LOGS_DIR = DATA_DIR / "logs"
 
-# Ensure runtime directories exist
 for p in [DATABASE_DIR, PACKAGES_DIR, ASSETS_DIR, LOGS_DIR]:
     p.mkdir(parents=True, exist_ok=True)
 
@@ -22,7 +21,7 @@ DATABASE_PATH = DATABASE_DIR / "lead_hunter.db"
 # Official Brand & Identity
 COMPANY_NAME = "Digi Formation Limited"
 PRODUCT_NAME = "Digi Biz OS — Lead Hunter"
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 AUTHOR = "Digi Formation Limited"
 COPYRIGHT = "© 2026 Digi Formation Limited. All Rights Reserved."
 
@@ -42,7 +41,28 @@ BACKEND_PORT = int(os.getenv("BACKEND_PORT", "8000"))
 FRONTEND_PORT = int(os.getenv("FRONTEND_PORT", "5173"))
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 
-# Default Search Defaults
-DEFAULT_RADIUS_KM = 10
-DEFAULT_TARGET_COUNT = 15
-MAX_SEARCH_RESULTS = 50
+# Shariah & Ethical Filter Directives
+SHARIAH_COMPLIANCE_REQUIRED = True
+
+PROHIBITED_KEYWORDS = [
+    # Usury / Interest / Riba
+    "interest", "riba", "payday loan", "moneylender", "pawnshop", "conventional bank",
+    # Gambling / Betting
+    "casino", "gambling", "betting", "bookmaker", "lottery", "slot machine", "poker",
+    # Alcohol / Intoxicants
+    "bar", "pub", "nightclub", "liquor", "wine", "beer", "brewery", "distillery", "cocktail", "alcohol",
+    # Adult / Inappropriate
+    "adult", "night club", "strip club", "escort", "massage parlour",
+    # Haram foods
+    "pork", "swine", "bacon only"
+]
+
+# Supported Radius Tiers (in KM)
+RADIUS_TIERS = {
+    "5": "5 KM (Hyper-Local)",
+    "50": "50 KM (City-Wide)",
+    "100": "100 KM (Regional / Metro)",
+    "1000": "1,000 KM (State / Country-Wide)",
+    "5000": "5,000 KM (Continental)",
+    "0": "Worldwide / Global"
+}
