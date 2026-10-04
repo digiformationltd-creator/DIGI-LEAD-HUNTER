@@ -45,7 +45,7 @@ export const WhatsAppWidget: React.FC = () => {
               </div>
               <div className="flex items-center space-x-2 text-slate-300">
                 <Mail className="h-3.5 w-3.5 text-sky-400" />
-                <span className="truncate">digiformation.info@digiformation.co.uk</span>
+                <span className="truncate">info@digiformation.co.uk</span>
               </div>
               <div className="flex items-center space-x-2 text-slate-300">
                 <Globe className="h-3.5 w-3.5 text-indigo-400" />

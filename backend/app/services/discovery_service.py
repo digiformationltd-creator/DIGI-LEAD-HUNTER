@@ -14,7 +14,7 @@ from config import PROHIBITED_KEYWORDS, SHARIAH_COMPLIANCE_REQUIRED
 class DiscoveryService:
     def __init__(self):
         self.headers = {
-            "User-Agent": "DigiFormation-LeadHunter/1.1 (https://www.digiformation.co.uk; info@digibizwiz.co.uk)"
+            "User-Agent": "DigiFormation-LeadHunter/1.1 (https://www.digiformation.co.uk; info@digibizos.co.uk)"
         }
 
     def is_shariah_compliant(self, name: str, category: str, description: str = "") -> bool:

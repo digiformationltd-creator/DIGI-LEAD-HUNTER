@@ -82,14 +82,14 @@ export const AboutView: React.FC = () => {
             <div className="space-y-1.5 font-mono text-white text-xs">
               <div className="flex items-center space-x-2">
                 <span className="text-slate-400">Corporate:</span>
-                <a href="mailto:digiformation.info@digiformation.co.uk" className="text-blue-300 hover:underline">
-                  digiformation.info@digiformation.co.uk
+                <a href="mailto:info@digiformation.co.uk" className="text-blue-300 hover:underline">
+                  info@digiformation.co.uk
                 </a>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="text-slate-400">Digi Biz:</span>
-                <a href="mailto:info@digibizwiz.co.uk" className="text-indigo-300 hover:underline">
-                  info@digibizwiz.co.uk
+                <a href="mailto:info@digibizos.co.uk" className="text-indigo-300 hover:underline">
+                  info@digibizos.co.uk
                 </a>
               </div>
             </div>
