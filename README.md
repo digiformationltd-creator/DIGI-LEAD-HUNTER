@@ -95,6 +95,16 @@ Once running, navigate to:
 
 ---
 
+## 🖥️ Live Control Center Interface & Dashboard
+
+The high-performance glassmorphic Control Center provides real-time discovery tracking, lead categorization tiers (Priority 1 Build-Ready, Priority 2 Consultation, Priority 3 Modernization), verified WhatsApp mobile indicators, and 1-click ZIP package exports:
+
+<p align="center">
+  <img src="digi-lead-hunter-control-center-ui.png" alt="DIGI LEAD HUNTER Control Center UI" width="100%" />
+</p>
+
+---
+
 ## 📐 System Architecture & Pipelines
 
 ```text
