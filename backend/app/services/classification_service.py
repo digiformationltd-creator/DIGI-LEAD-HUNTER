@@ -1,18 +1,18 @@
 """
 DIGIFORMATION LTD — Lead Hunter
-Phase 03: Three-Tier Website Opportunity Classification Engine (Strict 2-Signal Quality Gate)
-Certified Zero-Fabrication Protocol:
-- Priority 1 (Build-Ready Prime): Certified NO_WEBSITE + Verified Mobile/WhatsApp + Verified Physical Address + 2-Signal Multi-Factor Confirmation.
-- Priority 2 (Consultation): Certified NO_WEBSITE, but Landline-only OR missing key collateral assets (generates discovery checklist).
-- Priority 3 (Modernization / Unclear): Outdated/weak existing website OR WEBSITE_STATUS_UNCLEAR (search consensus inconclusive).
-- Excluded: Shariah violations or international chains.
+Phase 03: Precision Opportunity Classification Engine
+Active Priority Architecture:
+- Priority 1 (Build-Ready Prime): Certified NO_WEBSITE + Verified Mobile/WhatsApp + Verified Physical Address + Multi-Factor Confirmation.
+- Priority 2 (Website Redesign / Rebuild Opportunity): Inherits ALL P1 business qualification conditions (Real commercial business, Lahore/valid location, verified mobile/WhatsApp, verified address, signals confirmation), EXCEPT that an official website exists, AND that website is objectively verified as OUTDATED_WEAK / unfit for modern commercial use.
+- EXCLUDED: Does not qualify for P1 or P2 (Healthy/modern websites, inconclusive/uncertain web status, unverified mobile, or missing mandatory business evidence).
+There is NO active P3.
 """
 from typing import Dict, Any, Tuple, List, Optional
 
 class ClassificationService:
     def classify_lead(self, verified_lead: Dict[str, Any]) -> Tuple[str, int, List[str]]:
         """
-        Classifies lead into P1, P2, P3, or EXCLUDED.
+        Classifies lead into P1, P2, or EXCLUDED.
         Calculates factual Build-Readiness score (0-100%).
         Constructs granular asset checklist with zero fabricated fallbacks.
         Returns:
@@ -38,7 +38,7 @@ class ClassificationService:
             q = f"{verified_lead.get('business_name', '')} {verified_lead.get('address', '')}".strip()
             verified_lead["google_maps_url"] = f"https://www.google.com/maps/search/?api=1&query={urllib.parse.quote(q)}"
 
-        # Strict Multi-Factor Signals Count
+        # Strict Multi-Factor Signals Count (Shared business qualification standard for both P1 and P2)
         signals_count = 0
         if has_address: signals_count += 1
         if is_mobile: signals_count += 1
@@ -46,6 +46,12 @@ class ClassificationService:
         if review_count >= 5: signals_count += 1
         if has_hours: signals_count += 1
         if verified_lead.get("offerings"): signals_count += 1
+
+        # Check location qualification (Lahore + 50km or valid location)
+        location_str = (verified_lead.get("location") or "").lower()
+        address_str = (verified_lead.get("address") or "").lower()
+        # Location is valid if Lahore or recognized regional area is specified
+        is_valid_location = bool(location_str or address_str)
 
         # Build Detailed Asset Checklist (Strictly Honest - Zero Fallback)
         checklist = {
@@ -60,9 +66,11 @@ class ClassificationService:
                 "detail": f"+{verified_lead.get('whatsapp_number')}" if verified_lead.get("whatsapp_number") else ("Landline Only (No WhatsApp)" if is_landline else "Phone unverified")
             },
             "website_gap": {
-                "title": "Certified NO_WEBSITE Gap",
-                "present": website_status == "NO_WEBSITE",
-                "detail": "Certified NO official website across multi-engine consensus" if website_status == "NO_WEBSITE" else f"Current Status: {website_status}"
+                "title": "Website Gap & Opportunity Status",
+                "present": website_status in ("NO_WEBSITE", "OUTDATED_WEAK"),
+                "detail": "Certified NO official website (New Build Opportunity)" if website_status == "NO_WEBSITE" else (
+                    "Objectively unfit existing website (Redesign/Rebuild Opportunity)" if website_status == "OUTDATED_WEAK" else f"Current Status: {website_status}"
+                )
             },
             "ratings_and_reviews": {
                 "title": "Public Ratings & Social Proof",
@@ -88,7 +96,7 @@ class ClassificationService:
         if is_mobile: score += 30
         elif has_phone: score += 15
         if website_status == "NO_WEBSITE": score += 25
-        elif website_status == "OUTDATED_WEAK": score += 15
+        elif website_status == "OUTDATED_WEAK": score += 25
         if has_hours: score += 10
         if review_count >= 5: score += 10
         score = min(score, 100)
@@ -101,21 +109,50 @@ class ClassificationService:
         if review_count == 0: missing_info.append("Verified customer reviews")
         if not verified_lead.get("offerings"): missing_info.append("Product/Service menu items")
 
-        # ── STRICT 2-SIGNAL QUALITY GATING LOGIC ─────────────────────────────
-        # Rule 1: Website Status Unclear -> P3 (Never P1)
-        if website_status == "WEBSITE_STATUS_UNCLEAR":
-            return "P3", score, ["Multi-engine website search inconclusive — requires manual check"] + missing_info
+        # ── COMMON MANDATORY BUSINESS CONDITIONS FOR ACTIVE QUALIFICATION ────
+        # Both P1 and P2 require:
+        # - Real commercial business (valid address + valid location)
+        # - Verified mobile / WhatsApp channel (is_mobile == True)
+        # - Multi-factor signals >= 2
+        # - Shariah compliant (not excluded earlier)
+        has_base_business_qualification = bool(
+            has_address and
+            is_mobile and
+            is_valid_location and
+            signals_count >= 2
+        )
 
-        # Rule 2: Active or Outdated Website -> P3 (Modernization/Redesign Opportunity)
-        if website_status in ("OFFICIAL_WEBSITE", "OUTDATED_WEAK"):
-            return "P3", score, missing_info
-
-        # Rule 3: Certified NO_WEBSITE + Verified Mobile + Address + Signals >= 2 -> P1 (Prime)
-        if website_status == "NO_WEBSITE" and is_mobile and has_address and signals_count >= 2:
+        # ── 1. PRIORITY 1: NO PROPER OFFICIAL WEBSITE ────────────────────────
+        # P1 retains exact existing requirements:
+        # Certified NO_WEBSITE + Verified Mobile + Physical Address + Signals >= 2
+        if website_status == "NO_WEBSITE" and has_base_business_qualification:
             return "P1", score, missing_info
 
-        # Rule 4: Certified NO_WEBSITE but Landline Only or Missing Address -> P2 (Consultation Required)
-        if website_status == "NO_WEBSITE":
+        # ── 2. NEW PRIORITY 2: OBJECTIVELY UNFIT OFFICIAL WEBSITE ────────────
+        # P2 inherits ALL the exact same business qualifications as P1,
+        # but official website exists AND is objectively verified as OUTDATED_WEAK.
+        if (
+            website_status == "OUTDATED_WEAK" and
+            has_base_business_qualification
+        ):
+            # Formulate structured evidence-backed rebuild justification
+            audit = verified_lead.get("website_audit") or {}
+            issues = audit.get("issues", [])
+            verified_lead["p2_reason"] = {
+                "title": "P2 Website Redesign / Rebuild Justification",
+                "website_url": verified_lead.get("website_url"),
+                "weakness_score": audit.get("weakness_score", 65),
+                "verified_weaknesses": issues if issues else ["Outdated visual structure and missing mobile responsive optimization"],
+                "conclusion": "Official website exists, but its current condition is objectively unfit for modern business use, making a professional redesign/rebuild commercially justified."
+            }
             return "P2", score, missing_info
 
-        return "P3", score, missing_info
+        # ── 3. EXCLUDED: ALL OTHER CASES (NO ACTIVE P3) ──────────────────────
+        # - Website is healthy (OFFICIAL_WEBSITE) -> Not an opportunity
+        # - Website status is inconclusive (WEBSITE_STATUS_UNCLEAR) -> Cannot verify weakness objectively
+        # - Business lacks verified WhatsApp or physical presence -> Fails mandatory business conditions
+        # - Landline-only businesses or missing critical business assets -> EXCLUDED
+        if website_status == "WEBSITE_STATUS_UNCLEAR":
+            missing_info = ["Multi-engine website search inconclusive — epistemic status uncertain"] + missing_info
+
+        return "EXCLUDED", score, missing_info

@@ -93,13 +93,15 @@ export const LiveRunProgress: React.FC<LiveRunProgressProps> = ({ run, onRefresh
           <div className="text-emerald-400 text-[10px] uppercase font-bold">P1 Ready</div>
           <div className="text-base font-bold text-emerald-400 mt-0.5">{run.p1_count}</div>
         </div>
-        <div className="rounded-xl bg-amber-950/20 border border-amber-500/20 p-2.5">
-          <div className="text-amber-400 text-[10px] uppercase font-bold">P2 Consult</div>
-          <div className="text-base font-bold text-amber-400 mt-0.5">{run.p2_count}</div>
-        </div>
         <div className="rounded-xl bg-blue-950/20 border border-blue-500/20 p-2.5">
-          <div className="text-blue-400 text-[10px] uppercase font-bold">P3 Redesign</div>
-          <div className="text-base font-bold text-blue-400 mt-0.5">{run.p3_count}</div>
+          <div className="text-blue-400 text-[10px] uppercase font-bold">P2 Redesign</div>
+          <div className="text-base font-bold text-blue-400 mt-0.5">{run.p2_count}</div>
+        </div>
+        <div className="rounded-xl bg-slate-900/60 border border-slate-800 p-2.5">
+          <div className="text-slate-400 text-[10px] uppercase font-bold">Excluded</div>
+          <div className="text-base font-bold text-slate-400 mt-0.5">
+            {Math.max(0, (run.lead_count || 0) - (run.p1_count || 0) - (run.p2_count || 0))}
+          </div>
         </div>
       </div>
 

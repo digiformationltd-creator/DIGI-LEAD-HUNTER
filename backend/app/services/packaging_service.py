@@ -176,8 +176,8 @@ Before entering live website production, the following owner-supplied assets and
     .container {{ max-width: 860px; margin: 0 auto; background: #131B2A; border: 1px solid #1E293B; border-radius: 12px; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }}
     .badge {{ display: inline-block; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 13px; text-transform: uppercase; }}
     .badge-p1 {{ background: #064E3B; color: #34D399; border: 1px solid #059669; }}
-    .badge-p2 {{ background: #78350F; color: #FBBF24; border: 1px solid #D97706; }}
-    .badge-p3 {{ background: #1E3A8A; color: #60A5FA; border: 1px solid #2563EB; }}
+    .badge-p2 {{ background: #1E3A8A; color: #60A5FA; border: 1px solid #2563EB; }}
+    .badge-excluded {{ background: #1E293B; color: #94A3B8; border: 1px solid #334155; }}
     h1 {{ color: #F8FAFC; margin-top: 10px; font-size: 28px; }}
     h2 {{ color: #38BDF8; font-size: 20px; border-bottom: 1px solid #1E293B; padding-bottom: 8px; margin-top: 30px; }}
     .grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }}

@@ -125,7 +125,6 @@ export const App: React.FC = () => {
           onSelectTab={(tab) => setCurrentTab(tab)}
           p1Count={analytics?.p1_count}
           p2Count={analytics?.p2_count}
-          p3Count={analytics?.p3_count}
         />
 
         {/* Main Content Area */}
@@ -173,16 +172,6 @@ export const App: React.FC = () => {
               onDownloadPackage={handleDownloadPackage}
               onRefresh={fetchLeads}
               defaultPriority="P2"
-            />
-          )}
-
-          {currentTab === 'p3-leads' && (
-            <LeadsView
-              leads={leads}
-              onSelectLead={(lead) => setSelectedLead(lead)}
-              onDownloadPackage={handleDownloadPackage}
-              onRefresh={fetchLeads}
-              defaultPriority="P3"
             />
           )}
 

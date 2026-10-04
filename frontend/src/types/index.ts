@@ -18,7 +18,7 @@ export interface Lead {
   review_count?: number;
   business_hours?: string;
   description?: string;
-  priority: 'P1' | 'P2' | 'P3' | 'EXCLUDED';
+  priority: 'P1' | 'P2' | 'EXCLUDED';
   build_readiness: number;
   missing_info?: string[];
   offerings?: string[];

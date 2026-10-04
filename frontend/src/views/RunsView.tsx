@@ -50,7 +50,7 @@ export const RunsView: React.FC<RunsViewProps> = ({
               <th className="py-3.5 px-4">Run ID / Scope</th>
               <th className="py-3.5 px-3">Status</th>
               <th className="py-3.5 px-3">Target vs Qualified</th>
-              <th className="py-3.5 px-3">P1 / P2 / P3 Breakdown</th>
+              <th className="py-3.5 px-3">P1 / P2 Breakdown</th>
               <th className="py-3.5 px-3">Started</th>
               <th className="py-3.5 px-4 text-right">Action</th>
             </tr>
@@ -82,11 +82,9 @@ export const RunsView: React.FC<RunsViewProps> = ({
 
                 <td className="py-3.5 px-3">
                   <div className="flex items-center space-x-2 text-[11px] font-semibold">
-                    <span className="text-emerald-400">P1: {r.p1_count || 0}</span>
+                    <span className="text-emerald-400">P1 (New): {r.p1_count || 0}</span>
                     <span>•</span>
-                    <span className="text-amber-400">P2: {r.p2_count || 0}</span>
-                    <span>•</span>
-                    <span className="text-blue-400">P3: {r.p3_count || 0}</span>
+                    <span className="text-blue-400">P2 (Redesign): {r.p2_count || 0}</span>
                   </div>
                 </td>
 

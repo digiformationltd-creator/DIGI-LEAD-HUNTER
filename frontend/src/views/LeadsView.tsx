@@ -66,9 +66,9 @@ export const LeadsView: React.FC<LeadsViewProps> = ({
       <div className="flex border-b border-slate-800 space-x-2 text-xs font-semibold overflow-x-auto">
         {[
           { id: 'ALL', label: 'All Leads' },
-          { id: 'P1', label: 'Priority 1 (Ready)', color: 'text-emerald-400 border-emerald-500' },
-          { id: 'P2', label: 'Priority 2 (Consult)', color: 'text-amber-400 border-amber-500' },
-          { id: 'P3', label: 'Priority 3 (Redesign)', color: 'text-blue-400 border-blue-500' },
+          { id: 'P1', label: 'Priority 1 (New Website)', color: 'text-emerald-400 border-emerald-500' },
+          { id: 'P2', label: 'Priority 2 (Redesign / Rebuild)', color: 'text-blue-400 border-blue-500' },
+          { id: 'EXCLUDED', label: 'Excluded', color: 'text-slate-400 border-slate-500' },
         ].map((tab) => {
           const isActive = priorityFilter === tab.id;
           return (

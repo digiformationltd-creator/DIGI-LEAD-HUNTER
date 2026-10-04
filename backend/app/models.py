@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 Pydantic Models & Schemas
 """
@@ -12,7 +12,7 @@ class RunCreateRequest(BaseModel):
     scope: Optional[str] = Field("CITY", description="CITY, COUNTRY, or WORLDWIDE")
     radius: int = Field(50, description="Radius in KM: 5, 50, 100, 1000, 5000, or 0 (Worldwide)")
     target_count: int = Field(15, description="Target lead count")
-    priority_filters: List[str] = Field(default_factory=lambda: ["P1", "P2", "P3"])
+    priority_filters: List[str] = Field(default_factory=lambda: ["P1", "P2"])
     research_depth: str = Field("Standard", description="Standard or Deep")
     package_mode: str = Field("Full Package", description="Full Package, Evidence, or Website Plan")
     shariah_compliant_only: bool = Field(True, description="Strictly exclude interest, alcohol, gambling, and haram businesses")

@@ -24,7 +24,6 @@ export const FindLeadsView: React.FC<FindLeadsViewProps> = ({ onStartRun }) => {
   const [targetCount, setTargetCount] = useState<number>(15);
   const [p1, setP1] = useState(true);
   const [p2, setP2] = useState(true);
-  const [p3, setP3] = useState(true);
   const [depth, setDepth] = useState('Standard');
   const [packageMode, setPackageMode] = useState('Full Package');
 
@@ -72,7 +71,6 @@ export const FindLeadsView: React.FC<FindLeadsViewProps> = ({ onStartRun }) => {
     const prios = [];
     if (p1) prios.push('P1');
     if (p2) prios.push('P2');
-    if (p3) prios.push('P3');
 
     onStartRun({
       category,

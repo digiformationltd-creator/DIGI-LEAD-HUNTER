@@ -15,7 +15,6 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
   const [targetCount, setTargetCount] = useState<number>(15);
   const [p1, setP1] = useState(true);
   const [p2, setP2] = useState(true);
-  const [p3, setP3] = useState(true);
 
   if (!isOpen) return null;
 
@@ -33,7 +32,6 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
     const prios = [];
     if (p1) prios.push('P1');
     if (p2) prios.push('P2');
-    if (p3) prios.push('P3');
 
     onStartRun({
       category,

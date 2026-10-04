@@ -12,7 +12,7 @@ router = APIRouter(prefix="/api/leads", tags=["Leads"])
 
 @router.get("", response_model=List[LeadResponse])
 def get_leads(
-    priority: Optional[str] = Query(None, description="P1, P2, P3"),
+    priority: Optional[str] = Query(None, description="P1, P2, EXCLUDED"),
     website_status: Optional[str] = None,
     whatsapp_status: Optional[str] = None,
     search: Optional[str] = None,

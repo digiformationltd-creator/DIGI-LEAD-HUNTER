@@ -10,7 +10,6 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ analytics }) => {
   const total = analytics?.total_leads || 1;
   const p1Ratio = Math.round(((analytics?.p1_count || 0) / total) * 100);
   const p2Ratio = Math.round(((analytics?.p2_count || 0) / total) * 100);
-  const p3Ratio = Math.round(((analytics?.p3_count || 0) / total) * 100);
   const waVerifiedRatio = Math.round(((analytics?.whatsapp_verified_count || 0) / total) * 100);
 
   return (
@@ -60,27 +59,14 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ analytics }) => {
 
           <div className="space-y-1.5">
             <div className="flex justify-between text-xs font-semibold">
-              <span className="text-amber-400 flex items-center space-x-1.5">
-                <Clock className="h-3.5 w-3.5" />
-                <span>Priority 2: Consultation & Asset Collection ({analytics?.p2_count || 0})</span>
+              <span className="text-blue-400 flex items-center space-x-1.5">
+                <Globe className="h-3.5 w-3.5" />
+                <span>Priority 2: Website Redesign / Rebuild Opportunity ({analytics?.p2_count || 0})</span>
               </span>
               <span className="text-slate-300">{p2Ratio}%</span>
             </div>
             <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden">
-              <div className="h-full bg-amber-500 rounded-full" style={{ width: `${p2Ratio}%` }}></div>
-            </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <div className="flex justify-between text-xs font-semibold">
-              <span className="text-blue-400 flex items-center space-x-1.5">
-                <Globe className="h-3.5 w-3.5" />
-                <span>Priority 3: Website Modernization / Redesign ({analytics?.p3_count || 0})</span>
-              </span>
-              <span className="text-slate-300">{p3Ratio}%</span>
-            </div>
-            <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden">
-              <div className="h-full bg-blue-500 rounded-full" style={{ width: `${p3Ratio}%` }}></div>
+              <div className="h-full bg-blue-500 rounded-full" style={{ width: `${p2Ratio}%` }}></div>
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ class Orchestrator:
         """, (
             run_id, now_str, now_str, "INITIALIZING",
             req.get("category"), req.get("location"), req.get("radius", 50),
-            req.get("target_count", 15), json.dumps(req.get("priority_filters", ["P1", "P2", "P3"])),
+            req.get("target_count", 15), json.dumps(req.get("priority_filters", ["P1", "P2"])),
             req.get("research_depth", "Standard"), req.get("package_mode", "Full Package")
         ))
         conn.commit()
@@ -60,7 +60,7 @@ class Orchestrator:
         scope = req.get("scope", "CITY")
         target_count = req.get("target_count", 15)
         radius = req.get("radius", 50)
-        prio_filters = req.get("priority_filters", ["P1", "P2", "P3"])
+        prio_filters = req.get("priority_filters", ["P1", "P2"])
 
         p1_count = 0
         p2_count = 0
@@ -114,8 +114,6 @@ class Orchestrator:
                         p1_count += 1
                     elif priority == "P2":
                         p2_count += 1
-                    elif priority == "P3":
-                        p3_count += 1
                     qualified_count += 1
 
                     self._log_event(run_id, "PACKAGING", f"Generated {priority} Verified Opportunity Pack for: {verified_lead['business_name']}")
@@ -127,10 +125,10 @@ class Orchestrator:
             self._update_run_status(
                 run_id, "COMPLETED",
                 lead_count=len(candidates), qualified_count=qualified_count,
-                p1_count=p1_count, p2_count=p2_count, p3_count=p3_count,
+                p1_count=p1_count, p2_count=p2_count, p3_count=0,
                 failed_count=failed_count, excluded_count=excluded_count
             )
-            self._log_event(run_id, "COMPLETED", f"Run completed successfully: {qualified_count} qualified leads packaged.")
+            self._log_event(run_id, "COMPLETED", f"Run completed successfully: {qualified_count} qualified leads packaged ({p1_count} P1 Build-Ready, {p2_count} P2 Redesign).")
 
         except Exception as e:
             self._update_run_status(run_id, "FAILED", errors=str(e))

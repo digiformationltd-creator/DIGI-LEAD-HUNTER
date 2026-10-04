@@ -173,7 +173,7 @@ class TestFusionIntelligence(unittest.TestCase):
             "review_count": 0
         }
         prio, score, missing = self.classifier.classify_lead(lead)
-        self.assertEqual(prio, "P3")  # Must be P3, never P1!
+        self.assertEqual(prio, "EXCLUDED")  # Must be EXCLUDED, never P1 or P2!
         self.assertIn("Multi-engine website search inconclusive", missing[0])
 
     def test_landline_never_becomes_p1(self):
@@ -187,7 +187,7 @@ class TestFusionIntelligence(unittest.TestCase):
             "review_count": 10
         }
         prio, score, missing = self.classifier.classify_lead(lead)
-        self.assertEqual(prio, "P2")  # Consultation needed because WhatsApp direct messaging is unavailable
+        self.assertEqual(prio, "EXCLUDED")  # Excluded because WhatsApp direct messaging is unavailable
         self.assertNotEqual(prio, "P1")
 
     def test_genuine_p1_lead_qualification(self):

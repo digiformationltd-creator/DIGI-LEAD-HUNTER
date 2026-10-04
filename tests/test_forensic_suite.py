@@ -7,7 +7,7 @@ from services.classification_service import ClassificationService
 from services.discovery_service import DiscoveryService
 
 def test_scenario_1_direct_website_present():
-    """Scenario 1: Business with direct website is flagged as OFFICIAL_WEBSITE and classified as P3 (Modernization/CRO opportunity)."""
+    """Scenario 1: Business with direct healthy website is flagged as OFFICIAL_WEBSITE and classified as EXCLUDED."""
     srv = VerificationService()
     # Mock live check so test doesn't fail on external domain connectivity
     srv._audit_website_live = lambda url: ("OFFICIAL_WEBSITE", {"weakness_score": 20, "issues": []})
@@ -23,7 +23,7 @@ def test_scenario_1_direct_website_present():
     
     cls_srv = ClassificationService()
     priority, score, missing = cls_srv.classify_lead(verified)
-    assert priority == "P3"
+    assert priority == "EXCLUDED"
 
 def test_scenario_2_social_only_presence():
     """Scenario 2: Business with only Instagram/Facebook profile undergoes multi-stage check and is certified NO_WEBSITE."""
@@ -74,8 +74,8 @@ def test_scenario_6_missing_phone_traceability():
     assert status == "UNKNOWN"
     assert clean == ""
 
-def test_scenario_7_outdated_weak_website_p3():
-    """Scenario 7: Outdated website gets classified as P3 (Modernization pitch)."""
+def test_scenario_7_outdated_weak_website_p2_redesign():
+    """Scenario 7: Outdated website gets classified as P2 (Website Redesign / Rebuild opportunity) when business qualifies."""
     srv = VerificationService()
     status, audit = srv._audit_website("http://old-outdated-diner.example.org")
     assert status == "OUTDATED_WEAK"
@@ -86,13 +86,16 @@ def test_scenario_7_outdated_weak_website_p3():
         "whatsapp_status": "WHATSAPP_VERIFIED",
         "review_count": 25,
         "business_hours": "10:00 - 22:00",
-        "address": "Lahore"
+        "address": "Lahore",
+        "phone": "+92 300 1234567"
     }
     priority, score, missing = cls_srv.classify_lead(lead)
-    assert priority == "P3"
+    assert priority == "P2"
+    assert "p2_reason" in lead
+    assert "commercially justified" in lead["p2_reason"]["conclusion"]
 
 def test_scenario_8_p1_strict_gate():
-    """Scenario 8: P1 qualification strictly requires confirmed NO_WEBSITE, verified WhatsApp, and reviews."""
+    """Scenario 8: P1 qualification strictly requires confirmed NO_WEBSITE, verified WhatsApp, and reviews; missing contact excludes."""
     cls_srv = ClassificationService()
     # Missing WhatsApp
     lead_no_wa = {
@@ -104,7 +107,7 @@ def test_scenario_8_p1_strict_gate():
         "phone": ""
     }
     priority, score, missing = cls_srv.classify_lead(lead_no_wa)
-    assert priority == "P2"
+    assert priority == "EXCLUDED"
 
 def test_scenario_9_shariah_compliance_prohibited_filter():
     """Scenario 9: Shariah filter excludes prohibited categories."""

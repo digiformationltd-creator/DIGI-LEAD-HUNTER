@@ -442,8 +442,8 @@ class BatchLeadHunter:
     body {{ background: #080C14; color: #F1F5F9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }}
     .glass-card {{ background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.5); }}
     .badge-p1 {{ background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }}
-    .badge-p2 {{ background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }}
-    .badge-p3 {{ background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }}
+    .badge-p2 {{ background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }}
+    .badge-excluded {{ background: rgba(100, 116, 139, 0.15); color: #94A3B8; border: 1px solid rgba(100, 116, 139, 0.3); }}
   </style>
 </head>
 <body class="min-h-screen p-6 md:p-12">
@@ -464,13 +464,13 @@ class BatchLeadHunter:
         </div>
         <div class="flex items-center gap-3">
           <div class="text-right">
-            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Total Qualified Leads</div>
-            <div class="text-3xl font-extrabold text-emerald-400">{len(leads)}</div>
+            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Build-Ready (P1)</div>
+            <div class="text-3xl font-extrabold text-emerald-400">{len([l for l in leads_json if l['priority'] == 'P1'])}</div>
           </div>
           <div class="h-12 w-px bg-slate-800"></div>
           <div class="text-right">
-            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Build-Ready (P1)</div>
-            <div class="text-3xl font-extrabold text-blue-400">{len([l for l in leads_json if l['priority'] == 'P1'])}</div>
+            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Redesign (P2)</div>
+            <div class="text-3xl font-extrabold text-blue-400">{len([l for l in leads_json if l['priority'] == 'P2'])}</div>
           </div>
         </div>
       </div>
@@ -491,8 +491,8 @@ class BatchLeadHunter:
       <div class="flex gap-2">
         <button onclick="filterPriority('ALL')" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">All ({len(leads)})</button>
         <button onclick="filterPriority('P1')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p1">P1 Build-Ready</button>
-        <button onclick="filterPriority('P2')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p2">P2 Consultation</button>
-        <button onclick="filterPriority('P3')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p3">P3 Redesign</button>
+        <button onclick="filterPriority('P2')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p2">P2 Redesign / Rebuild</button>
+        <button onclick="filterPriority('EXCLUDED')" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-800/80 text-slate-400 hover:bg-slate-700">Excluded</button>
       </div>
     </div>
 

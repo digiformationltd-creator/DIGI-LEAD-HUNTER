@@ -40,11 +40,9 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case 'P1':
-        return <span className="inline-flex items-center rounded-md bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30">P1 • Ready</span>;
+        return <span className="inline-flex items-center rounded-md bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30">P1 • New Website</span>;
       case 'P2':
-        return <span className="inline-flex items-center rounded-md bg-amber-500/10 px-2.5 py-1 text-xs font-bold text-amber-400 border border-amber-500/30">P2 • Consult</span>;
-      case 'P3':
-        return <span className="inline-flex items-center rounded-md bg-blue-500/10 px-2.5 py-1 text-xs font-bold text-blue-400 border border-blue-500/30">P3 • Redesign</span>;
+        return <span className="inline-flex items-center rounded-md bg-blue-500/10 px-2.5 py-1 text-xs font-bold text-blue-400 border border-blue-500/30">P2 • Redesign</span>;
       default:
         return <span className="inline-flex items-center rounded-md bg-slate-800 px-2 py-1 text-xs font-medium text-slate-400">Excluded</span>;
     }

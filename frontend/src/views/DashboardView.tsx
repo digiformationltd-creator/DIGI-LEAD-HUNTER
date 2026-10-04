@@ -89,11 +89,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           color="emerald"
         />
         <KpiCard
-          title="Priority 2 (Consult)"
+          title="Priority 2 (Redesign)"
           value={analytics?.p2_count || 0}
-          subtitle="Limited assets / Onboarding needed"
-          icon={Clock}
-          color="amber"
+          subtitle="Outdated website / Rebuild opportunity"
+          icon={RefreshCw}
+          color="blue"
         />
         <KpiCard
           title="Packages Ready"

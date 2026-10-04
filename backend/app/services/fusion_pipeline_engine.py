@@ -58,7 +58,7 @@ class FusionPipelineEngine:
                     pass
             logger.info(f"[{run_id}] [{stage}] {msg}")
 
-        filters = priority_filters or ["P1", "P2", "P3"]
+        filters = priority_filters or ["P1", "P2"]
         now_str = datetime.now().isoformat()
 
         # Step 1: DISCOVERY
@@ -123,8 +123,6 @@ class FusionPipelineEngine:
                     p1_count += 1
                 elif priority == "P2":
                     p2_count += 1
-                elif priority == "P3":
-                    p3_count += 1
 
                 verified_leads.append(verified_lead)
                 emit("PACKAGING", f"Packaged {priority} Lead: '{biz_name}' (Web: {web_status}, WhatsApp: {wa_status})")
@@ -134,7 +132,7 @@ class FusionPipelineEngine:
 
         # Step 3: FINALIZE
         qualified_total = len(verified_leads)
-        emit("COMPLETED", f"Pipeline complete: {qualified_total} leads certified ({p1_count} P1 Prime, {p2_count} P2 Consultation, {p3_count} P3 Modernization/Unclear).")
+        emit("COMPLETED", f"Pipeline complete: {qualified_total} leads certified ({p1_count} P1 Build-Ready, {p2_count} P2 Redesign/Rebuild).")
 
         return {
             "run_id": run_id,
@@ -142,7 +140,7 @@ class FusionPipelineEngine:
             "qualified_count": qualified_total,
             "p1_count": p1_count,
             "p2_count": p2_count,
-            "p3_count": p3_count,
+            "p3_count": 0,
             "unclear_count": unclear_count,
             "excluded_count": excluded_count,
             "leads": verified_leads
