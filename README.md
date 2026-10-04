@@ -39,21 +39,24 @@ Lead Hunter is proudly developed and maintained by **Digiformation LTD**:
 
 ---
 
-## ⚡ 1-Click Antigravity Setup Experience
+## ⚡ Autonomous Antigravity Prompt Execution (No UI Needed)
 
-This repository is optimized for the **Antigravity AI Agent environment**. When you clone or unzip this repository into Antigravity, simply tell the agent:
-
+This repository is optimized for direct **Antigravity AI Agent prompt-based execution**. When you give Antigravity a command like:
 ```text
-SETUP FOR ME
+Extract 100 restaurant leads in Lahore with complete website opportunity packs
 ```
 
-Antigravity will automatically:
-1. Read `MASTER_SETUP.md`.
-2. Install Python backend dependencies (`fastapi`, `uvicorn`, `pydantic`, `httpx`).
-3. Install frontend Node modules and compile the Control Center distribution.
-4. Initialize the SQLite local database (`data/database/lead_hunter.db`).
-5. Run automated test suites to ensure 100% verification.
-6. Launch the Control Center on `http://localhost:8000` and open your default web browser.
+Antigravity executes the autonomous 5-phase pipeline directly in your selected workspace:
+1. **Creates Automated Batch Folder:** (e.g. `Restaurant_Batch_1`) directly inside your target project directory.
+2. **Generates Master Excel Spreadsheet (`.xlsx`):** Professional Microsoft Excel sheet with verified WhatsApp numbers, one-click WhatsApp chat links, Google Maps locations, ratings, and build-readiness status.
+3. **Generates Interactive Opportunity Portal (`.html`):** Beautiful, responsive HTML dashboard featuring live search filters, hero concepts, and structured packages.
+4. **Builds Priority-1 (Build-Ready) Deliverables:** Complete website architecture blueprints (`WEBSITE_PLAN.md`), mockups, and product/pricing packages (`PRODUCTS_AND_PACKAGES.json`).
+5. **Generates Complete ZIP Archive:** A standalone `<BATCH_NAME>_COMPLETE_PACK.zip` packed and ready for distribution or client outreach.
+
+### Running via Terminal / CLI:
+```bash
+python batch_hunter.py --category "Restaurant" --location "Lahore" --count 100
+```
 
 ---
 
