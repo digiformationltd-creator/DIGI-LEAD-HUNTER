@@ -6,6 +6,8 @@
 ### Autonomous AI Lead Intelligence, Website Opportunity Hunter & Evidence Packaging Platform
 **Official Product of DIGIFORMATION LTD • Sponsored by Digi Biz OS**
 
+[![Digi Biz OS Ecosystem](https://img.shields.io/badge/Ecosystem-Digi%20Biz%20OS-blueviolet.svg)](https://www.digibizos.co.uk/)
+[![AI Automation](https://img.shields.io/badge/AI-Autonomous%20Automation-orange.svg)](https://github.com/digiformationltd-creator/DIGI-LEAD-HUNTER)
 [![License: Source-Available](https://img.shields.io/badge/License-Source--Available-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://www.python.org/)
 [![React 18](https://img.shields.io/badge/Frontend-React%2018%20%2B%20Vite-indigo.svg)](https://vitejs.dev/)
