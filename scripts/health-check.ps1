@@ -1,4 +1,4 @@
-# Digiformation LTD — Lead Hunter Health Check
+# DIGIFORMATION LTD — Lead Hunter Health Check
 $url = "http://127.0.0.1:8000/api/health"
 Write-Host "Checking Lead Hunter backend health at $url..." -ForegroundColor Cyan
 try {

@@ -1,5 +1,5 @@
 ﻿"""
-Digiformation LTD — Lead Hunter
+DIGIFORMATION LTD — Lead Hunter
 Analytics & Dashboard KPI API
 """
 from fastapi import APIRouter

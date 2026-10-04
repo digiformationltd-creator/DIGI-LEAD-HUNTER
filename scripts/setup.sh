@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Digiformation LTD — Lead Hunter Setup Script (Linux/macOS)
+# DIGIFORMATION LTD — Lead Hunter Setup Script (Linux/macOS)
 set -e
 echo "=========================================================="
-echo "  Digiformation LTD — Lead Hunter Setup"
+echo "  DIGIFORMATION LTD — Lead Hunter Setup"
 echo "=========================================================="
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

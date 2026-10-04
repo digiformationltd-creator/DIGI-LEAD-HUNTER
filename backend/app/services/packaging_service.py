@@ -1,5 +1,5 @@
 ﻿"""
-Digiformation LTD — Lead Hunter
+DIGIFORMATION LTD — Lead Hunter
 Phase 06: Evidence, Markdown, HTML & ZIP Packaging Engine
 """
 import os

@@ -1,4 +1,4 @@
-# Digiformation LTD — Lead Hunter
+# DIGIFORMATION LTD — Lead Hunter
 # Universal 1-Click Runner & Antigravity Launcher
 import os
 import sys
@@ -14,7 +14,7 @@ FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
 def main():
     print("=" * 65)
     print("  DIGI LEAD HUNTER — LOCAL BUSINESS INTELLIGENCE AGENT")
-    print("  by Digiformation LTD • Sponsored by Digi Biz OS")
+    print("  by DIGIFORMATION LTD • Sponsored by Digi Biz OS")
     print("=" * 65)
 
     # 1. Initialize Database

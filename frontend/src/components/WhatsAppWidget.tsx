@@ -6,7 +6,7 @@ export const WhatsAppWidget: React.FC = () => {
 
   const whatsappNumber = "03164467464";
   const whatsappClean = "923164467464";
-  const waUrl = `https://wa.me/${whatsappClean}?text=Hello%20Digi%20Formation%2C%20I%20am%20using%20Lead%20Hunter%20Agent`;
+  const waUrl = `https://wa.me/${whatsappClean}?text=Hello%20DIGIFORMATION%20LTD%2C%20I%20am%20using%20Lead%20Hunter%20Agent`;
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -18,7 +18,7 @@ export const WhatsAppWidget: React.FC = () => {
                 <MessageSquare className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-white">Digi Formation Support</h4>
+                <h4 className="text-sm font-semibold text-white">DIGIFORMATION LTD Support</h4>
                 <p className="text-xs text-emerald-400 flex items-center space-x-1">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   <span>Direct WhatsApp Online</span>

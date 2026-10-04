@@ -1,5 +1,5 @@
 """
-Digiformation LTD — Lead Hunter
+DIGIFORMATION LTD — Lead Hunter
 Batch Opportunity Runner (Autonomous Antigravity CLI Engine)
 """
 import os
@@ -455,7 +455,7 @@ class BatchLeadHunter:
         <div>
           <div class="inline-flex items-center space-x-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-400 mb-3">
             <i class="fa-solid fa-bolt"></i>
-            <span>Digiformation LTD • Opportunity Portal</span>
+            <span>DIGIFORMATION LTD • Opportunity Portal</span>
           </div>
           <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">{batch_name.replace('_', ' ')}</h1>
           <p class="text-slate-300 text-sm mt-2 max-w-2xl leading-relaxed">

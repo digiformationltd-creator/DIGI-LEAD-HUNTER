@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenFindLeads, onNavigateAbout
               </span>
             </div>
             <p className="text-[11px] text-slate-400 font-medium">
-              by <strong className="text-slate-300">Digiformation LTD</strong> • <span className="text-slate-500">Sponsored by Digi Biz OS</span>
+              by <strong className="text-slate-300">DIGIFORMATION LTD</strong> • <span className="text-slate-500">Sponsored by Digi Biz OS</span>
             </p>
           </div>
         </div>
@@ -48,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenFindLeads, onNavigateAbout
         </button>
 
         <a
-          href="https://wa.me/923164467464?text=Hello%20Digi%20Formation%2C%20I%20am%20using%20Digi%20Lead%20Hunter"
+          href="https://wa.me/923164467464?text=Hello%20DIGIFORMATION%20LTD%2C%20I%20am%20using%20Digi%20Lead%20Hunter"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden sm:flex items-center space-x-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 px-3 py-2 text-xs font-medium text-emerald-400 hover:bg-emerald-500/20 transition-all"

@@ -42,7 +42,7 @@ def test_full_autonomous_batch_pipeline():
         assert html_file.stat().st_size > 2000
         html_text = html_file.read_text(encoding="utf-8")
         assert "Test_E2E_Batch" in html_text
-        assert "Digiformation LTD" in html_text
+        assert "DIGIFORMATION LTD" in html_text
 
         # 3. Master Standalone ZIP
         zip_file = Path(result["zip_path"])

@@ -1,5 +1,5 @@
 """
-Digiformation LTD — Lead Hunter
+DIGIFORMATION LTD — Lead Hunter
 Phase 01: Core Lead Discovery Engine with Shariah Compliance & Multi-Tier Geographic Scope
 """
 import urllib.parse

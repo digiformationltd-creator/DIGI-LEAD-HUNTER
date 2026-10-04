@@ -1,5 +1,5 @@
 ﻿"""
-Digiformation LTD — Lead Hunter
+DIGIFORMATION LTD — Lead Hunter
 Phase 03: Three-Tier Website Opportunity Classification Engine
 """
 from typing import Dict, Any, Tuple, List

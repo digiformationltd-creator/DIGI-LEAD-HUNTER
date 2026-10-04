@@ -1,5 +1,5 @@
 ﻿"""
-Digiformation LTD — Lead Hunter
+DIGIFORMATION LTD — Lead Hunter
 Leads API Endpoints
 """
 import json

@@ -1,5 +1,5 @@
 ﻿"""
-Digiformation LTD — Lead Hunter
+DIGIFORMATION LTD — Lead Hunter
 Phase 04: Business & Asset Intelligence Engine
 """
 from datetime import datetime
@@ -30,7 +30,7 @@ class IntelligenceService:
                 "source_url": lead_data.get("google_maps_url"),
                 "local_path": "assets/logo-placeholder.svg",
                 "usability_status": "PROPOSED_DESIGN_DIRECTION",
-                "rights_notes": "Proposed branding for Digi Formation website development.",
+                "rights_notes": "Proposed branding for DIGIFORMATION LTD website development.",
                 "created_at": datetime.now().isoformat()
             },
             {

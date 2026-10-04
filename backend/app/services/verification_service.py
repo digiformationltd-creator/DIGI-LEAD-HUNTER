@@ -1,5 +1,5 @@
 ﻿"""
-Digiformation LTD — Lead Hunter
+DIGIFORMATION LTD — Lead Hunter
 Phase 02: Verification Engine (Identity, Website, WhatsApp & Shariah Compliance)
 """
 import re
@@ -27,7 +27,7 @@ class VerificationService:
             "claim": "Shariah Compliance & Ethical Standard",
             "value": "PASSED (100% Halal / Ethical)",
             "evidence_level": "E1_DIRECT",
-            "source": "Digi Formation Shariah & Ethical Filter Engine",
+            "source": "DIGIFORMATION LTD Shariah & Ethical Filter Engine",
             "source_url": None,
             "observed_at": now_str,
             "notes": "Verified business category and operational description are free from interest (riba), gambling, intoxicants, and prohibited trade."

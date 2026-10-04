@@ -1,11 +1,11 @@
 # Contributing to Digi Biz OS — Lead Hunter
 
-Thank you for your interest in contributing to **Digi Biz OS — Lead Hunter** by **Digiformation LTD**.
+Thank you for your interest in contributing to **Digi Biz OS — Lead Hunter** by **DIGIFORMATION LTD**.
 
 ## Code of Conduct & Licensing Alignment
 By submitting pull requests or issues, you acknowledge that all contributions:
-1. Adhere to the *Digiformation LTD Source-Available License*.
-2. Retain all original Digiformation LTD branding, copyright notices, and product identity.
+1. Adhere to the *DIGIFORMATION LTD Source-Available License*.
+2. Retain all original DIGIFORMATION LTD branding, copyright notices, and product identity.
 3. Prohibit the introduction of white-label toggles, branding removal switches, or unauthorized re-licensing.
 
 ## Development Workflow

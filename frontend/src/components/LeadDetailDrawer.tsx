@@ -348,7 +348,7 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
               <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-xs text-slate-300 space-y-2">
                 <h4 className="font-semibold text-white">ZIP Contents:</h4>
                 <ul className="space-y-1 text-slate-400 text-[11px] list-disc list-inside">
-                  <li><code>README.md</code> (Package introduction & Digi Formation contact info)</li>
+                  <li><code>README.md</code> (Package introduction & DIGIFORMATION LTD contact info)</li>
                   <li><code>WEBSITE_PLAN.md</code> (Complete website architecture specification)</li>
                   <li><code>WEBSITE_PLAN.html</code> (Printable / PDF-ready visual presentation)</li>
                   <li><code>WEBSITE_BUILD_BRIEF.md</code> (Component development blueprint)</li>

@@ -1,6 +1,6 @@
-# Digiformation LTD — Lead Hunter Setup Script (PowerShell)
+# DIGIFORMATION LTD — Lead Hunter Setup Script (PowerShell)
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "  Digiformation LTD — Lead Hunter Setup (Windows)" -ForegroundColor Cyan
+Write-Host "  DIGIFORMATION LTD — Lead Hunter Setup (Windows)" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
