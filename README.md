@@ -1,6 +1,6 @@
 # DIGI LEAD HUNTER
 ### AI-Powered Local Business Lead Intelligence, Website Opportunity Research & Packaging Platform
-**Official Product of Digi Formation Limited • Supported by Digi Biz OS**
+**Official Product of Digiformation LTD • Sponsored by Digi Biz OS**
 
 [![License: Source-Available](https://img.shields.io/badge/License-Source--Available-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://www.python.org/)
@@ -12,7 +12,7 @@
 
 ## 🌟 Executive Overview
 
-**Lead Hunter** is an autonomous intelligence and website-opportunity research platform developed by **Digi Formation Limited**. It solves the core client acquisition bottleneck for web agencies and developers by discovering local businesses on **Google Maps** that have strong customer reviews and operational presence, but **lack an official website** or possess a broken/outdated web presence.
+**Lead Hunter** is an autonomous intelligence and website-opportunity research platform developed by **Digiformation LTD**. It solves the core client acquisition bottleneck for web agencies and developers by discovering local businesses on **Google Maps** that have strong customer reviews and operational presence, but **lack an official website** or possess a broken/outdated web presence.
 
 Instead of scraping raw phone numbers, Lead Hunter:
 1. **Verifies business identity & Google Maps presence** across any category and city.
@@ -28,7 +28,7 @@ Instead of scraping raw phone numbers, Lead Hunter:
 
 ## 🏢 Official Company & Contact Directory
 
-Lead Hunter is proudly developed and maintained by **Digi Formation Limited**:
+Lead Hunter is proudly developed and maintained by **Digiformation LTD**:
 
 - **WhatsApp Support Hotline:** [+92 316 4467464 (03164467464)](https://wa.me/923164467464?text=Hello%20Digi%20Formation%2C%20I%20am%20using%20Lead%20Hunter)
 - **Corporate Email:** [digiformation.info@digiformation.co.uk](mailto:digiformation.info@digiformation.co.uk)
@@ -123,7 +123,7 @@ For every qualified business, the engine outputs a structured client opportunity
 
 ## 🛡️ Usage & License Terms
 
-**Digi Biz OS — Lead Hunter** is published under the **Digi Formation Limited Source-Available (Personal & Internal Use) License**.
+**Digi Biz OS — Lead Hunter** is published under the **Digiformation LTD Source-Available (Personal & Internal Use) License**.
 
 ### Allowed (Permitted):
 - You may download and inspect the complete source code.
@@ -134,10 +134,10 @@ For every qualified business, the engine outputs a structured client opportunity
 ### Not Allowed (Strictly Prohibited):
 - **No Commercial Resale:** You may not sell the software, sell modified versions, or charge for access to the codebase.
 - **No SaaS / Paid Hosting:** You may not host this software as a public commercial service, SaaS platform, or paid API.
-- **No White-Labeling:** You may not remove or obscure the Digi Formation Limited or Digi Biz OS branding, logos, or copyright notices.
+- **No White-Labeling:** You may not remove or obscure the Digiformation LTD or Digi Biz OS branding, logos, or copyright notices.
 - **No Rebranding:** You may not re-package or re-brand this tool under another company name.
 
-All copyright and intellectual property rights remain exclusively with **Digi Formation Limited**.
+All copyright and intellectual property rights remain exclusively with **Digiformation LTD**.
 
 ---
 

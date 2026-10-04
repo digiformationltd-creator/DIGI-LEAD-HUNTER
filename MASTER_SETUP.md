@@ -1,4 +1,4 @@
-# Digi Formation Limited — Lead Hunter
+# Digiformation LTD — Lead Hunter
 ## Canonical Master Setup Specification for Antigravity
 
 When an autonomous agent (such as Antigravity) opens this repository and receives the prompt:

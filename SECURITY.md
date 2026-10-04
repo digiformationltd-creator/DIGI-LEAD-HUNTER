@@ -6,7 +6,7 @@
 | 1.0.x   | :white_check_mark: |
 
 ## Reporting a Vulnerability
-If you discover any security issue, please contact Digi Formation Limited directly:
+If you discover any security issue, please contact Digiformation LTD directly:
 - **WhatsApp Security Desk:** +92 316 4467464
 - **Email:** digiformation.info@digiformation.co.uk
 - **Secondary:** info@digibizwiz.co.uk

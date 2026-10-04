@@ -1,6 +1,6 @@
-# Digi Formation Limited — Lead Hunter Setup Script (PowerShell)
+# Digiformation LTD — Lead Hunter Setup Script (PowerShell)
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "  Digi Formation Limited — Lead Hunter Setup (Windows)" -ForegroundColor Cyan
+Write-Host "  Digiformation LTD — Lead Hunter Setup (Windows)" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -8,7 +8,8 @@ $projectRoot = Split-Path -Parent $scriptDir
 
 # 1. Install Backend Requirements
 Write-Host "`n[1/4] Installing Python backend dependencies..." -ForegroundColor Yellow
-python -m pip install -r "$projectRootackendequirements.txt" pytest
+python -m pip install -r "$projectRootackend
+equirements.txt" pytest
 
 # 2. Build Frontend Control Center
 Write-Host "`n[2/4] Installing and building frontend packages..." -ForegroundColor Yellow

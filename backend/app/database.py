@@ -1,5 +1,5 @@
 ﻿"""
-Digi Formation Limited — Lead Hunter
+Digiformation LTD — Lead Hunter
 SQLite Database Initialization & Connection
 """
 import sqlite3

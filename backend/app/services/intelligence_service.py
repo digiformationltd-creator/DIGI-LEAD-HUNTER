@@ -1,5 +1,5 @@
 ﻿"""
-Digi Formation Limited — Lead Hunter
+Digiformation LTD — Lead Hunter
 Phase 04: Business & Asset Intelligence Engine
 """
 from datetime import datetime

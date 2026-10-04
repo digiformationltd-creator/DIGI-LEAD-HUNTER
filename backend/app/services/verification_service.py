@@ -1,5 +1,5 @@
 ﻿"""
-Digi Formation Limited — Lead Hunter
+Digiformation LTD — Lead Hunter
 Phase 02: Verification Engine (Identity, Website, WhatsApp & Shariah Compliance)
 """
 import re

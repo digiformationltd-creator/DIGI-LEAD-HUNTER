@@ -1,7 +1,7 @@
 # Packaging Agent (Phase 06)
 ## Purpose
 Assembles, validates, and packages all research deliverables into a standalone ZIP archive:
-- README.md (Attribution to Digi Formation Limited)
+- README.md (Attribution to Digiformation LTD)
 - WEBSITE_PLAN.md & WEBSITE_PLAN.html (Printable client pitch)
 - WEBSITE_BUILD_BRIEF.md
 - EVIDENCE_REPORT.md

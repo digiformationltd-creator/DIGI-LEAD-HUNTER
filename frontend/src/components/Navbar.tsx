@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenFindLeads, onNavigateAbout
               </span>
             </div>
             <p className="text-[11px] text-slate-400 font-medium">
-              by <strong className="text-slate-300">Digi Formation Limited</strong> • <span className="text-slate-500">Supported by Digi Biz OS</span>
+              by <strong className="text-slate-300">Digiformation LTD</strong> • <span className="text-slate-500">Sponsored by Digi Biz OS</span>
             </p>
           </div>
         </div>

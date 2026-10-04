@@ -84,7 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="rounded-2xl border border-slate-800/90 bg-[#0F172A]/90 p-3.5 text-xs text-slate-400 space-y-2">
         <div className="flex items-center space-x-2 text-slate-300 font-semibold">
           <Building2 className="h-4 w-4 text-blue-400" />
-          <span className="text-[11px] text-white">Digi Formation Limited</span>
+          <span className="text-[11px] text-white">Digiformation LTD</span>
         </div>
         <p className="text-[10px] leading-relaxed text-slate-400">
           Source-available personal & internal research engine. Commercial resale & white-labeling strictly prohibited.

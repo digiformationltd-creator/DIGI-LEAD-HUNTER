@@ -39,7 +39,7 @@ export const SettingsView: React.FC = () => {
         <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 text-xs text-slate-300 space-y-2 leading-relaxed">
           <p>
             <strong>Product:</strong> Digi Biz OS — Lead Hunter<br />
-            <strong>Owner:</strong> Digi Formation Limited<br />
+            <strong>Owner:</strong> Digiformation LTD<br />
             <strong>License:</strong> Source-Available (Personal & Internal Use)
           </p>
           <div className="flex items-center space-x-2 text-[11px] text-emerald-400 pt-2 border-t border-slate-800 font-medium">

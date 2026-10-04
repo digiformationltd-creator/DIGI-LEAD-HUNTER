@@ -1,5 +1,5 @@
 ﻿"""
-Digi Formation Limited — Lead Hunter
+Digiformation LTD — Lead Hunter
 Pydantic Models & Schemas
 """
 from typing import List, Optional, Dict, Any

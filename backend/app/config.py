@@ -1,5 +1,5 @@
 """
-Digi Formation Limited — Lead Hunter
+Digiformation LTD — Lead Hunter
 Application Configuration & Brand Constants
 """
 import os
@@ -19,12 +19,12 @@ for p in [DATABASE_DIR, PACKAGES_DIR, ASSETS_DIR, LOGS_DIR]:
 DATABASE_PATH = DATABASE_DIR / "lead_hunter.db"
 
 # Official Brand & Identity
-COMPANY_NAME = "Digi Formation Limited"
+COMPANY_NAME = "Digiformation LTD"
 PRODUCT_NAME = "DIGI LEAD HUNTER"
-ECOSYSTEM_SUPPORTER = "Digi Biz OS"
+SPONSORED_BY = "Digi Biz OS"
 VERSION = "1.1.0"
-AUTHOR = "Digi Formation Limited"
-COPYRIGHT = "© 2026 Digi Formation Limited. All Rights Reserved."
+AUTHOR = "Digiformation LTD"
+COPYRIGHT = "© 2026 Digiformation LTD. All Rights Reserved."
 
 # Official Contact Information
 SUPPORT_WHATSAPP = "+92 316 4467464"

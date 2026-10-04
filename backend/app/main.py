@@ -1,5 +1,5 @@
 ﻿"""
-Digi Formation Limited — Lead Hunter
+Digiformation LTD — Lead Hunter
 FastAPI Application Entry Point
 """
 import sys
@@ -27,7 +27,7 @@ init_db()
 
 app = FastAPI(
     title=PRODUCT_NAME,
-    description="Local Business Lead Intelligence, Website Opportunity Research & Packaging Platform by Digi Formation Limited.",
+    description="Local Business Lead Intelligence, Website Opportunity Research & Packaging Platform by Digiformation LTD.",
     version=VERSION
 )
 
@@ -73,7 +73,7 @@ def company_info():
         "website_secondary": WEBSITE_SECONDARY,
         "linktree": LINKTREE_URL,
         "branding_immutable": True,
-        "license": "Digi Formation Limited Source-Available (Personal & Internal Use) License"
+        "license": "Digiformation LTD Source-Available (Personal & Internal Use) License"
     }
 
 # If production frontend build exists, serve it
