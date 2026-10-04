@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="digi-lead-hunter-banner.jpg" alt="DIGI LEAD HUNTER" style="max-width: 468px; width: 100%; border-radius: 16px;" />
+  <img src="digi-lead-hunter-banner.jpg" alt="DIGI LEAD HUNTER" width="100%" />
 </p>
 
 # DIGI LEAD HUNTER
