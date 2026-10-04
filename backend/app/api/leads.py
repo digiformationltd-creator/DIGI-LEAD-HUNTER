@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 Leads API Endpoints
 """
@@ -16,7 +16,7 @@ def get_leads(
     website_status: Optional[str] = None,
     whatsapp_status: Optional[str] = None,
     search: Optional[str] = None,
-    limit: int = 50,
+    limit: int = 200,
     offset: int = 0
 ):
     conn = get_connection()

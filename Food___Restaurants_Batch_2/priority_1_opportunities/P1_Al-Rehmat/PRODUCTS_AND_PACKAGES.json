@@ -1,0 +1,38 @@
+{
+  "business_name": "Al-Rehmat",
+  "category": "Food & Restaurants",
+  "location": "Lahore, Pakistan",
+  "whatsapp_order_channel": "923009693304",
+  "packages_and_pricing": [
+    {
+      "item_name": "Signature Platter & House Special",
+      "category": "Main Courses",
+      "price": "PKR 1,850 / $12.00",
+      "description": "Handcrafted signature chef special with fresh ingredients."
+    },
+    {
+      "item_name": "Family Feast Combo (4-6 Persons)",
+      "category": "Combos & Deals",
+      "price": "PKR 4,500 / $28.00",
+      "description": "Assorted grill, sides, beverages, and dessert basket."
+    },
+    {
+      "item_name": "Express Lunch Box",
+      "category": "Daily Value",
+      "price": "PKR 850 / $5.50",
+      "description": "Quick corporate lunch combo with soft drink."
+    },
+    {
+      "item_name": "Artisan Beverage & Mocktails",
+      "category": "Beverages",
+      "price": "PKR 450 / $3.00",
+      "description": "Freshly shaken seasonal refreshments."
+    },
+    {
+      "item_name": "Dessert Delight Platter",
+      "category": "Desserts",
+      "price": "PKR 650 / $4.20",
+      "description": "Traditional and continental confectioneries."
+    }
+  ]
+}

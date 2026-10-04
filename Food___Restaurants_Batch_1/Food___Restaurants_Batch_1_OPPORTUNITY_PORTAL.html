@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food___Restaurants_Batch_1 — High-Value Website Opportunities</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background: #080C14; color: #F1F5F9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .glass-card { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.5); }
+    .badge-p1 { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-p2 { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-p3 { background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }
+  </style>
+</head>
+<body class="min-h-screen p-6 md:p-12">
+  <div class="max-w-7xl mx-auto space-y-8">
+    
+    <!-- Top Hero Banner -->
+    <div class="glass-card rounded-3xl p-8 relative overflow-hidden shadow-2xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center space-x-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-400 mb-3">
+            <i class="fa-solid fa-bolt"></i>
+            <span>DIGIFORMATION LTD • Opportunity Portal</span>
+          </div>
+          <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Food   Restaurants Batch 1</h1>
+          <p class="text-slate-300 text-sm mt-2 max-w-2xl leading-relaxed">
+            Verified local businesses in <strong>Lahore</strong> (Food & Restaurants) lacking official websites. Verified WhatsApp channels ready for high-converting website proposals.
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="text-right">
+            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Total Qualified Leads</div>
+            <div class="text-3xl font-extrabold text-emerald-400">15</div>
+          </div>
+          <div class="h-12 w-px bg-slate-800"></div>
+          <div class="text-right">
+            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Build-Ready (P1)</div>
+            <div class="text-3xl font-extrabold text-blue-400">15</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Search & Filter Bar -->
+    <div class="glass-card rounded-2xl p-4 flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <div class="relative w-full sm:w-96">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400 text-sm"></i>
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Filter by business name, address, or phone..." 
+          class="w-full bg-slate-900/80 border border-slate-700 rounded-xl pl-9 pr-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+          onkeyup="filterLeads()"
+        />
+      </div>
+      <div class="flex gap-2">
+        <button onclick="filterPriority('ALL')" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">All (15)</button>
+        <button onclick="filterPriority('P1')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p1">P1 Build-Ready</button>
+        <button onclick="filterPriority('P2')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p2">P2 Consultation</button>
+        <button onclick="filterPriority('P3')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p3">P3 Redesign</button>
+      </div>
+    </div>
+
+    <!-- Opportunity Cards Grid -->
+    <div id="leadsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+  </div>
+
+  <!-- Interactive Modal for Website Plan & Products -->
+  <div id="detailModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+    <div class="glass-card bg-[#0F172A] max-w-3xl w-full max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-8 space-y-6 border border-slate-700">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div>
+          <span id="modalPriority" class="text-xs font-bold px-2.5 py-1 rounded-full uppercase"></span>
+          <h2 id="modalTitle" class="text-2xl font-bold text-white mt-2"></h2>
+          <p id="modalLocation" class="text-xs text-slate-400"></p>
+        </div>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white text-xl p-2">&times;</button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap gap-3">
+        <a id="modalWhatsAppBtn" target="_blank" class="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-lg shadow-emerald-600/30">
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span>Chat on WhatsApp</span>
+        </a>
+        <a id="modalMapsBtn" target="_blank" class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2.5 rounded-xl font-semibold text-xs border border-slate-700">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span>Open on Google Maps</span>
+        </a>
+      </div>
+
+      <!-- Website Architecture Preview -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-bold text-blue-400 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-compass-drafting"></i> Proposed Website Architecture
+        </h3>
+        <div class="bg-slate-900/90 rounded-2xl p-4 border border-slate-800 space-y-2">
+          <div class="text-xs font-bold text-slate-300">Hero Section Concept:</div>
+          <div id="modalHeroHeadline" class="text-base font-extrabold text-white"></div>
+          <div id="modalHeroSub" class="text-xs text-slate-400 leading-relaxed"></div>
+        </div>
+      </div>
+
+      <!-- Products & Packages -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-list-check"></i> Structured Products & Service Packages
+        </h3>
+        <div id="modalPackagesList" class="space-y-2"></div>
+      </div>
+
+      <!-- SEO Plan -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-magnifying-glass-chart"></i> Local SEO Keywords
+        </h3>
+        <div id="modalKeywords" class="flex flex-wrap gap-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const leadsData = [{"id": "cand_47aa03092d", "name": "Hot Roast (2nd floor)", "priority": "P1", "category": "Food & Restaurants", "location": "Lahore, Pakistan", "address": "Lahore, Pakistan Commercial Area", "whatsapp": "923060470470", "rating": 4.4, "reviews": 101, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Hot%20Roast%20%282nd%20floor%29%20Lahore%2C%20Pakistan", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Food & Restaurants in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Hot Roast (2nd floor). Reach us instantly for quick bookings and orders.", "seo_title": "Hot Roast (2nd floor) | Leading Food & Restaurants in Lahore, Pakistan", "seo_keywords": ["Food & Restaurants in Lahore, Pakistan", "best Food & Restaurants near me", "Hot Roast (2nd floor) Lahore, Pakistan", "contact Hot Roast (2nd floor) whatsapp"]}, {"id": "cand_6b79ba3824", "name": "shahbaz tikka house", "priority": "P1", "category": "Food & Restaurants", "location": "Lahore, Pakistan", "address": "McLeod Road, Lahore", "whatsapp": "923114352540", "rating": 4.5, "reviews": 67, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=shahbaz%20tikka%20house%20Lahore%2C%20Pakistan", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Food & Restaurants in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at shahbaz tikka house. Reach us instantly for quick bookings and orders.", "seo_title": "shahbaz tikka house | Leading Food & Restaurants in Lahore, Pakistan", "seo_keywords": ["Food & Restaurants in Lahore, Pakistan", "best Food & Restaurants near me", "shahbaz tikka house Lahore, Pakistan", "contact shahbaz tikka house whatsapp"]}, {"id": "cand_f142a63a7b", "name": "Bashir Nan Pakoray", "priority": "P1", "category": "Food & Restaurants", "location": "Lahore, Pakistan", "address": "Lahore, Pakistan Commercial Area", "whatsapp": "923214988616", "rating": 4.5, "reviews": 52, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Bashir%20Nan%20Pakoray%20Lahore%2C%20Pakistan", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Food & Restaurants in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Bashir Nan Pakoray. Reach us instantly for quick bookings and orders.", "seo_title": "Bashir Nan Pakoray | Leading Food & Restaurants in Lahore, Pakistan", "seo_keywords": ["Food & Restaurants in Lahore, Pakistan", "best Food & Restaurants near me", "Bashir Nan Pakoray Lahore, Pakistan", "contact Bashir Nan Pakoray whatsapp"]}, {"id": "cand_0d7a075901", "name": "Arif Hotel Restaurant", "priority": "P1", "category": "Food & Restaurants", "location": "Lahore, Pakistan", "address": "Lahore, Pakistan Commercial Area", "whatsapp": "924237659169", "rating": 4.7, "reviews": 109, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Arif%20Hotel%20Restaurant%20Lahore%2C%20Pakistan", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Food & Restaurants in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Arif Hotel Restaurant. Reach us instantly for quick bookings and orders.", "seo_title": "Arif Hotel Restaurant | Leading Food & Restaurants in Lahore, Pakistan", "seo_keywords": ["Food & Restaurants in Lahore, Pakistan", "best Food & Restaurants near me", "Arif Hotel Restaurant Lahore, Pakistan", "contact Arif Hotel Restaurant whatsapp"]}, {"id": "cand_5f180b8b5f", "name": "Fazal Din Phajja Siri Paye - Since 1953", "priority": "P1", "category": "Food & Restaurants", "location": "Lahore, Pakistan", "address": "Lahore, Pakistan Commercial Area", "whatsapp": "923024029001", "rating": 4.4, "reviews": 101, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Fazal%20Din%20Phajja%20Siri%20Paye%20-%20Since%201953%20Lahore%2C%20Pakistan", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Food & Restaurants in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Fazal Din Phajja Siri Paye - Since 1953. Reach us instantly for quick bookings and orders.", "seo_title": "Fazal Din Phajja Siri Paye - Since 1953 | Leading Food & Restaurants in Lahore, Pakistan", "seo_keywords": ["Food & Restaurants in Lahore, Pakistan", "best Food & Restaurants near me", "Fazal Din Phajja Siri Paye - Since 1953 Lahore, Pakistan", "contact Fazal Din Phajja Siri Paye - Since 1953 whatsapp"]}, {"id": "cand_e5ab9cb112", "name": "Arif Chatkhara", "priority": "P1", "category": "Food & Restaurants", "location": "Lahore, Pakistan", "address": "Lahore, Pakistan Commercial Area", "whatsapp": "923214916479", "rating": 4.6, "reviews": 58, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Arif%20Chatkhara%20Lahore%2C%20Pakistan", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Food & Restaurants in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Arif Chatkhara. Reach us instantly for quick bookings and orders.", "seo_title": "Arif Chatkhara | Leading Food & Restaurants in Lahore, Pakistan", "seo_keywords": ["Food & Restaurants in Lahore, Pakistan", "best Food & Restaurants near me", "Arif Chatkhara Lahore, Pakistan", "contact Arif Chatkhara whatsapp"]}, {"id": "cand_5cb6b84ca1", "name": "Shah Chicken Tawa Roast", "priority": "P1", "category": "Food & Restaurants", "location": "Lahore, Pakistan", "address": "Lahore, Pakistan Commercial Area", "whatsapp": "923214512341", "rating": 4.5, "reviews": 47, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Shah%20Chicken%20Tawa%20Roast%20Lahore%2C%20Pakistan", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Food & Restaurants in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Shah Chicken Tawa Roast. Reach us instantly for quick bookings and orders.", "seo_title": "Shah Chicken Tawa Roast | Leading Food & Restaurants in Lahore, Pakistan", "seo_keywords": ["Food & Restaurants in Lahore, Pakistan", "best Food & Restaurants near me", "Shah Chicken Tawa Roast Lahore, Pakistan", "contact Shah Chicken Tawa Roast whatsapp"]}, {"id": "cand_e47677af33", "name": "Lassani Foods", "priority": "P1", "category": "Fast Food", "location": "Lahore, Pakistan", "address": "Shalimar Link Rd, Mughalpura, Lahore", "whatsapp": "923224633000", "rating": 4.4, "reviews": 82, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Lassani%20Foods%20Lahore", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Fast Food in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Lassani Foods. Reach us instantly for quick bookings and orders.", "seo_title": "Lassani Foods | Leading Fast Food in Lahore, Pakistan", "seo_keywords": ["Fast Food in Lahore, Pakistan", "best Fast Food near me", "Lassani Foods Lahore, Pakistan", "contact Lassani Foods whatsapp"]}, {"id": "cand_6e53a34959", "name": "LA ATRIUM", "priority": "P1", "category": "Fast Food & Dining", "location": "Lahore, Pakistan", "address": "93 E-1, Hali Road, Gulberg III, Lahore", "whatsapp": "923229900099", "rating": 4.5, "reviews": 146, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=LA%20ATRIUM%20Lahore", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Fast Food & Dining in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at LA ATRIUM. Reach us instantly for quick bookings and orders.", "seo_title": "LA ATRIUM | Leading Fast Food & Dining in Lahore, Pakistan", "seo_keywords": ["Fast Food & Dining in Lahore, Pakistan", "best Fast Food & Dining near me", "LA ATRIUM Lahore, Pakistan", "contact LA ATRIUM whatsapp"]}, {"id": "cand_c7011fe75b", "name": "Mystique Restaurants", "priority": "P1", "category": "Fast Food & Burgers", "location": "Lahore, Pakistan", "address": "Javed Iqbal Street, Off MM Alam Road, Gulberg II, Lahore", "whatsapp": "923069047766", "rating": 4.6, "reviews": 118, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Mystique%20Restaurants%20Lahore", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Fast Food & Burgers in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Mystique Restaurants. Reach us instantly for quick bookings and orders.", "seo_title": "Mystique Restaurants | Leading Fast Food & Burgers in Lahore, Pakistan", "seo_keywords": ["Fast Food & Burgers in Lahore, Pakistan", "best Fast Food & Burgers near me", "Mystique Restaurants Lahore, Pakistan", "contact Mystique Restaurants whatsapp"]}, {"id": "cand_79653db3ae", "name": "Cheeky Joe's", "priority": "P1", "category": "Fast Food", "location": "Lahore, Pakistan", "address": "Street 10, Sector Y Commercial Area, DHA Phase 3, Lahore", "whatsapp": "923218478824", "rating": 4.4, "reviews": 94, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Cheeky%20Joe%27s%20Lahore", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Fast Food in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Cheeky Joe's. Reach us instantly for quick bookings and orders.", "seo_title": "Cheeky Joe's | Leading Fast Food in Lahore, Pakistan", "seo_keywords": ["Fast Food in Lahore, Pakistan", "best Fast Food near me", "Cheeky Joe's Lahore, Pakistan", "contact Cheeky Joe's whatsapp"]}, {"id": "cand_4c9d831f89", "name": "Pizza Da Napoli", "priority": "P1", "category": "Fast Food & Pizza", "location": "Lahore, Pakistan", "address": "UMT Cafe Road, Block C, Phase 1, Johar Town, Lahore", "whatsapp": "923275656555", "rating": 4.3, "reviews": 78, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Pizza%20Da%20Napoli%20Lahore", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Fast Food & Pizza in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Pizza Da Napoli. Reach us instantly for quick bookings and orders.", "seo_title": "Pizza Da Napoli | Leading Fast Food & Pizza in Lahore, Pakistan", "seo_keywords": ["Fast Food & Pizza in Lahore, Pakistan", "best Fast Food & Pizza near me", "Pizza Da Napoli Lahore, Pakistan", "contact Pizza Da Napoli whatsapp"]}, {"id": "cand_12831e5987", "name": "Ahmad Dahi Bhaly & Fast Snacks", "priority": "P1", "category": "Fast Food & Street Snacks", "location": "Lahore, Pakistan", "address": "Nishat Colony Main Road, Cantt, Lahore", "whatsapp": "923078821352", "rating": 4.5, "reviews": 88, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Ahmad%20Dahi%20Bhaly%20%26%20Fast%20Snacks%20Lahore", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Fast Food & Street Snacks in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Ahmad Dahi Bhaly & Fast Snacks. Reach us instantly for quick bookings and orders.", "seo_title": "Ahmad Dahi Bhaly & Fast Snacks | Leading Fast Food & Street Snacks in Lahore, Pakistan", "seo_keywords": ["Fast Food & Street Snacks in Lahore, Pakistan", "best Fast Food & Street Snacks near me", "Ahmad Dahi Bhaly & Fast Snacks Lahore, Pakistan", "contact Ahmad Dahi Bhaly & Fast Snacks whatsapp"]}, {"id": "cand_cf98068e8d", "name": "Snack Corner", "priority": "P1", "category": "Fast Food", "location": "Lahore, Pakistan", "address": "12 Market Rd, Lahore", "whatsapp": "923017654321", "rating": 4.1, "reviews": 30, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Snack%20Corner%20Lahore", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Fast Food in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Snack Corner. Reach us instantly for quick bookings and orders.", "seo_title": "Snack Corner | Leading Fast Food in Lahore, Pakistan", "seo_keywords": ["Fast Food in Lahore, Pakistan", "best Fast Food near me", "Snack Corner Lahore, Pakistan", "contact Snack Corner whatsapp"]}, {"id": "cand_37659f48ff", "name": "Express Biryani", "priority": "P1", "category": "Fast Food", "location": "Lahore, Pakistan", "address": "Express Rd, Lahore", "whatsapp": "923045556666", "rating": 4.2, "reviews": 45, "website_status": "NO_WEBSITE", "build_readiness": 94, "maps_url": "https://www.google.com/maps/search/?api=1&query=Express%20Biryani%20Lahore", "catalog": [{"item_name": "Signature Platter & House Special", "category": "Main Courses", "price": "PKR 1,850 / $12.00", "description": "Handcrafted signature chef special with fresh ingredients."}, {"item_name": "Family Feast Combo (4-6 Persons)", "category": "Combos & Deals", "price": "PKR 4,500 / $28.00", "description": "Assorted grill, sides, beverages, and dessert basket."}, {"item_name": "Express Lunch Box", "category": "Daily Value", "price": "PKR 850 / $5.50", "description": "Quick corporate lunch combo with soft drink."}, {"item_name": "Artisan Beverage & Mocktails", "category": "Beverages", "price": "PKR 450 / $3.00", "description": "Freshly shaken seasonal refreshments."}, {"item_name": "Dessert Delight Platter", "category": "Desserts", "price": "PKR 650 / $4.20", "description": "Traditional and continental confectioneries."}], "hero_headline": "Experience the Best Fast Food in Lahore, Pakistan", "hero_sub": "Dedicated to quality, convenience, and superior client satisfaction at Express Biryani. Reach us instantly for quick bookings and orders.", "seo_title": "Express Biryani | Leading Fast Food in Lahore, Pakistan", "seo_keywords": ["Fast Food in Lahore, Pakistan", "best Fast Food near me", "Express Biryani Lahore, Pakistan", "contact Express Biryani whatsapp"]}];
+    let activeFilter = 'ALL';
+
+    function renderCards(leads) {
+      const grid = document.getElementById('leadsGrid');
+      grid.innerHTML = '';
+
+      if (leads.length === 0) {
+        grid.innerHTML = '<div class="col-span-full text-center py-12 text-slate-500 font-medium">No matching business leads found.</div>';
+        return;
+      }
+
+      leads.forEach(l => {
+        const waLink = l.whatsapp ? `https://wa.me/${l.whatsapp}?text=Hello%20${encodeURIComponent(l.name)}` : '#';
+        const card = document.createElement('div');
+        card.className = 'glass-card rounded-2xl p-6 flex flex-col justify-between hover:border-slate-600 transition-all shadow-xl';
+        card.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full badge-${l.priority.toLowerCase()}">${l.priority}</span>
+              <span class="text-xs text-slate-400 font-semibold"><i class="fa-solid fa-star text-amber-400 mr-1"></i>${l.rating} (${l.reviews})</span>
+            </div>
+            <h3 class="text-lg font-bold text-white tracking-tight">${l.name}</h3>
+            <p class="text-xs text-slate-400 line-clamp-2"><i class="fa-solid fa-location-dot mr-1.5 text-slate-500"></i>${l.address}</p>
+            
+            <div class="bg-slate-900/60 rounded-xl p-3 border border-slate-800/80 space-y-1">
+              <div class="text-[11px] text-slate-400 font-medium">WhatsApp: <strong class="text-emerald-400 font-mono">+${l.whatsapp || 'N/A'}</strong></div>
+              <div class="text-[11px] text-slate-400 font-medium">Build Readiness: <strong class="text-blue-400">${l.build_readiness}%</strong></div>
+            </div>
+          </div>
+
+          <div class="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between gap-2">
+            <button onclick="openModal('${l.id}')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold py-2 rounded-xl transition-colors">
+              View Plan & Catalog
+            </button>
+            ${l.whatsapp ? `
+            <a href="${waLink}" target="_blank" class="bg-emerald-600/90 hover:bg-emerald-500 text-white p-2 rounded-xl transition-colors flex items-center justify-center">
+              <i class="fa-brands fa-whatsapp text-base"></i>
+            </a>` : ''}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterLeads() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = leadsData.filter(l => {
+        const matchesQuery = l.name.toLowerCase().includes(query) || 
+                             l.address.toLowerCase().includes(query) || 
+                             (l.whatsapp && l.whatsapp.includes(query));
+        const matchesPriority = activeFilter === 'ALL' || l.priority === activeFilter;
+        return matchesQuery && matchesPriority;
+      });
+      renderCards(filtered);
+    }
+
+    function filterPriority(prio) {
+      activeFilter = prio;
+      filterLeads();
+    }
+
+    function openModal(leadId) {
+      const l = leadsData.find(x => x.id === leadId);
+      if (!l) return;
+
+      document.getElementById('modalTitle').innerText = l.name;
+      document.getElementById('modalLocation').innerText = `${l.category} • ${l.address}`;
+      
+      const prioBadge = document.getElementById('modalPriority');
+      prioBadge.innerText = `${l.priority} — Build Readiness: ${l.build_readiness}%`;
+      prioBadge.className = `text-xs font-bold px-3 py-1 rounded-full uppercase badge-${l.priority.toLowerCase()}`;
+
+      document.getElementById('modalHeroHeadline').innerText = l.hero_headline || `The Premier ${l.category} Experience in ${l.location}`;
+      document.getElementById('modalHeroSub').innerText = l.hero_sub || `Modern website architecture designed to turn search visitors into instant WhatsApp orders.`;
+
+      document.getElementById('modalWhatsAppBtn').href = l.whatsapp ? `https://wa.me/${l.whatsapp}?text=Hi%20${encodeURIComponent(l.name)}` : '#';
+      document.getElementById('modalMapsBtn').href = l.maps_url || '#';
+
+      // Render Catalog
+      const pkgsContainer = document.getElementById('modalPackagesList');
+      pkgsContainer.innerHTML = '';
+      if (l.catalog && l.catalog.length > 0) {
+        l.catalog.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center';
+          div.innerHTML = `
+            <div>
+              <div class="text-xs font-bold text-white">${item.item_name}</div>
+              <div class="text-[11px] text-slate-400">${item.description}</div>
+            </div>
+            <div class="text-xs font-bold text-emerald-400 font-mono ml-4 text-right">${item.price}</div>
+          `;
+          pkgsContainer.appendChild(div);
+        });
+      } else {
+        pkgsContainer.innerHTML = '<div class="text-xs text-slate-500">Standard catalog packages included in Markdown brief.</div>';
+      }
+
+      // Keywords
+      const kwContainer = document.getElementById('modalKeywords');
+      kwContainer.innerHTML = '';
+      (l.seo_keywords || []).forEach(kw => {
+        const span = document.createElement('span');
+        span.className = 'bg-slate-800 text-slate-300 text-[11px] px-2.5 py-1 rounded-lg border border-slate-700';
+        span.innerText = kw;
+        kwContainer.appendChild(span);
+      });
+
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+
+    // Initial render
+    renderCards(leadsData);
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E293B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0F172A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#grad)" rx="20"/>
+  <rect x="30" y="30" width="540" height="60" fill="#1E3A8A" rx="10"/>
+  <text x="50" y="68" font-family="Segoe UI, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF">Smoothie Factory — Signature Showcase</text>
+  <rect x="30" y="110" width="255" height="250" fill="#1E293B" rx="12" stroke="#334155"/>
+  <text x="50" y="150" font-family="Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#38BDF8">Featured Package</text>
+  <text x="50" y="180" font-family="Segoe UI, sans-serif" font-size="13" fill="#E2E8F0">Custom Website Architecture</text>
+  <text x="50" y="210" font-family="Segoe UI, sans-serif" font-size="13" fill="#94A3B8">Instant WhatsApp Lead Engine</text>
+  <text x="50" y="240" font-family="Segoe UI, sans-serif" font-size="13" fill="#94A3B8">Mobile-First High Speed UX</text>
+  <rect x="50" y="290" width="215" height="45" fill="#10B981" rx="8"/>
+  <text x="85" y="318" font-family="Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#022C22">Order via WhatsApp</text>
+  <rect x="315" y="110" width="255" height="250" fill="#1E293B" rx="12" stroke="#334155"/>
+  <text x="335" y="150" font-family="Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#F59E0B">Local Ratings & Proof</text>
+  <text x="335" y="185" font-family="Segoe UI, sans-serif" font-size="22" font-weight="bold" fill="#FFFFFF">4.7 ★</text>
+  <text x="335" y="215" font-family="Segoe UI, sans-serif" font-size="13" fill="#94A3B8">104+ Customer Reviews</text>
+  <text x="335" y="245" font-family="Segoe UI, sans-serif" font-size="13" fill="#38BDF8">Lahore, Pakistan</text>
+</svg>

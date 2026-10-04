@@ -27,7 +27,7 @@ export const App: React.FC = () => {
   const [activeRun, setActiveRun] = useState<RunDetail | null>(null);
 
   const fetchLeads = () => {
-    fetch('/api/leads')
+    fetch('/api/leads?limit=250')
       .then(res => res.json())
       .then(data => setLeads(data))
       .catch(err => console.error("Error fetching leads:", err));
