@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 Phase 02: Verification Engine (Identity, Website, WhatsApp & Shariah Compliance)
 """
@@ -34,12 +34,15 @@ class VerificationService:
         })
 
         # 3. Website Verification
-        raw_web = candidate.get("website_url")
+        raw_web = candidate.get("website_url", "")
         website_status = "NO_WEBSITE"
         website_audit = {}
 
-        if not raw_web or raw_web.strip() == "" or "none" in raw_web.lower():
+        is_social_only = bool(raw_web and any(soc in raw_web.lower() for soc in ["facebook.com", "instagram.com", "tiktok.com", "wa.me", "whatsapp.com", "foodpanda.pk"]))
+
+        if not raw_web or raw_web.strip() == "" or "none" in raw_web.lower() or is_social_only:
             website_status = "NO_WEBSITE"
+            social_note = f" (Social media profile found: {raw_web})" if is_social_only else ""
             evidence_list.append({
                 "claim": "Official Website Status",
                 "value": "NO_WEBSITE",
@@ -47,7 +50,7 @@ class VerificationService:
                 "source": "Google Maps & Public Web Verification",
                 "source_url": candidate.get("google_maps_url"),
                 "observed_at": now_str,
-                "notes": "No official website link registered on Google Maps listing or direct local web records."
+                "notes": f"No official standalone website registered. Prime prospect for custom website deployment{social_note}."
             })
         else:
             website_status, website_audit = self._audit_website(raw_web)

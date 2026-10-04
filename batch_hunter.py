@@ -699,6 +699,23 @@ class BatchLeadHunter:
 
 
 if __name__ == "__main__":
-    # Test batch runner
-    hunter = BatchLeadHunter()
-    hunter.execute_hunt(category="Restaurant", location="Lahore", country="Pakistan", target_count=5)
+    import argparse
+    parser = argparse.ArgumentParser(description="DIGIFORMATION LTD — Autonomous Lead Hunter Batch Pipeline")
+    parser.add_argument("--category", default="Fast Food", help="Business category / niche (e.g. 'Fast Food', 'Restaurant')")
+    parser.add_argument("--location", default="Lahore", help="Target city or area (e.g. 'Lahore')")
+    parser.add_argument("--country", default="Pakistan", help="Target country")
+    parser.add_argument("--radius", type=int, default=5, help="Radius in kilometers (e.g. 5, 50, 100)")
+    parser.add_argument("--count", type=int, default=5, help="Number of target leads to extract")
+    parser.add_argument("--batch", default=None, help="Batch name (e.g. Fast_Food_5KM_Batch_1)")
+    parser.add_argument("--output-dir", default=None, help="Base target output directory")
+    args = parser.parse_args()
+
+    hunter = BatchLeadHunter(target_folder=args.output_dir)
+    hunter.execute_hunt(
+        category=args.category,
+        location=args.location,
+        country=args.country,
+        radius_km=args.radius,
+        target_count=args.count,
+        batch_name=args.batch
+    )
