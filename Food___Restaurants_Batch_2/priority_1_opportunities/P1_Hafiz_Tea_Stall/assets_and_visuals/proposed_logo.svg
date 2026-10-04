@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200">
-  <rect width="400" height="200" fill="#0B132B" rx="16"/>
-  <circle cx="90" cy="100" r="50" fill="#2563EB" opacity="0.9"/>
-  <circle cx="105" cy="95" r="40" fill="#38BDF8" opacity="0.8"/>
-  <text x="160" y="95" font-family="Segoe UI, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF">Hafiz Tea Stall</text>
-  <text x="160" y="125" font-family="Segoe UI, sans-serif" font-size="14" fill="#94A3B8">FOOD & RESTAURANTS</text>
-  <text x="160" y="150" font-family="Segoe UI, sans-serif" font-size="12" fill="#34D399">VERIFIED WHATSAPP ACTIVE</text>
-</svg>

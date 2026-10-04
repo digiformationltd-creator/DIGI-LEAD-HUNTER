@@ -21,6 +21,10 @@ data/database/*.db
 data/packages/*.zip
 data/packages/*_PACK/
 data/logs/*.log
+data/revalidation_audit_summary.json
+backend/app/services/processed_leads.json
+*_Batch_*/
+Food___Restaurants_Batch_*/
 *.log
 
 # Sensitive environment variables
