@@ -8,7 +8,7 @@ interface FindLeadsModalProps {
 }
 
 export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose, onStartRun }) => {
-  const [category, setCategory] = useState('Halal Restaurants & Dining');
+  const [category, setCategory] = useState('Local Businesses & Services');
   const [country, setCountry] = useState('Pakistan');
   const [location, setLocation] = useState('Lahore');
   const [radius, setRadius] = useState<number>(50);
@@ -59,8 +59,8 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
               <ShieldCheck className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Start Halal Lead Hunt</h3>
-              <p className="text-[11px] text-emerald-400 font-medium">100% Shariah-Compliant Discovery Active</p>
+              <h3 className="text-base font-bold text-white">Start Lead Hunt</h3>
+              <p className="text-[11px] text-emerald-400 font-medium">Compliance & Quality Discovery Active</p>
             </div>
           </div>
           <button onClick={onClose} className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white">
@@ -72,14 +72,14 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
           <div>
             <label className="block font-semibold text-slate-300 mb-1 flex items-center space-x-1.5">
               <Tag className="h-3.5 w-3.5 text-blue-400" />
-              <span>Permissible Category (حلال کیٹیگری)</span>
+              <span>Target Category</span>
             </label>
             <input
               type="text"
               required
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              placeholder="e.g. Halal Food, Clinics, Dentists, Boutiques, Auto Workshops"
+              placeholder="e.g. Restaurants, Clinics, Dentists, Boutiques, Auto Workshops"
               className="w-full rounded-xl border border-slate-800 bg-slate-900/90 px-3.5 py-2.5 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none"
             />
           </div>
@@ -88,7 +88,7 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
             <div>
               <label className="block font-semibold text-slate-300 mb-1 flex items-center space-x-1">
                 <Globe className="h-3.5 w-3.5 text-sky-400" />
-                <span>Country (ملک)</span>
+                <span>Country</span>
               </label>
               <select
                 value={country}
@@ -108,7 +108,7 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
             <div>
               <label className="block font-semibold text-slate-300 mb-1 flex items-center space-x-1">
                 <MapPin className="h-3.5 w-3.5 text-emerald-400" />
-                <span>City (شہر)</span>
+                <span>City</span>
               </label>
               <input
                 type="text"
@@ -122,7 +122,7 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
           </div>
 
           <div>
-            <label className="block font-semibold text-slate-300 mb-1.5">Radius & Scope (دائرہ کار)</label>
+            <label className="block font-semibold text-slate-300 mb-1.5">Radius & Scope</label>
             <div className="grid grid-cols-3 gap-2 text-center">
               {radiusTiers.map((tier) => (
                 <button
@@ -147,7 +147,7 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
               className="flex w-full items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 py-3 font-bold text-white shadow-lg shadow-blue-600/25 transition-all text-sm"
             >
               <Play className="h-4 w-4 fill-white" />
-              <span>RUN HALAL LEAD HUNT</span>
+              <span>RUN LEAD HUNT</span>
             </button>
           </div>
         </form>

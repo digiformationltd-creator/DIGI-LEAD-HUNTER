@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 Phase 07: End-to-End Runtime Orchestrator
 """
@@ -118,7 +118,7 @@ class Orchestrator:
                         p3_count += 1
                     qualified_count += 1
 
-                    self._log_event(run_id, "PACKAGING", f"Generated {priority} Halal Opportunity Pack for: {verified_lead['business_name']}")
+                    self._log_event(run_id, "PACKAGING", f"Generated {priority} Verified Opportunity Pack for: {verified_lead['business_name']}")
 
                 except Exception as lead_err:
                     failed_count += 1

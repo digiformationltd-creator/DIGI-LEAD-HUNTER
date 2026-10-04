@@ -42,15 +42,15 @@ class VerificationService:
             "notes": f"Verified physical presence in {candidate.get('location')} under category {candidate.get('category')} [ProofHash: {identity_hash}]."
         })
 
-        # 2. Shariah Compliance Verification
+        # 2. Compliance & Ethical Standard Verification
         evidence_list.append({
-            "claim": "Shariah Compliance & Ethical Standard",
-            "value": "PASSED (100% Halal / Ethical)",
+            "claim": "Business Compliance & Ethical Standard",
+            "value": "PASSED (Verified Ethical Standard)",
             "evidence_level": "E1_DIRECT",
-            "source": "DIGIFORMATION LTD Shariah & Ethical Filter Engine",
+            "source": "DIGIFORMATION LTD Compliance & Ethical Verification Engine",
             "source_url": None,
             "observed_at": now_str,
-            "notes": "Verified business category and operational description are free from interest (riba), gambling, intoxicants, and prohibited trade."
+            "notes": "Verified business category and operational description comply with strict ethical trade standards."
         })
 
         # 3. Telephony & WhatsApp Channel Verification (libphonenumber)
