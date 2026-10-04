@@ -32,18 +32,6 @@ Instead of scraping raw phone numbers, Lead Hunter:
 
 ---
 
-## 🏢 Official Company & Contact Directory
-
-Lead Hunter is proudly developed and maintained by **DIGIFORMATION LTD**:
-
-- **WhatsApp Support Hotline:** [+92 316 4467464 (03164467464)](https://wa.me/923164467464?text=Hello%20DIGIFORMATION%20LTD%2C%20I%20am%20using%20Lead%20Hunter)
-- **Corporate Emails:** [info@digiformation.co.uk](mailto:info@digiformation.co.uk) • [info@digibizos.co.uk](mailto:info@digibizos.co.uk)
-- **DIGIFORMATION LTD UK:** [https://www.digiformation.co.uk/](https://www.digiformation.co.uk/)
-- **Digi Biz OS Ecosystem:** [https://www.digibizos.co.uk/](https://www.digibizos.co.uk/)
-- **Official Linktree:** [https://linktr.ee/digiformationltd](https://linktr.ee/digiformationltd)
-
----
-
 ## ⚡ Autonomous Antigravity Prompt Execution (No UI Needed)
 
 This repository is optimized for direct **Antigravity AI Agent prompt-based execution**. When you give Antigravity a command like:
@@ -180,7 +168,12 @@ All copyright and intellectual property rights remain exclusively with **DIGIFOR
 
 ---
 
-## 💬 Direct Support Desk
-Have questions, need custom lead filters, or want enterprise consulting?
-- **WhatsApp:** [+92 316 4467464](https://wa.me/923164467464)
-- **Email:** [info@digiformation.co.uk](mailto:info@digiformation.co.uk)
+## 🏢 Official Company & Contact Directory
+
+Lead Hunter is proudly developed and maintained by **DIGIFORMATION LTD**:
+
+- **WhatsApp Support Hotline:** [+92 316 4467464 (03164467464)](https://wa.me/923164467464?text=Hello%20DIGIFORMATION%20LTD%2C%20I%20am%20using%20Lead%20Hunter)
+- **Corporate Emails:** [info@digiformation.co.uk](mailto:info@digiformation.co.uk) • [info@digibizos.co.uk](mailto:info@digibizos.co.uk)
+- **DIGIFORMATION LTD UK:** [https://www.digiformation.co.uk/](https://www.digiformation.co.uk/)
+- **Digi Biz OS Ecosystem:** [https://www.digibizos.co.uk/](https://www.digibizos.co.uk/)
+- **Official Linktree:** [https://linktr.ee/digiformationltd](https://linktr.ee/digiformationltd)
