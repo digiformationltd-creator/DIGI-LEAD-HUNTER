@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 FastAPI Application Entry Point
 """
@@ -50,6 +50,7 @@ app.include_router(analytics_router)
 if PACKAGES_DIR.exists():
     app.mount("/download_files", StaticFiles(directory=str(PACKAGES_DIR)), name="download_files")
 
+@app.get("/health")
 @app.get("/api/health")
 def health_check():
     return {
