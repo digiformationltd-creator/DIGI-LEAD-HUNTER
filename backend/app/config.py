@@ -1,4 +1,4 @@
-﻿"""
+"""
 Digi Formation Limited — Lead Hunter
 Application Configuration & Brand Constants
 """
@@ -20,7 +20,8 @@ DATABASE_PATH = DATABASE_DIR / "lead_hunter.db"
 
 # Official Brand & Identity
 COMPANY_NAME = "Digi Formation Limited"
-PRODUCT_NAME = "Digi Biz OS — Lead Hunter"
+PRODUCT_NAME = "DIGI LEAD HUNTER"
+ECOSYSTEM_SUPPORTER = "Digi Biz OS"
 VERSION = "1.1.0"
 AUTHOR = "Digi Formation Limited"
 COPYRIGHT = "© 2026 Digi Formation Limited. All Rights Reserved."

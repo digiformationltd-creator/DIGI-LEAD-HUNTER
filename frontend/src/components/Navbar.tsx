@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Search, MessageSquare, ExternalLink, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface NavbarProps {
@@ -13,21 +13,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenFindLeads, onNavigateAbout
         <div className="flex items-center space-x-3">
           <img 
             src="/digi-logo.png" 
-            alt="Digi Biz OS Logo" 
+            alt="Digi Lead Hunter Logo" 
             className="h-9 w-9 rounded-xl object-contain shadow-md shadow-blue-500/10 border border-slate-700/50" 
             onError={(e) => {
-              // fallback if image not loaded yet
               (e.target as HTMLElement).style.display = 'none';
             }}
           />
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-bold tracking-tight text-white text-base">Digi Biz OS</span>
-              <span className="rounded-md bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold tracking-wider text-blue-400 border border-blue-500/20 uppercase">
-                Lead Hunter
+              <span className="font-extrabold tracking-tight text-white text-base">DIGI LEAD HUNTER</span>
+              <span className="rounded-md bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold tracking-wider text-emerald-400 border border-emerald-500/20 uppercase">
+                100% Halal
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-medium">by Digi Formation Limited</p>
+            <p className="text-[11px] text-slate-400 font-medium">
+              by <strong className="text-slate-300">Digi Formation Limited</strong> • <span className="text-slate-500">Supported by Digi Biz OS</span>
+            </p>
           </div>
         </div>
       </div>
@@ -47,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenFindLeads, onNavigateAbout
         </button>
 
         <a
-          href="https://wa.me/923164467464?text=Hello%20Digi%20Formation%2C%20I%20am%20using%20Lead%20Hunter"
+          href="https://wa.me/923164467464?text=Hello%20Digi%20Formation%2C%20I%20am%20using%20Digi%20Lead%20Hunter"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden sm:flex items-center space-x-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 px-3 py-2 text-xs font-medium text-emerald-400 hover:bg-emerald-500/20 transition-all"

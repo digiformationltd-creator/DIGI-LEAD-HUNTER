@@ -30,9 +30,12 @@ export const AboutView: React.FC = () => {
               <span>Official Product of Digi Formation Limited</span>
             </div>
             <h1 className="text-3xl font-extrabold tracking-tight text-white">
-              Digi Biz OS — Lead Hunter
+              DIGI LEAD HUNTER
             </h1>
-            <p className="text-xs text-slate-300 max-w-xl leading-relaxed">
+            <p className="text-xs text-slate-400 font-medium">
+              by <strong className="text-white">Digi Formation Limited</strong> • Supported by Digi Biz OS
+            </p>
+            <p className="text-xs text-slate-300 max-w-xl leading-relaxed pt-1">
               AI-driven Local Business Lead Intelligence, Website Opportunity Research & Automated Packaging Engine.
             </p>
           </div>

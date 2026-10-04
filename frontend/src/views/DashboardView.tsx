@@ -45,9 +45,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <span>Digi Formation Limited • Local Business Intelligence</span>
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight text-white">
-            Lead Hunter Control Center
+            DIGI LEAD HUNTER Control Center
           </h1>
-          <p className="text-xs text-slate-300 leading-relaxed">
+          <p className="text-xs text-slate-400 font-medium">
+            by <strong className="text-slate-200">Digi Formation Limited</strong> • Supported by Digi Biz OS
+          </p>
+          <p className="text-xs text-slate-300 leading-relaxed pt-1">
             Discover local businesses on Google Maps lacking official websites, verify direct WhatsApp channels, and automatically generate high-converting website architecture plans and ZIP opportunity packages.
           </p>
           <div className="pt-2 flex items-center space-x-3">

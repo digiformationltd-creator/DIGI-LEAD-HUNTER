@@ -1,6 +1,6 @@
-# Digi Biz OS — Lead Hunter Agent
+# DIGI LEAD HUNTER
 ### AI-Powered Local Business Lead Intelligence, Website Opportunity Research & Packaging Platform
-**Official Product of Digi Formation Limited**
+**Official Product of Digi Formation Limited • Supported by Digi Biz OS**
 
 [![License: Source-Available](https://img.shields.io/badge/License-Source--Available-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://www.python.org/)

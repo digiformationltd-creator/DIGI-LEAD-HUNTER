@@ -13,8 +13,8 @@ FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
 
 def main():
     print("=" * 65)
-    print("  DIGI FORMATION LIMITED — LEAD HUNTER AGENT")
-    print("  Digi Biz OS Architecture | Localhost Control Center")
+    print("  DIGI LEAD HUNTER — LOCAL BUSINESS INTELLIGENCE AGENT")
+    print("  by Digi Formation Limited • Supported by Digi Biz OS")
     print("=" * 65)
 
     # 1. Initialize Database
