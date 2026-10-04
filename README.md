@@ -100,11 +100,19 @@ Once running, navigate to:
 ```text
 User Search Request (Category + Location + Radius)
         ↓
-Phase 01: Google Maps / OSM Overpass Discovery Engine
+Phase 01: Google Maps / OSM Overpass Discovery Engine (Zero Hashed Fallbacks)
         ↓
-Phase 02: Verification Engine (Identity, Website Status, WhatsApp Carrier Detection)
+Phase 02: Multi-Stage Cross-Verification Engine:
+          • Live Web Search Cross-Verification (Google/DuckDuckGo Query Check)
+          • Social Media & Directory Filtration (Instagram, Facebook, Foodpanda, Yelp)
+          • Phone Number Carrier Normalization & Traceability Tagging
+          • WhatsApp Channel Verification & Shariah Ethical Audit
         ↓
-Phase 03: 3-Tier Classification (P1 Build-Ready / P2 Consultation / P3 Redesign)
+Phase 03: Strict 3-Tier Classification Gate:
+          • P1 (Build-Ready): Confirmed NO_WEBSITE + Verified WhatsApp + Reviews
+          • P2 (Consultation): Confirmed NO_WEBSITE + Missing Assets
+          • P3 (Modernization): Existing Outdated / Non-Responsive Website
+          • EXCLUDED: Confirmed Active Modern Website
         ↓
 Phase 04: Business & Asset Intelligence (Hours, Reviews, Offerings, Visual Signals)
         ↓
@@ -112,10 +120,19 @@ Phase 05: Website Build-Ready Planning (IA, Hero Plan, WhatsApp CTA Strategy, Lo
         ↓
 Phase 06: Evidence, Markdown, HTML Presentation & ZIP Packaging Engine
         ↓
-Phase 07: Runtime Orchestration & SQLite Database Persistence
+Phase 07: Forensic Audit Ledger & SQLite Database Persistence
         ↓
 Phase 08: Premium Glassmorphic Control Center UI
 ```
+
+---
+
+## 🔬 Multi-Stage Verification Engine & Forensic Audit
+
+The platform strictly enforces the **Multi-Stage Verification Standard**:
+* **No Assumption of "NO_WEBSITE":** A business is never classified as having no website merely because a single directory tag was empty. The engine executes live search queries, validates candidate domains, and filters out directories and social profiles.
+* **Authentic Source Traceability:** Phone numbers maintain explicit provenance tags (`Google Maps / OpenStreetMap Direct Tag`) or remain flagged as `PUBLIC_REGISTRY_PENDING`. No synthetic phone numbers are ever generated.
+* **Immutable Audit Ledger:** All revalidations preserve historical priorities, timestamps, and confidence scores across the database.
 
 ---
 
