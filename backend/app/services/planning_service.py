@@ -24,10 +24,13 @@ class PlanningService:
         plan_type = f"{priority}_WEBSITE_PLAN"
         target_audience = f"Local customers and residents in {location} seeking dependable {category} services with instant mobile accessibility."
 
+        rating_val = lead_data.get("rating")
+        review_note = f"{rating_val}★" if rating_val is not None else "Public Reputation"
+
         objectives = [
             f"Establish an authoritative, high-converting digital storefront for {name}",
             f"Convert local search traffic into immediate customer inquiries via WhatsApp ({wa_number or 'Direct'})",
-            f"Showcase verified service offerings, customer reviews ({f'{lead_data.get(\"rating\")}★' if lead_data.get('rating') is not None else 'Public Reputation'}), and physical location in {location}",
+            f"Showcase verified service offerings, customer reviews ({review_note}), and physical location in {location}",
             "Outrank local competitors lacking modern mobile-responsive websites"
         ]
 
