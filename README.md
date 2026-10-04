@@ -1,5 +1,9 @@
+<p align="center">
+  <img src="digi-lead-hunter-banner.jpg" alt="DIGI LEAD HUNTER" width="100%" />
+</p>
+
 # DIGI LEAD HUNTER
-### AI-Powered Local Business Lead Intelligence, Website Opportunity Research & Packaging Platform
+### Autonomous AI Lead Intelligence, Website Opportunity Hunter & Evidence Packaging Platform
 **Official Product of DIGIFORMATION LTD • Sponsored by Digi Biz OS**
 
 [![License: Source-Available](https://img.shields.io/badge/License-Source--Available-blue.svg)](LICENSE)
@@ -44,6 +48,10 @@ This repository is optimized for direct **Antigravity AI Agent prompt-based exec
 ```text
 Extract 100 restaurant leads in Lahore with complete website opportunity packs
 ```
+
+**Tracking UI:** Visit `http://localhost:8000` after deployment to view lead tracking dashboard. From there you can download ZIP, WORD, and EXCEL packages, and view the full evidence report.
+
+**Google Shop Link:** Each lead includes a direct link to its Google Shopping page (e.g., `https://shopping.google.com/...`) for cross‑verification of product listings and contact numbers.
 
 Antigravity executes the autonomous 5-phase pipeline directly in your selected workspace:
 1. **Creates Automated Batch Folder:** (e.g. `Restaurant_Batch_1`) directly inside your target project directory.

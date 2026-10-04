@@ -6,6 +6,7 @@ export interface Lead {
   address?: string;
   location?: string;
   google_maps_url?: string;
+  google_shop_url?: string;
   phone?: string;
   phone_normalized?: string;
   whatsapp_number?: string;

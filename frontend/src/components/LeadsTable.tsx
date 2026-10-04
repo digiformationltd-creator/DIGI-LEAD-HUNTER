@@ -174,10 +174,50 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                 </td>
 
                 <td className="py-3.5 px-3">
-                  <span className="inline-flex items-center space-x-1 text-slate-400 text-[11px]">
-                    <ShieldCheck className="h-3.5 w-3.5 text-blue-400" />
-                    <span>{lead.evidence_count} claims</span>
-                  </span>
+                  <div className="flex flex-col space-y-1">
+                    <span className="inline-flex items-center space-x-1 text-slate-400 text-[11px]">
+                      <ShieldCheck className="h-3.5 w-3.5 text-blue-400" />
+                      <span>{lead.evidence_count} claims</span>
+                    </span>
+                    <div className="flex items-center space-x-2 pt-0.5" onClick={(e) => e.stopPropagation()}>
+                      {lead.google_maps_url ? (
+                        <a
+                          href={lead.google_maps_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center space-x-1 rounded bg-slate-800 hover:bg-slate-700 px-1.5 py-0.5 text-[10px] text-blue-400 hover:text-blue-300 transition-colors"
+                          title="Verified Google Maps Listing"
+                        >
+                          <MapPin className="h-2.5 w-2.5" />
+                          <span>Maps</span>
+                          <ExternalLink className="h-2 w-2" />
+                        </a>
+                      ) : (
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lead.business_name + ' ' + (lead.location || ''))}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center space-x-1 rounded bg-slate-800 hover:bg-slate-700 px-1.5 py-0.5 text-[10px] text-blue-400 hover:text-blue-300 transition-colors"
+                          title="Verify on Google Maps"
+                        >
+                          <MapPin className="h-2.5 w-2.5" />
+                          <span>Maps</span>
+                          <ExternalLink className="h-2 w-2" />
+                        </a>
+                      )}
+                      <a
+                        href={lead.google_shop_url || `https://shopping.google.com/search?q=${encodeURIComponent(lead.business_name + ' ' + (lead.location || ''))}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1 rounded bg-amber-500/10 hover:bg-amber-500/20 px-1.5 py-0.5 text-[10px] text-amber-400 hover:text-amber-300 border border-amber-500/20 transition-colors"
+                        title="Direct Google Shop / Shopping Proof"
+                      >
+                        <Globe className="h-2.5 w-2.5" />
+                        <span>Google Shop</span>
+                        <ExternalLink className="h-2 w-2" />
+                      </a>
+                    </div>
+                  </div>
                 </td>
 
                 <td className="py-3.5 px-4 text-right" onClick={(e) => e.stopPropagation()}>

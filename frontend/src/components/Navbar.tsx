@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Search, MessageSquare, ExternalLink, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface NavbarProps {
@@ -22,8 +22,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenFindLeads, onNavigateAbout
           <div>
             <div className="flex items-center space-x-2">
               <span className="font-extrabold tracking-tight text-white text-base">DIGI LEAD HUNTER</span>
-              <span className="rounded-md bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold tracking-wider text-emerald-400 border border-emerald-500/20 uppercase">
-                100% Halal
+              <span className="rounded-md bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold tracking-wider text-blue-400 border border-blue-500/20 uppercase">
+                Autonomous Agent
               </span>
             </div>
             <p className="text-[11px] text-slate-400 font-medium">

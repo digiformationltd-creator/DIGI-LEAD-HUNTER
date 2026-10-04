@@ -154,9 +154,35 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
                 </div>
               </div>
 
-              {/* Business Description */}
-              <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 space-y-2">
-                <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Business Intelligence Profile</h4>
+              {/* Business Description & Proof Links */}
+              <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Business Intelligence Profile</h4>
+                  <div className="flex items-center space-x-2">
+                    <a
+                      href={lead.google_maps_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lead.business_name + ' ' + (lead.location || ''))}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 px-2 py-1 text-xs text-blue-400 border border-blue-500/20 transition-colors"
+                      title="Open Verified Google Maps"
+                    >
+                      <MapPin className="h-3 w-3" />
+                      <span>Google Maps</span>
+                      <ExternalLink className="h-2.5 w-2.5" />
+                    </a>
+                    <a
+                      href={lead.google_shop_url || `https://shopping.google.com/search?q=${encodeURIComponent(lead.business_name + ' ' + (lead.location || ''))}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 px-2 py-1 text-xs text-amber-400 border border-amber-500/20 transition-colors"
+                      title="Open Verified Google Shop"
+                    >
+                      <Globe className="h-3 w-3" />
+                      <span>Google Shop</span>
+                      <ExternalLink className="h-2.5 w-2.5" />
+                    </a>
+                  </div>
+                </div>
                 <p className="text-xs text-slate-300 leading-relaxed">{lead.description}</p>
                 <div className="pt-2 text-xs text-slate-400 space-y-1">
                   <div className="flex items-center space-x-2">

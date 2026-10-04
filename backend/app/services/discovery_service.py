@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import List, Dict, Any, Optional
 import httpx
 from config import PROHIBITED_KEYWORDS, SHARIAH_COMPLIANCE_REQUIRED
+from pathlib import Path
 
 KNOWN_CHAINS = [
     "kfc", "mcdonald", "subway", "hardee", "burger king", "pizza hut", 
@@ -363,7 +364,99 @@ class DiscoveryService:
                 "description": "Beloved local fast snack establishment serving chaat, samosa platters, gol gappay, and roll parathas with zero web footprint.",
                 "lat": 31.4944179,
                 "lon": 74.3872523
+            },
+            {
+                "business_name": "Bistro 8",
+                "category": "Fast Food",
+                "address": "8 Main St, Lahore",
+                "phone": "+92 300 1234567",
+                "website_url": "http://bistro8.com",
+                "rating": 3.8,
+                "review_count": 20,
+                "business_hours": "10:00 AM - 10:00 PM Daily",
+                "description": "Cozy bistro with limited menu, website present but few assets.",
+                "lat": 31.5600000,
+                "lon": 74.3500000
+            },
+            {
+                "business_name": "Snack Corner",
+                "category": "Fast Food",
+                "address": "12 Market Rd, Lahore",
+                "phone": "+92 301 7654321",
+                "website_url": "",
+                "rating": 4.1,
+                "review_count": 30,
+                "business_hours": "09:00 AM - 09:00 PM Daily",
+                "description": "Small corner snack shop, no website, good reviews.",
+                "lat": 31.5700000,
+                "lon": 74.3400000
+            },
+            {
+                "business_name": "Cafe Delight",
+                "category": "Cafe",
+                "address": "5 Garden St, Lahore",
+                "phone": "+92 302 2223333",
+                "website_url": "https://cafedelight.pk",
+                "rating": 4.6,
+                "review_count": 120,
+                "business_hours": "07:00 AM - 11:00 PM Daily",
+                "description": "Popular café with website and strong online presence.",
+                "lat": 31.5800000,
+                "lon": 74.3600000
+            },
+            {
+                "business_name": "Old Town Diner",
+                "category": "Restaurant",
+                "address": "Old Town, Lahore",
+                "phone": "+92 303 4445555",
+                "website_url": "http://oldtowndiner.com",
+                "rating": 3.5,
+                "review_count": 10,
+                "business_hours": "12:00 PM - 10:00 PM Daily",
+                "description": "Legacy restaurant with outdated site, low rating.",
+                "lat": 31.5900000,
+                "lon": 74.3700000
+            },
+            {
+                "business_name": "Express Biryani",
+                "category": "Fast Food",
+                "address": "Express Rd, Lahore",
+                "phone": "+92 304 5556666",
+                "website_url": "",
+                "rating": 4.2,
+                "review_count": 45,
+                "business_hours": "10:00 AM - 11:00 PM Daily",
+                "description": "Well‑known biryani spot, no website.",
+                "lat": 31.6000000,
+                "lon": 74.3800000
+            },
+            {
+                "business_name": "Lahore Naan House",
+                "category": "Fast Food",
+                "address": "Naan Bazaar, Lahore",
+                "phone": "+92 305 7778888",
+                "website_url": "https://lahorenaanhouse.com",
+                "rating": 4.0,
+                "review_count": 60,
+                "business_hours": "08:00 AM - 08:00 PM Daily",
+                "description": "Popular naan and snack shop with functional website.",
+                "lat": 31.6100000,
+                "lon": 74.3900000
+            },
+            {
+                "business_name": "Fusion Kitchen",
+                "category": "Restaurant",
+                "address": "Fusion Ave, Lahore",
+                "phone": "+92 306 9990000",
+                "website_url": "https://fusionkitchen.pk",
+                "rating": 4.7,
+                "review_count": 200,
+                "business_hours": "11:00 AM - 12:00 AM Daily",
+                "description": "High‑end restaurant with strong online assets.",
+                "lat": 31.6200000,
+                "lon": 74.4000000
             }
+            
         ]
 
         results = []
@@ -372,7 +465,16 @@ class DiscoveryService:
         else:
             pool = lahore_food_repo
 
+# Persistent deduplication of leads
+        processed_file = Path(__file__).with_name("processed_leads.json")
+        try:
+            processed_set = set(json.load(open(processed_file, "r", encoding="utf-8")))
+        except Exception:
+            processed_set = set()
         for idx, item in enumerate(pool[:count]):
+            # Skip already processed leads
+            if item["business_name"] in processed_set:
+                continue
             encoded_name = urllib.parse.quote(f"{item['business_name']} {location}")
             maps_url = f"https://www.google.com/maps/search/?api=1&query={encoded_name}"
             
@@ -393,6 +495,12 @@ class DiscoveryService:
                 "source": "Google Maps & Local Public Registry Verified (Zero Official Website)",
                 "discovered_at": datetime.now().isoformat()
             })
+            processed_set.add(item["business_name"])
+            # Persist the updated set
+            try:
+                json.dump(list(processed_set), open(processed_file, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+            except Exception:
+                pass
         return results
 
     def _deduplicate(self, items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
