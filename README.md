@@ -24,6 +24,38 @@
 - **Carrier Phone Validation:** Native `libphonenumber` phone carrier formatting and WhatsApp channel detection.
 - **Automated Opportunity Packages:** Generates comprehensive architecture blueprints (`WEBSITE_PLAN.md`), client briefs, and 1-click ZIP deliverables.
 
+---
+
+## ⚙️ How It Works (Autonomous Pipeline)
+
+DIGI Lead Hunter runs an end-to-end 5-phase intelligence loop that converts raw map locations into client-ready web agency pitches:
+
+```text
+User Search Request (Category + Location + Radius)
+        ↓
+1. Discovery Engine (Live OpenStreetMap / Overpass Registry POI)
+   • Extracts authentic physical local establishments with coordinates and reviews.
+        ↓
+2. Multi-Stage Verification Engine (Anti-False-Positive Gate)
+   • Runs real-time consensus web searches (DuckDuckGo, Bing, Mojeek).
+   • Filters social media directories (Facebook, Instagram, Foodpanda).
+   • Validates true "NO_WEBSITE" status with multi-source proof.
+        ↓
+3. Deep Carrier Telephony & WhatsApp Channel Detection
+   • Standardizes phone numbers using Google's libphonenumber library.
+   • Segregates mobile cellular lines from inactive landlines.
+   • Generates direct 1-click WhatsApp outreach links.
+        ↓
+4. Strict 3-Tier Classification Gate
+   • Priority 1 (Build-Ready): Confirmed NO website + Active WhatsApp mobile.
+   • Priority 2 (Consultation): NO website + Missing assets / Consultation needed.
+   • Priority 3 (Modernization): Outdated, broken, or non-mobile web presence.
+        ↓
+5. Automated Opportunity Packaging & Deliverables
+   • Generates strategic WEBSITE_PLAN.md, pitch copy, and HTML presentations.
+   • Packages everything into 1-click downloadable ZIP deliverables.
+```
+
 📖 **[Read the Full Blog / Guide: How DIGI Lead Hunter Works & Business Benefits](HOW_IT_WORKS.md)**
 
 ---
@@ -75,24 +107,6 @@ The interactive UI allows you to trigger automated discovery, inspect verified l
 <p align="center">
   <img src="digi-lead-hunter-control-center-ui.png" alt="DIGI LEAD HUNTER Control Center UI" width="100%" />
 </p>
-
----
-
-## 📐 Pipeline Architecture
-
-```text
-User Search Request (Category + Location + Radius)
-        ↓
-1. Discovery Engine (Live Registry / Overpass POI)
-        ↓
-2. Multi-Stage Verification Engine (Multi-Search Consensus, DNS, Carrier Check)
-        ↓
-3. Classification Gate (P1 Build-Ready / P2 Consultation / P3 Redesign)
-        ↓
-4. Opportunity Packaging (Architecture Plans, Pitch Copy, ZIP Export)
-        ↓
-5. Control Center UI & SQLite Storage
-```
 
 ---
 
