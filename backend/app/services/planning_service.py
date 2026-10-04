@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 Phase 05: Website Build-Ready Planning Engine
 """
@@ -27,7 +27,7 @@ class PlanningService:
         objectives = [
             f"Establish an authoritative, high-converting digital storefront for {name}",
             f"Convert local search traffic into immediate customer inquiries via WhatsApp ({wa_number or 'Direct'})",
-            f"Showcase verified service offerings, customer reviews ({lead_data.get('rating', 4.5)}★), and physical location in {location}",
+            f"Showcase verified service offerings, customer reviews ({f'{lead_data.get(\"rating\")}★' if lead_data.get('rating') is not None else 'Public Reputation'}), and physical location in {location}",
             "Outrank local competitors lacking modern mobile-responsive websites"
         ]
 

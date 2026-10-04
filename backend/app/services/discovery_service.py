@@ -207,8 +207,12 @@ class DiscoveryService:
                             phone = ""
                             phone_source = "UAN_EXCLUDED"
 
-                    review_count = int(tags.get("reviews", tags.get("check_date:count", 45 + (abs(hash(name)) % 75))))
-                    rating = float(tags.get("stars", 4.3 + ((abs(hash(name)) % 5) / 10)))
+                    # Strict zero-fabrication: only extract real tags or keep None/0
+                    raw_reviews = tags.get("reviews") or tags.get("check_date:count")
+                    review_count = int(raw_reviews) if raw_reviews and str(raw_reviews).isdigit() else 0
+
+                    raw_stars = tags.get("stars") or tags.get("rating")
+                    rating = float(raw_stars) if raw_stars else None
 
                     candidates.append({
                         "id": f"cand_{uuid.uuid4().hex[:10]}",
@@ -220,11 +224,11 @@ class DiscoveryService:
                         "google_maps_url": maps_url,
                         "phone": phone,
                         "website_url": website or "",
-                        "rating": round(rating, 1),
+                        "rating": round(rating, 1) if rating is not None else None,
                         "review_count": review_count,
-                        "business_hours": tags.get("opening_hours", "11:00 AM - 01:00 AM Daily"),
-                        "description": tags.get("description", f"Verified authentic {category} establishment serving the local {location_query} community."),
-                        "source": "Google Maps & OpenStreetMap Public Verified Listing",
+                        "business_hours": tags.get("opening_hours") or None,
+                        "description": tags.get("description", ""),
+                        "source": "OpenStreetMap Public Verified Listing",
                         "discovered_at": datetime.now().isoformat()
                     })
         return candidates

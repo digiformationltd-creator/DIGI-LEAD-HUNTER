@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 Phase 06: Evidence, Markdown, HTML & ZIP Packaging Engine
 """
@@ -62,6 +62,10 @@ This complete intelligence package contains verified public business research, W
         html_content = self._generate_html_plan(lead, plan, intelligence, date_display)
         (pack_dir / "WEBSITE_PLAN.html").write_text(html_content, encoding="utf-8")
 
+        rating_val = lead.get('rating')
+        review_cnt = lead.get('review_count', 0)
+        review_summary = f"{rating_val}★ across {review_cnt} reviews" if rating_val is not None and review_cnt else (f"{review_cnt} reviews" if review_cnt else "Public reputation establishment")
+
         # 4. WEBSITE_BUILD_BRIEF.md
         brief_content = f"""# Developer Build Brief: {name}
 **Project:** Local Business Web Launch  
@@ -73,7 +77,7 @@ This complete intelligence package contains verified public business research, W
 - [x] Sticky Header with Digi-Powered WhatsApp Action
 - [x] Hero Section with instant consultation hook
 - [x] Verified Offerings Grid ({len(intelligence.get('offerings', []))} items)
-- [x] Google Review Trust Badge ({lead.get('rating', 4.5)}★ across {lead.get('review_count', 30)} reviews)
+- [x] Google Review Trust Badge ({review_summary})
 - [x] Mobile-first Bottom Sticky Contact Drawer
 - [x] Embed Google Maps Location Frame
 """
@@ -155,8 +159,9 @@ Before entering live website production, the following owner-supplied assets and
         cat = lead.get("category")
         loc = lead.get("location")
         wa = lead.get("whatsapp_number", "Direct Chat")
-        wa_link = f"https://wa.me/{wa}" if wa != "Direct Chat" else "#"
-        rating = lead.get("rating", 4.5)
+        raw_rating = lead.get("rating")
+        review_cnt = lead.get("review_count", 0)
+        rating_display = f"{raw_rating} ★ ({review_cnt} reviews)" if raw_rating is not None and review_cnt else (f"{review_cnt} reviews (Unrated)" if review_cnt else "Unrated")
         prio = lead.get("priority")
 
         return f"""<!DOCTYPE html>
@@ -205,8 +210,8 @@ Before entering live website production, the following owner-supplied assets and
         <div class="value" style="color: #34D399;">+{wa}</div>
       </div>
       <div class="card">
-        <div class="label">Google Maps Rating</div>
-        <div class="value">{rating} ★ Local Reviews</div>
+        <div class="label">Public Rating & Reviews</div>
+        <div class="value">{rating_display}</div>
       </div>
     </div>
 
