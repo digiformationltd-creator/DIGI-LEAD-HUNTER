@@ -24,6 +24,8 @@
 - **Carrier Phone Validation:** Native `libphonenumber` phone carrier formatting and WhatsApp channel detection.
 - **Automated Opportunity Packages:** Generates comprehensive architecture blueprints (`WEBSITE_PLAN.md`), client briefs, and 1-click ZIP deliverables.
 
+📖 **[Read the Full Blog / Guide: How DIGI Lead Hunter Works & Business Benefits](HOW_IT_WORKS.md)**
+
 ---
 
 ## 🚀 Quickstart Guide
