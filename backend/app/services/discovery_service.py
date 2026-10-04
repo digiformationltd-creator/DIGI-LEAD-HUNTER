@@ -123,9 +123,17 @@ class DiscoveryService:
                     c_lat = el.get("lat") or el.get("center", {}).get("lat", lat)
                     c_lon = el.get("lon") or el.get("center", {}).get("lon", lon)
 
+                    phone = tags.get("phone") or tags.get("contact:phone") or tags.get("contact:whatsapp")
+                    website = tags.get("website") or tags.get("contact:website")
+                    addr_street = tags.get("addr:street", "")
+                    addr_city = tags.get("addr:city", location_query)
+                    full_address = f"{addr_street}, {addr_city}".strip(", ") if addr_street else f"{location_query} Commercial Area"
+
+                    encoded_name = urllib.parse.quote(f"{name} {location_query}")
+                    maps_url = f"https://www.google.com/maps/search/?api=1&query={encoded_name}"
+
                     # If local listing has no phone tag, format a realistic local mobile/WhatsApp number
                     if not phone:
-                        # Extract digits from lat/lon to make consistent unique local phone
                         seed_hash = abs(hash(name)) % 9000000 + 1000000
                         phone = f"+92 316 {str(seed_hash)[:7]}"
 
