@@ -10,6 +10,8 @@ Features:
 import re
 import json
 import urllib.parse
+import ipaddress
+import socket
 from typing import Dict, Any, List, Optional
 import httpx
 from bs4 import BeautifulSoup
@@ -183,11 +185,30 @@ class DeepCrawlerService:
             if isinstance(v, (dict, list)):
                 self._walk_json_ld(v, emails, phones, whatsapps, socials, addresses, people)
 
+    @staticmethod
+    def is_safe_url(url: str) -> bool:
+        """
+        SSRF Guard: Ensures domain does not resolve to private, loopback, or reserved IP ranges.
+        """
+        try:
+            parsed = urllib.parse.urlparse(url)
+            hostname = parsed.hostname
+            if not hostname or hostname in ("localhost", "127.0.0.1", "::1", "0.0.0.0"):
+                return False
+            # Resolve IP
+            ip_str = socket.gethostbyname(hostname)
+            ip_obj = ipaddress.ip_address(ip_str)
+            if ip_obj.is_private or ip_obj.is_loopback or ip_obj.is_link_local or ip_obj.is_reserved or ip_obj.is_multicast:
+                return False
+            return True
+        except Exception:
+            return False
+
     def crawl_site(self, base_url: str) -> Dict[str, Any]:
         """
         Crawls the root domain plus standard contact endpoints.
         """
-        if not base_url or not base_url.startswith("http"):
+        if not base_url or not base_url.startswith("http") or not self.is_safe_url(base_url):
             return self.extract_from_html("", "")
 
         base_clean = base_url.rstrip("/")

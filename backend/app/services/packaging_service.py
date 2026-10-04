@@ -156,13 +156,15 @@ Before entering live website production, the following owner-supplied assets and
 
     def _generate_html_plan(self, lead: Dict[str, Any], plan: Dict[str, Any], intelligence: Dict[str, Any], date_display: str) -> str:
         name = lead.get("business_name")
-        cat = lead.get("category")
-        loc = lead.get("location")
-        wa = lead.get("whatsapp_number", "Direct Chat")
+        cat = lead.get("category", "")
+        loc = lead.get("location", "")
+        wa = lead.get("whatsapp_number") or ""
+        wa_link = f"https://wa.me/{wa}?text=Hello%20{name}%2C%20I%20would%20like%20to%20inquire%20about%20your%20services" if wa else "#"
         raw_rating = lead.get("rating")
         review_cnt = lead.get("review_count", 0)
-        rating_display = f"{raw_rating} ★ ({review_cnt} reviews)" if raw_rating is not None and review_cnt else (f"{review_cnt} reviews (Unrated)" if review_cnt else "Unrated")
-        prio = lead.get("priority")
+        rating = f"{raw_rating}" if raw_rating is not None else "Top Rated"
+        rating_display = f"{raw_rating} ★ ({review_cnt} reviews)" if raw_rating is not None and review_cnt else (f"{review_cnt} reviews" if review_cnt else "Verified Local Business")
+        prio = lead.get("priority", "P1")
 
         return f"""<!DOCTYPE html>
 <html lang="en">

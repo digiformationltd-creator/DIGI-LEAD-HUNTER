@@ -5,6 +5,9 @@ Certified Zero-Fabrication & Strict Epistemic Uncertainty Standard
 """
 import re
 import hashlib
+import ipaddress
+import socket
+import urllib.parse
 from datetime import datetime
 from typing import Dict, Any, Tuple, List, Optional
 import httpx
@@ -189,12 +192,40 @@ class VerificationService:
             notes = f"{search_result.get('notes')} Epistemic status: WEBSITE_STATUS_UNCLEAR."
             return "WEBSITE_STATUS_UNCLEAR", "", {}, notes, "E3_MODERATE"
 
+    @staticmethod
+    def is_safe_url(url: str) -> bool:
+        """
+        SSRF Guard: Ensures domain does not resolve to private, loopback, or reserved IP ranges.
+        """
+        try:
+            parsed = urllib.parse.urlparse(url if url.startswith("http") else f"https://{url}")
+            hostname = parsed.hostname
+            if not hostname or hostname in ("localhost", "127.0.0.1", "::1", "0.0.0.0"):
+                return False
+            # Resolve IP
+            ip_str = socket.gethostbyname(hostname)
+            ip_obj = ipaddress.ip_address(ip_str)
+            if ip_obj.is_private or ip_obj.is_loopback or ip_obj.is_link_local or ip_obj.is_reserved or ip_obj.is_multicast:
+                return False
+            return True
+        except Exception:
+            return False
+
     def _audit_website_live(self, url: str) -> Tuple[str, Dict[str, Any]]:
         """
         Performs genuine HTTP GET request to test liveness, SSL, responsiveness, and speed.
         Zero hardcoded 'example.com' mocking.
         """
         target_url = url if url.startswith("http") else f"https://{url}"
+        if not self.is_safe_url(target_url):
+            return "OUTDATED_WEAK", {
+                "weakness_score": 100,
+                "http_status": 0,
+                "issues": ["Invalid or private non-routable address blocked by SSRF filter"],
+                "modernization_urgency": "HIGH",
+                "recommended_action": "Configure public domain DNS"
+            }
+
         weaknesses = []
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) DigiLeadHunterAudit/1.0"}
 
@@ -246,3 +277,36 @@ class VerificationService:
                 "modernization_urgency": "HIGH",
                 "recommended_action": "Complete domain recovery and modern web replacement"
             }
+
+    def _audit_website(self, url: str) -> Tuple[str, Dict[str, Any]]:
+        """Alias for _audit_website_live for backwards compatibility."""
+        return self._audit_website_live(url)
+
+    def _verify_whatsapp(self, raw_phone: str) -> Tuple[str, str, str]:
+        """
+        Legacy helper for phone normalization and WhatsApp status.
+        Returns: (normalized_format, clean_digits, status)
+        """
+        if not raw_phone or not raw_phone.strip():
+            return "", "", "UNKNOWN"
+        # Detect region if UK phone starting with 07 or 44
+        region = "GB" if raw_phone.strip().startswith(("07", "+44", "44")) else "PK"
+        res = self.phone_validator.validate_and_classify_phone(raw_phone, country_code=region)
+        status = res.get("whatsapp_status", "UNKNOWN")
+        # Legacy status mapping
+        if status in ("WHATSAPP_CONFIRMED", "MOBILE_CARRIER_VALID"):
+            legacy_status = "WHATSAPP_VERIFIED"
+        elif status == "LANDLINE_ONLY":
+            legacy_status = "PHONE_ONLY"
+        else:
+            legacy_status = "UNKNOWN"
+        
+        # Format like "+92 316 4467464"
+        e164 = res.get("e164", "")
+        if region == "PK" and len(e164) == 13 and e164.startswith("+92"):
+            formatted_norm = f"{e164[:3]} {e164[3:6]} {e164[6:]}"
+        else:
+            formatted_norm = res.get("national_format") or e164
+
+        return formatted_norm, res.get("whatsapp_number", ""), legacy_status
+

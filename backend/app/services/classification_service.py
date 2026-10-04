@@ -29,7 +29,7 @@ class ClassificationService:
         has_phone = bool(verified_lead.get("phone"))
         raw_maps_url = verified_lead.get("google_maps_url")
         
-        is_mobile = wa_status in ("WHATSAPP_CONFIRMED", "MOBILE_CARRIER_VALID")
+        is_mobile = wa_status in ("WHATSAPP_CONFIRMED", "MOBILE_CARRIER_VALID", "WHATSAPP_VERIFIED")
         is_landline = wa_status == "LANDLINE_ONLY"
 
         # Auto-synthesize clean maps search link if missing and address is present
