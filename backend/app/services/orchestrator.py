@@ -143,16 +143,21 @@ class Orchestrator:
         cursor.execute("""
         INSERT OR REPLACE INTO leads (
             id, run_id, business_name, category, address, location, google_maps_url,
-            phone, phone_normalized, whatsapp_number, whatsapp_status, website_url,
-            website_status, website_audit, rating, review_count, business_hours,
+            phone, phone_normalized, whatsapp_number, whatsapp_status,
+            whatsapp_confidence, whatsapp_verified, carrier_line_type,
+            website_url, website_status, website_audit, rating, review_count, business_hours,
             description, priority, build_readiness, missing_info, offerings,
             visual_signals, created_at, updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             lead_id, run_id, lead.get("business_name"), lead.get("category"),
             lead.get("address"), lead.get("location"), lead.get("google_maps_url"),
             lead.get("phone"), lead.get("phone_normalized"), lead.get("whatsapp_number"),
-            lead.get("whatsapp_status"), lead.get("website_url"), lead.get("website_status"),
+            lead.get("whatsapp_status"),
+            lead.get("whatsapp_confidence"),
+            1 if lead.get("whatsapp_verified") else 0,
+            lead.get("carrier_line_type"),
+            lead.get("website_url"), lead.get("website_status"),
             json.dumps(lead.get("website_audit", {})), lead.get("rating"), lead.get("review_count"),
             lead.get("business_hours"), lead.get("description"), lead.get("priority"),
             lead.get("build_readiness"), json.dumps(lead.get("missing_info", [])),

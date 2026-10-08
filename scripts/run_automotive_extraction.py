@@ -1677,19 +1677,24 @@ def execute_automotive_extraction():
         INSERT INTO leads (
             id, run_id, business_name, category, address, location,
             google_maps_url, phone, phone_normalized, whatsapp_number,
-            whatsapp_status, website_url, website_status, website_audit,
+            whatsapp_status, whatsapp_confidence, whatsapp_verified, carrier_line_type,
+            website_url, website_status, website_audit,
             rating, review_count, business_hours, description, priority,
             build_readiness, missing_info, offerings, visual_signals,
             is_used, created_at, updated_at
         ) VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
         )
         """, (
             lead_id, run_id, verified_lead["business_name"], verified_lead["category"],
             verified_lead.get("address"), verified_lead.get("location"),
             verified_lead.get("google_maps_url"), verified_lead.get("phone"),
             verified_lead.get("phone_normalized"), verified_lead.get("whatsapp_number"),
-            verified_lead.get("whatsapp_status"), verified_lead.get("website_url"),
+            verified_lead.get("whatsapp_status"),
+            verified_lead.get("whatsapp_confidence"),
+            1 if verified_lead.get("whatsapp_verified") else 0,
+            verified_lead.get("carrier_line_type"),
+            verified_lead.get("website_url"),
             verified_lead.get("website_status"), json.dumps(verified_lead.get("website_audit") or {}),
             verified_lead.get("rating"), verified_lead.get("review_count"),
             verified_lead.get("business_hours"), verified_lead.get("description"),
