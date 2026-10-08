@@ -33,11 +33,8 @@ async function start() {
     const { connection, lastDisconnect, qr } = u;
     if (qr) {
       currentQR = qr;
-      console.log("\nScan this QR in WhatsApp → Linked Devices:\n");
-      QR.generate(qr, { small: true });
       try {
         await QRCode.toFile(path.join(__dirname, "qr.png"), qr, { width: 400 });
-        console.log("QR saved to qr.png and available on http://127.0.0.1:" + PORT + "/qr");
       } catch (err) {
         console.error("Failed to save QR png:", err);
       }
