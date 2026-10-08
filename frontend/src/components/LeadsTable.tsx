@@ -174,20 +174,27 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                   {/* Actions */}
                   <td className="py-4 px-5 text-right" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center justify-end space-x-2">
-                      {/* Direct WhatsApp Action Button */}
-                      {lead.whatsapp_number && (
+                      {/* WhatsApp Action Button — Only active & green when confirmed on WhatsApp */}
+                      {lead.whatsapp_number && (lead.whatsapp_verified || lead.whatsapp_confidence === 'CONFIRMED' || lead.whatsapp_status === 'WHATSAPP_CONFIRMED') ? (
                         <a
                           href={`https://wa.me/${lead.whatsapp_number}?text=Hello%20${encodeURIComponent(lead.business_name)}%2C%20I%20noticed%20your%20business%20on%20Google%20Maps%20and%20would%20love%20to%20help%20you%20with%20a%20modern%20website`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center space-x-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 px-2.5 py-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors shadow-sm"
-                          title={`Direct WhatsApp to ${lead.business_name} (+${lead.whatsapp_number})`}
+                          title={`Direct Confirmed WhatsApp to ${lead.business_name} (+${lead.whatsapp_number})`}
                         >
                           <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                          <span>WhatsApp</span>
+                          <span>WhatsApp ✓</span>
                           <ExternalLink className="h-3 w-3" />
                         </a>
-                      )}
+                      ) : lead.phone ? (
+                        <span
+                          className="inline-flex items-center space-x-1 rounded-lg bg-slate-800/80 border border-slate-700/60 px-2 py-1 text-[11px] font-medium text-slate-400"
+                          title="Mobile carrier format valid, but active WhatsApp account not independently confirmed"
+                        >
+                          <span>Unverified WA</span>
+                        </span>
+                      ) : null}
 
                       {/* Mark Used / Reset Toggle */}
                       {onToggleUsed && (

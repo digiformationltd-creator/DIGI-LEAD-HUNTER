@@ -90,7 +90,7 @@ class PhoneValidationService:
                 wa_status = "WHATSAPP_CONFIRMED"
                 wa_number = digits_only
             elif is_mobile:
-                wa_status = "NOT_VERIFIED"
+                wa_status = "MOBILE_CARRIER_VALID"
                 wa_number = digits_only
             elif line_type_str == "FIXED_LINE":
                 wa_status = "LANDLINE_ONLY"

@@ -87,6 +87,12 @@ def init_db():
         cursor.execute("ALTER TABLE leads ADD COLUMN used_at TEXT")
     if "usage_notes" not in existing_cols:
         cursor.execute("ALTER TABLE leads ADD COLUMN usage_notes TEXT")
+    if "whatsapp_confidence" not in existing_cols:
+        cursor.execute("ALTER TABLE leads ADD COLUMN whatsapp_confidence TEXT")
+    if "whatsapp_verified" not in existing_cols:
+        cursor.execute("ALTER TABLE leads ADD COLUMN whatsapp_verified INTEGER DEFAULT 0")
+    if "carrier_line_type" not in existing_cols:
+        cursor.execute("ALTER TABLE leads ADD COLUMN carrier_line_type TEXT")
 
     # 3. Lead Evidence Table
     cursor.execute("""
