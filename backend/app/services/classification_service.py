@@ -31,7 +31,10 @@ class ClassificationService:
         
         carrier_line_type = verified_lead.get("carrier_line_type", "")
         valid_wa_statuses = ("WHATSAPP_CONFIRMED", "MOBILE_CARRIER_VALID", "WHATSAPP_VERIFIED", "WHATSAPP_POSSIBLE", "WHATSAPP_FORMAT_ONLY")
-        is_mobile = (wa_status in valid_wa_statuses or carrier_line_type in ("MOBILE", "FIXED_LINE_OR_MOBILE")) and carrier_line_type != "FIXED_LINE"
+        # NO_WHATSAPP = checked against WhatsApp and the number is NOT registered.
+        # Such a number must never count as a WhatsApp lead, even though its line
+        # type is MOBILE — this is what removes the fake WhatsApp leads.
+        is_mobile = (wa_status != "NO_WHATSAPP") and (wa_status in valid_wa_statuses or carrier_line_type in ("MOBILE", "FIXED_LINE_OR_MOBILE")) and carrier_line_type != "FIXED_LINE"
         is_landline = wa_status == "LANDLINE_ONLY" or carrier_line_type == "FIXED_LINE"
 
         # Auto-synthesize clean maps search link if missing and address is present

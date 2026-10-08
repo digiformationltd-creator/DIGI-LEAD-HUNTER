@@ -16,6 +16,7 @@ from services.multi_search_verifier import MultiSearchVerifier
 from services.phone_validation_service import PhoneValidationService
 from services.deep_crawler_service import DeepCrawlerService
 from services.dns_verifier_service import DnsVerifierService
+from services.whatsapp_verifier import check_whatsapp
 
 class VerificationService:
     def __init__(self):
@@ -64,6 +65,20 @@ class VerificationService:
         wa_number = phone_info.get("whatsapp_number", "")
         wa_status = phone_info.get("whatsapp_status", "PHONE_UNVERIFIED")
         line_type = phone_info.get("line_type", "UNKNOWN")
+
+        # REAL WhatsApp existence check — the ONLY honest confirmation. A mobile
+        # number is not proof of WhatsApp; ask WhatsApp itself (Baileys onWhatsApp
+        # via WHATSAPP_CHECK_URL). exists=True -> genuine WhatsApp; exists=False ->
+        # drop as NO_WHATSAPP (this is what stops the fake leads); None (no checker
+        # configured) -> leave as mobile-carrier, never claimed as confirmed.
+        wa_check_method = "none"
+        if wa_status in ("MOBILE_CARRIER_VALID", "WHATSAPP_POSSIBLE", "WHATSAPP_FORMAT_ONLY") and norm_phone:
+            _wa = check_whatsapp(norm_phone)
+            wa_check_method = _wa.get("method", "none")
+            if _wa.get("exists") is True:
+                wa_status = "WHATSAPP_CONFIRMED"
+            elif _wa.get("exists") is False:
+                wa_status = "NO_WHATSAPP"
 
         phone_ev_level = "E1_DIRECT" if wa_status in ("WHATSAPP_CONFIRMED", "MOBILE_CARRIER_VALID") else ("E2_STRONG" if wa_status == "LANDLINE_ONLY" else "E4_UNCERTAIN")
         evidence_list.append({
@@ -130,8 +145,9 @@ class VerificationService:
             "phone_normalized": norm_phone,
             "whatsapp_number": wa_number,
             "whatsapp_status": wa_status,
-            "whatsapp_confidence": "CONFIRMED" if wa_status == "WHATSAPP_CONFIRMED" else ("CARRIER_VALID" if wa_status == "MOBILE_CARRIER_VALID" or line_type in ("MOBILE", "FIXED_LINE_OR_MOBILE") else "UNVERIFIED"),
+            "whatsapp_confidence": "CONFIRMED" if wa_status == "WHATSAPP_CONFIRMED" else ("NO_WHATSAPP" if wa_status == "NO_WHATSAPP" else ("CARRIER_VALID" if wa_status == "MOBILE_CARRIER_VALID" or line_type in ("MOBILE", "FIXED_LINE_OR_MOBILE") else "UNVERIFIED")),
             "whatsapp_verified": wa_status == "WHATSAPP_CONFIRMED",
+            "whatsapp_check_method": wa_check_method,
             "carrier_line_type": line_type,
             "rating": rating if rating is not None else None,
             "review_count": review_count if review_count is not None else 0,

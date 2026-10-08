@@ -260,7 +260,7 @@ class BatchLeadHunter:
   <circle cx="105" cy="95" r="40" fill="#38BDF8" opacity="0.8"/>
   <text x="160" y="95" font-family="Segoe UI, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF">{name[:15]}</text>
   <text x="160" y="125" font-family="Segoe UI, sans-serif" font-size="14" fill="#94A3B8">{lead.get('category').upper()}</text>
-  <text x="160" y="150" font-family="Segoe UI, sans-serif" font-size="12" fill="#34D399">VERIFIED WHATSAPP ACTIVE</text>
+  <text x="160" y="150" font-family="Segoe UI, sans-serif" font-size="12" fill="{'#34D399' if lead.get('whatsapp_verified') else '#94A3B8'}">{'WHATSAPP VERIFIED' if lead.get('whatsapp_verified') else 'MOBILE CONTACT (WhatsApp unconfirmed)'}</text>
 </svg>"""
         (img_dir / "proposed_logo.svg").write_text(logo_svg, encoding="utf-8")
 
@@ -431,6 +431,7 @@ class BatchLeadHunter:
                 "location": l.get("location"),
                 "address": l.get("address"),
                 "whatsapp": l.get("whatsapp_number"),
+                "wa_confirmed": bool(l.get("whatsapp_verified")),
                 "rating": l.get("rating"),
                 "reviews": l.get("review_count"),
                 "website_status": l.get("website_status"),
@@ -472,7 +473,7 @@ class BatchLeadHunter:
           </div>
           <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">{batch_name.replace('_', ' ')}</h1>
           <p class="text-slate-300 text-sm mt-2 max-w-2xl leading-relaxed">
-            Verified local businesses in <strong>{location}</strong> ({category}) lacking official websites. Verified WhatsApp channels ready for high-converting website proposals.
+            Local businesses in <strong>{location}</strong> ({category}) with no official website found. WhatsApp is shown only for numbers actually verified on WhatsApp; others are marked as unconfirmed mobile contacts.
           </p>
         </div>
         <div class="flex items-center gap-3">
@@ -595,7 +596,7 @@ class BatchLeadHunter:
             <p class="text-xs text-slate-400 line-clamp-2"><i class="fa-solid fa-location-dot mr-1.5 text-slate-500"></i>${{l.address}}</p>
             
             <div class="bg-slate-900/60 rounded-xl p-3 border border-slate-800/80 space-y-1">
-              <div class="text-[11px] text-slate-400 font-medium">WhatsApp: <strong class="text-emerald-400 font-mono">+${{l.whatsapp || 'N/A'}}</strong></div>
+              <div class="text-[11px] text-slate-400 font-medium">${{l.wa_confirmed ? 'WhatsApp' : 'Mobile'}}: <strong class="${{l.wa_confirmed ? 'text-emerald-400' : 'text-slate-300'}} font-mono">+${{l.whatsapp || 'N/A'}}</strong> ${{l.wa_confirmed ? '<span class=\"text-emerald-400\">✓ on WhatsApp</span>' : '<span class=\"text-amber-400\">· WhatsApp not confirmed</span>'}}</div>
               <div class="text-[11px] text-slate-400 font-medium">Build Readiness: <strong class="text-blue-400">${{l.build_readiness}}%</strong></div>
             </div>
           </div>
@@ -604,8 +605,8 @@ class BatchLeadHunter:
             <button onclick="openModal('${{l.id}}')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold py-2 rounded-xl transition-colors">
               View Plan & Catalog
             </button>
-            ${{l.whatsapp ? `
-            <a href="${{waLink}}" target="_blank" class="bg-emerald-600/90 hover:bg-emerald-500 text-white p-2 rounded-xl transition-colors flex items-center justify-center">
+            ${{l.wa_confirmed ? `
+            <a href="${{waLink}}" target="_blank" title="Verified on WhatsApp" class="bg-emerald-600/90 hover:bg-emerald-500 text-white p-2 rounded-xl transition-colors flex items-center justify-center">
               <i class="fa-brands fa-whatsapp text-base"></i>
             </a>` : ''}}
           </div>
@@ -645,7 +646,13 @@ class BatchLeadHunter:
       document.getElementById('modalHeroHeadline').innerText = l.hero_headline || `The Premier ${{l.category}} Experience in ${{l.location}}`;
       document.getElementById('modalHeroSub').innerText = l.hero_sub || `Modern website architecture designed to turn search visitors into instant WhatsApp orders.`;
 
-      document.getElementById('modalWhatsAppBtn').href = l.whatsapp ? `https://wa.me/${{l.whatsapp}}?text=Hi%20${{encodeURIComponent(l.name)}}` : '#';
+      // WhatsApp button only for numbers verified on WhatsApp; otherwise hide it
+      // (never offer a WhatsApp chat for a number not confirmed on WhatsApp).
+      {{
+        const waBtn = document.getElementById('modalWhatsAppBtn');
+        if (l.wa_confirmed && l.whatsapp) {{ waBtn.href = `https://wa.me/${{l.whatsapp}}?text=Hi%20${{encodeURIComponent(l.name)}}`; waBtn.style.display = ''; }}
+        else {{ waBtn.href = '#'; waBtn.style.display = 'none'; }}
+      }}
       document.getElementById('modalMapsBtn').href = l.maps_url || '#';
 
       // Render Catalog
