@@ -106,6 +106,11 @@ class BatchLeadHunter:
         print(f"[Phase 2/5] Auditing web presence, normalizing WhatsApp channels, and classifying priorities...")
         qualified_leads = []
         for cand in candidates:
+            # Give the verifier the batch's city/country so it can run the live
+            # web-presence search (real website + advertised WhatsApp) instead of
+            # trusting the sparse OSM record. This is what prevents fake leads.
+            cand["_city"] = clean_loc
+            cand["_country"] = country
             verified_lead, evidence_list = self.verification.verify_candidate(cand)
             priority, readiness, missing_info = self.classification.classify_lead(verified_lead)
             
@@ -307,15 +312,15 @@ class BatchLeadHunter:
 
         # Header 2: Subtitle
         ws.merge_cells("A2:K2")
-        ws["A2"] = f"Niche: {category} | Territory: {location} | Verified WhatsApp Numbers & Website Opportunities"
+        ws["A2"] = f"Niche: {category} | Territory: {location} | WhatsApp Channels & Website Opportunities (verified where confirmed; unverified items flagged)"
         ws["A2"].font = Font(name="Segoe UI", size=10, italic=True, color="94A3B8")
         ws["A2"].fill = PatternFill(start_color="1E293B", end_color="1E293B", fill_type="solid")
         ws["A2"].alignment = Alignment(horizontal="center", vertical="center")
         ws.row_dimensions[2].height = 24
 
         headers = [
-            "Tier", "Business Name", "Category", "Verified WhatsApp", 
-            "Rating", "Reviews", "Website Status", "Address / Location", 
+            "Tier", "Business Name", "Category", "WhatsApp (confidence)",
+            "Rating", "Reviews", "Website Status", "Address / Location",
             "Build Readiness", "Direct WhatsApp Chat Link", "Google Maps URL"
         ]
         ws.append([]) # row 3 blank
@@ -349,13 +354,20 @@ class BatchLeadHunter:
             wa_num = lead.get("whatsapp_number", "")
             wa_link = f"https://wa.me/{wa_num}?text=Hi%20{lead.get('business_name')}" if wa_num else ""
             maps_link = lead.get("google_maps_url", "")
+            # Honest WhatsApp cell: say whether the channel was actually confirmed
+            # (advertised wa.me match) or is only a format-valid guess.
+            wa_conf = "CONFIRMED" if lead.get("whatsapp_verified") else "format-only, UNVERIFIED"
+            wa_cell = f"+{wa_num} ({wa_conf})" if wa_num else "Not Available"
+            # Never invent a rating. OSM has none, so show N/A rather than a fake 4.5.
+            rating_val = lead.get("rating")
+            rating_cell = f"{rating_val} ★" if rating_val not in (None, "", 0) else "N/A"
 
             row_data = [
                 prio,
                 lead.get("business_name", ""),
                 lead.get("category", ""),
-                f"+{wa_num}" if wa_num else "Not Available",
-                f"{lead.get('rating', 4.5)} ★",
+                wa_cell,
+                rating_cell,
                 lead.get("review_count", 0),
                 lead.get("website_status", "NO_WEBSITE"),
                 lead.get("address", location),
@@ -442,8 +454,8 @@ class BatchLeadHunter:
     body {{ background: #080C14; color: #F1F5F9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }}
     .glass-card {{ background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.5); }}
     .badge-p1 {{ background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }}
-    .badge-p2 {{ background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }}
-    .badge-excluded {{ background: rgba(100, 116, 139, 0.15); color: #94A3B8; border: 1px solid rgba(100, 116, 139, 0.3); }}
+    .badge-p2 {{ background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }}
+    .badge-p3 {{ background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }}
   </style>
 </head>
 <body class="min-h-screen p-6 md:p-12">
@@ -459,18 +471,18 @@ class BatchLeadHunter:
           </div>
           <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">{batch_name.replace('_', ' ')}</h1>
           <p class="text-slate-300 text-sm mt-2 max-w-2xl leading-relaxed">
-            Verified local businesses in <strong>{location}</strong> ({category}) lacking official websites. Verified WhatsApp channels ready for high-converting website proposals.
+            Local businesses in <strong>{location}</strong> ({category}) with no official website found. WhatsApp channels are confirmed where a live search matched an advertised number; others are flagged format-only (unverified) — confirm before outreach.
           </p>
         </div>
         <div class="flex items-center gap-3">
           <div class="text-right">
-            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Build-Ready (P1)</div>
-            <div class="text-3xl font-extrabold text-emerald-400">{len([l for l in leads_json if l['priority'] == 'P1'])}</div>
+            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Total Qualified Leads</div>
+            <div class="text-3xl font-extrabold text-emerald-400">{len(leads)}</div>
           </div>
           <div class="h-12 w-px bg-slate-800"></div>
           <div class="text-right">
-            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Redesign (P2)</div>
-            <div class="text-3xl font-extrabold text-blue-400">{len([l for l in leads_json if l['priority'] == 'P2'])}</div>
+            <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Build-Ready (P1)</div>
+            <div class="text-3xl font-extrabold text-blue-400">{len([l for l in leads_json if l['priority'] == 'P1'])}</div>
           </div>
         </div>
       </div>
@@ -491,8 +503,8 @@ class BatchLeadHunter:
       <div class="flex gap-2">
         <button onclick="filterPriority('ALL')" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">All ({len(leads)})</button>
         <button onclick="filterPriority('P1')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p1">P1 Build-Ready</button>
-        <button onclick="filterPriority('P2')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p2">P2 Redesign / Rebuild</button>
-        <button onclick="filterPriority('EXCLUDED')" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-800/80 text-slate-400 hover:bg-slate-700">Excluded</button>
+        <button onclick="filterPriority('P2')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p2">P2 Consultation</button>
+        <button onclick="filterPriority('P3')" class="px-4 py-1.5 rounded-lg text-xs font-bold badge-p3">P3 Redesign</button>
       </div>
     </div>
 
