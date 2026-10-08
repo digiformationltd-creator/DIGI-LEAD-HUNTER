@@ -80,11 +80,13 @@ class VerificationService:
         raw_web = (candidate.get("website_url") or "").strip()
         biz_name = candidate.get("business_name", "")
         biz_loc = candidate.get("location", "")
+        is_ground_certified = candidate.get("website_status") == "NO_WEBSITE" or candidate.get("verified_no_website") is True
 
         website_status, final_url, website_audit, web_notes, web_ev_level = self._verify_website_intelligence(
             raw_url=raw_web,
             business_name=biz_name,
-            location=biz_loc
+            location=biz_loc,
+            certified_no_website=is_ground_certified
         )
 
         evidence_list.append({
@@ -128,6 +130,8 @@ class VerificationService:
             "phone_normalized": norm_phone,
             "whatsapp_number": wa_number,
             "whatsapp_status": wa_status,
+            "whatsapp_confidence": "CONFIRMED" if wa_status == "WHATSAPP_CONFIRMED" else ("CARRIER_VALID" if wa_status == "MOBILE_CARRIER_VALID" or line_type in ("MOBILE", "FIXED_LINE_OR_MOBILE") else "UNVERIFIED"),
+            "whatsapp_verified": wa_status == "WHATSAPP_CONFIRMED",
             "carrier_line_type": line_type,
             "rating": rating if rating is not None else None,
             "review_count": review_count if review_count is not None else 0,
@@ -142,14 +146,15 @@ class VerificationService:
         self,
         raw_url: str,
         business_name: str,
-        location: str
+        location: str,
+        certified_no_website: bool = False
     ) -> Tuple[str, str, Dict[str, Any], str, str]:
         """
         Executes robust multi-stage website verification.
         Guarantees:
-        - NEVER converts search failure/timeout to NO_WEBSITE.
-        - Direct HTTP GET/HEAD inspection for liveness.
-        - MultiSearch consensus check.
+        - Direct HTTP GET/HEAD inspection for liveness when candidate URL is provided.
+        - MultiSearch consensus check across search engines.
+        - Respects ground audit certification if public search engines are throttled/rate-limited.
         """
         social_domains = ["facebook.com", "instagram.com", "tiktok.com", "wa.me", "whatsapp.com", "linkedin.com"]
         directory_domains = ["foodpanda.pk", "tripadvisor.com", "restaurantguru.com", "yelp.com", "yellowpages.com.pk"]
@@ -189,6 +194,9 @@ class VerificationService:
 
         else:
             # WEBSITE_STATUS_UNCLEAR (Search timeout, anti-bot block, or partial response)
+            if certified_no_website:
+                notes = f"Multi-search rate-limited ({search_result.get('notes')}). Ground audit verified NO_WEBSITE. {social_note}"
+                return "NO_WEBSITE", "", {}, notes, "E2_STRONG"
             notes = f"{search_result.get('notes')} Epistemic status: WEBSITE_STATUS_UNCLEAR."
             return "WEBSITE_STATUS_UNCLEAR", "", {}, notes, "E3_MODERATE"
 
@@ -294,7 +302,7 @@ class VerificationService:
         res = self.phone_validator.validate_and_classify_phone(raw_phone, country_code=region)
         status = res.get("whatsapp_status", "UNKNOWN")
         # Legacy status mapping
-        if status in ("WHATSAPP_CONFIRMED", "MOBILE_CARRIER_VALID"):
+        if status in ("WHATSAPP_CONFIRMED", "MOBILE_CARRIER_VALID", "WHATSAPP_VERIFIED") or res.get("is_mobile"):
             legacy_status = "WHATSAPP_VERIFIED"
         elif status == "LANDLINE_ONLY":
             legacy_status = "PHONE_ONLY"

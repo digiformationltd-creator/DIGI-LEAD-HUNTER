@@ -28,12 +28,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
   p2Count = 0
 }) => {
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'find-leads', label: 'Find Leads', icon: Search, highlight: true },
-    { id: 'all-leads', label: 'All Leads', icon: Users },
+    { id: 'dashboard', label: 'Overview & Recent', icon: LayoutDashboard },
+    { id: 'all-leads', label: 'All Tracked Leads', icon: Users },
     { id: 'p1-leads', label: 'Priority 1 (New Website)', icon: Flame, badge: p1Count, badgeColor: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' },
     { id: 'p2-leads', label: 'Priority 2 (Redesign)', icon: RefreshCw, badge: p2Count, badgeColor: 'bg-blue-500/20 text-blue-400 border border-blue-500/30' },
-    { id: 'runs', label: 'Active & Run History', icon: Clock },
+    { id: 'runs', label: 'Audit & Run History', icon: Clock },
     { id: 'packages', label: 'ZIP Packages', icon: Archive },
     { id: 'analytics', label: 'Analytics & Funnel', icon: BarChart3 },
     { id: 'about', label: 'About & Contacts', icon: Info },

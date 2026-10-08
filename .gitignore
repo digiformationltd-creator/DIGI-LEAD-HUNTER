@@ -16,22 +16,34 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Runtime data & Generated packages (Keep structure, ignore generated contents)
-data/database/*.db
-data/packages/*.zip
-data/packages/*_PACK/
-data/logs/*.log
-data/revalidation_audit_summary.json
+# Runtime data & Generated packages (Keep local, never commit)
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.zip
+*_PACK/
+*.log
+*.csv
+*.xlsx
+manual_live_test_results.json
+revalidation_audit_summary.json
+processed_leads.json
 backend/app/services/processed_leads.json
 *_Batch_*/
 Food___Restaurants_Batch_*/
-*.log
+test_batch_run/
 
-# Sensitive environment variables
+# Sensitive environment variables & secrets
 .env
-.env.local
+.env.*
+!.env.example
 
 # Operating System
 .DS_Store
 Thumbs.db
 desktop.ini
+controlled_extraction_report.json

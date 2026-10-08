@@ -106,6 +106,8 @@ class BatchLeadHunter:
         print(f"[Phase 2/5] Auditing web presence, normalizing WhatsApp channels, and classifying priorities...")
         qualified_leads = []
         for cand in candidates:
+            cand["_city"] = clean_loc
+            cand["_country"] = country
             verified_lead, evidence_list = self.verification.verify_candidate(cand)
             priority, readiness, missing_info = self.classification.classify_lead(verified_lead)
             
@@ -307,14 +309,14 @@ class BatchLeadHunter:
 
         # Header 2: Subtitle
         ws.merge_cells("A2:K2")
-        ws["A2"] = f"Niche: {category} | Territory: {location} | Verified WhatsApp Numbers & Website Opportunities"
+        ws["A2"] = f"Niche: {category} | Territory: {location} | WhatsApp Channels & Website Opportunities (verified where confirmed; unverified items flagged)"
         ws["A2"].font = Font(name="Segoe UI", size=10, italic=True, color="94A3B8")
         ws["A2"].fill = PatternFill(start_color="1E293B", end_color="1E293B", fill_type="solid")
         ws["A2"].alignment = Alignment(horizontal="center", vertical="center")
         ws.row_dimensions[2].height = 24
 
         headers = [
-            "Tier", "Business Name", "Category", "Verified WhatsApp", 
+            "Tier", "Business Name", "Category", "WhatsApp (confidence)", 
             "Rating", "Reviews", "Website Status", "Address / Location", 
             "Build Readiness", "Direct WhatsApp Chat Link", "Google Maps URL"
         ]
@@ -350,12 +352,23 @@ class BatchLeadHunter:
             wa_link = f"https://wa.me/{wa_num}?text=Hi%20{lead.get('business_name')}" if wa_num else ""
             maps_link = lead.get("google_maps_url", "")
 
+            # Honest WhatsApp cell: say whether the channel was actually confirmed
+            # (advertised wa.me match) or is only a format-valid carrier guess.
+            wa_status = lead.get("whatsapp_status", "")
+            wa_is_confirmed = wa_status == "WHATSAPP_CONFIRMED" or lead.get("whatsapp_verified") is True
+            wa_conf = "CONFIRMED" if wa_is_confirmed else "format-only, UNVERIFIED"
+            wa_cell = f"+{wa_num} ({wa_conf})" if wa_num else "Not Available"
+
+            # Never invent a rating. Show N/A rather than a fake 4.5
+            rating_val = lead.get("rating")
+            rating_cell = f"{rating_val} ★" if rating_val not in (None, "", 0) else "N/A"
+
             row_data = [
                 prio,
                 lead.get("business_name", ""),
                 lead.get("category", ""),
-                f"+{wa_num}" if wa_num else "Not Available",
-                f"{lead.get('rating', 4.5)} ★",
+                wa_cell,
+                rating_cell,
                 lead.get("review_count", 0),
                 lead.get("website_status", "NO_WEBSITE"),
                 lead.get("address", location),

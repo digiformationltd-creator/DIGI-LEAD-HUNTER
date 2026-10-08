@@ -10,7 +10,10 @@ export interface Lead {
   phone?: string;
   phone_normalized?: string;
   whatsapp_number?: string;
-  whatsapp_status: 'WHATSAPP_VERIFIED' | 'WHATSAPP_POSSIBLE' | 'PHONE_ONLY' | 'UNKNOWN';
+  whatsapp_status: string;
+  whatsapp_confidence?: string;
+  whatsapp_verified?: boolean;
+  carrier_line_type?: string;
   website_url?: string;
   website_status: 'NO_WEBSITE' | 'OFFICIAL_WEBSITE' | 'OUTDATED_WEAK' | 'UNCLEAR';
   website_audit?: any;
@@ -24,6 +27,9 @@ export interface Lead {
   offerings?: string[];
   visual_signals?: any;
   user_notes?: string;
+  is_used?: boolean;
+  used_at?: string;
+  usage_notes?: string;
   created_at: string;
   updated_at: string;
   has_package: boolean;
@@ -84,5 +90,6 @@ export interface AnalyticsData {
   ready_packages: number;
   whatsapp_verified_count: number;
   no_website_count: number;
+  used_leads_count?: number;
   recent_runs: any[];
 }

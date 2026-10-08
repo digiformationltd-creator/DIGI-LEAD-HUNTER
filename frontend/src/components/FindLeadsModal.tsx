@@ -120,7 +120,7 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
           </div>
 
           <div>
-            <label className="block font-semibold text-slate-300 mb-1.5">Radius & Scope</label>
+            <label className="block font-semibold text-slate-300 mb-1.5">Radius &amp; Scope</label>
             <div className="grid grid-cols-3 gap-2 text-center">
               {radiusTiers.map((tier) => (
                 <button
@@ -136,6 +136,44 @@ export const FindLeadsModal: React.FC<FindLeadsModalProps> = ({ isOpen, onClose,
                   {tier.label}
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Priority Opportunity Selection (P1 & P2 Only) */}
+          <div className="space-y-2 pt-1">
+            <label className="block font-semibold text-slate-300">Opportunity Priority Model</label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setP1(!p1)}
+                className={`p-2.5 rounded-xl border text-left transition-all ${
+                  p1 
+                    ? 'border-emerald-500/50 bg-emerald-950/20 text-emerald-300' 
+                    : 'border-slate-800 bg-slate-900/40 text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                <div className="font-bold text-[11px] flex items-center justify-between">
+                  <span>P1 • New Website</span>
+                  <input type="checkbox" checked={p1} readOnly className="h-3.5 w-3.5 accent-emerald-500 pointer-events-none" />
+                </div>
+                <div className="text-[10px] text-slate-400 mt-0.5">Real Business with NO Website</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setP2(!p2)}
+                className={`p-2.5 rounded-xl border text-left transition-all ${
+                  p2 
+                    ? 'border-blue-500/50 bg-blue-950/20 text-blue-300' 
+                    : 'border-slate-800 bg-slate-900/40 text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                <div className="font-bold text-[11px] flex items-center justify-between">
+                  <span>P2 • Redesign</span>
+                  <input type="checkbox" checked={p2} readOnly className="h-3.5 w-3.5 accent-blue-500 pointer-events-none" />
+                </div>
+                <div className="text-[10px] text-slate-400 mt-0.5">Website Exists but Outdated/Unfit</div>
+              </button>
             </div>
           </div>
 

@@ -39,6 +39,9 @@ class LeadResponse(BaseModel):
     phone_normalized: Optional[str] = None
     whatsapp_number: Optional[str] = None
     whatsapp_status: str
+    whatsapp_confidence: Optional[str] = None
+    whatsapp_verified: Optional[bool] = None
+    carrier_line_type: Optional[str] = None
     website_url: Optional[str] = None
     website_status: str
     website_audit: Optional[Dict[str, Any]] = None
@@ -52,6 +55,9 @@ class LeadResponse(BaseModel):
     offerings: Optional[List[str]] = None
     visual_signals: Optional[Dict[str, Any]] = None
     user_notes: Optional[str] = None
+    is_used: bool = False
+    used_at: Optional[str] = None
+    usage_notes: Optional[str] = None
     created_at: str
     updated_at: str
     has_package: bool = False
@@ -111,4 +117,5 @@ class AnalyticsResponse(BaseModel):
     ready_packages: int
     whatsapp_verified_count: int
     no_website_count: int
+    used_leads_count: int = 0
     recent_runs: List[Dict[str, Any]]

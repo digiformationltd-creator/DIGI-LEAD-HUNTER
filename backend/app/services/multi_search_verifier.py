@@ -22,7 +22,9 @@ DIRECTORY_DOMAINS = {
     "yellowpages.com.pk", "pakistanyp.com", "findpk.com", "justdial.com",
     "yelp.com", "foursquare.com", "wikipedia.org", "zomato.com",
     "swiggy.com", "google.com", "bing.com", "duckduckgo.com", "mojeek.com",
-    "maps.google.com", "yell.com", "trustpilot.com"
+    "maps.google.com", "yell.com", "trustpilot.com", "oladoc.com", "marham.pk",
+    "hamariweb.com", "urdupoint.com", "dha.gov.pk", "zameen.com", "graana.com",
+    "ilmkiroshni.pk", "parho.com"
 }
 
 class MultiSearchVerifier:
@@ -53,13 +55,41 @@ class MultiSearchVerifier:
                     if d and d not in candidates:
                         candidates.append(d)
                 return candidates, "OK" if candidates else "EMPTY"
-            elif res.status_code in (202, 429, 403):
-                return [], f"RATE_LIMITED_{res.status_code}"
-            return [], f"HTTP_{res.status_code}"
+            # Resilient fallback to DDG Lite if HTML challenges or rate-limits
+            lite_url = f"https://lite.duckduckgo.com/lite/?q={urllib.parse.quote(query)}"
+            lite_res = client.get(lite_url, timeout=self.timeout)
+            if lite_res.status_code == 200:
+                soup = BeautifulSoup(lite_res.text, "html.parser")
+                for tag in soup.find_all("a", class_="result-link", href=True):
+                    raw_href = tag["href"]
+                    m = re.search(r"uddg=([^&]+)", raw_href)
+                    if m:
+                        actual_url = urllib.parse.unquote(m.group(1))
+                        d = self._extract_domain(actual_url)
+                        if d and d not in candidates:
+                            candidates.append(d)
+                return candidates, "OK" if candidates else "EMPTY"
+            return [], f"RATE_LIMITED_{res.status_code}"
         except httpx.TimeoutException:
             return [], "TIMEOUT"
         except Exception as e:
             return [], f"ERR_{str(e)[:30]}"
+
+    @staticmethod
+    def _resolve_bing_url(href: str) -> str:
+        """Decode Bing's click-tracking redirect (ck/a?...&u=a1<base64url>) to the real destination."""
+        if "bing.com/ck/a" not in href:
+            return href
+        try:
+            import base64
+            import binascii
+            u = urllib.parse.parse_qs(urllib.parse.urlparse(href).query).get("u", [""])[0]
+            if u.startswith("a1"):
+                u = u[2:]
+            pad = "=" * (-len(u) % 4)
+            return base64.urlsafe_b64decode(u + pad).decode("utf-8", "replace")
+        except Exception:
+            return href
 
     def _search_bing(self, client: httpx.Client, query: str) -> Tuple[List[str], str]:
         candidates = []
@@ -71,7 +101,8 @@ class MultiSearchVerifier:
                 for li in soup.find_all("li", class_="b_algo"):
                     a_tag = li.find("a", href=True)
                     if a_tag and a_tag["href"].startswith("http"):
-                        d = self._extract_domain(a_tag["href"])
+                        dest = self._resolve_bing_url(a_tag["href"])
+                        d = self._extract_domain(dest)
                         if d and d not in candidates:
                             candidates.append(d)
                 return candidates, "OK" if candidates else "EMPTY"
@@ -154,15 +185,40 @@ class MultiSearchVerifier:
                 continue
             standalone_domains.append(d)
 
-        # Token-match check: ensure candidate domain has some similarity to business name
-        name_tokens = set(re.findall(r'[a-zA-Z0-9]{3,}', clean_name.lower()))
+        # Token-match check: ensure candidate domain matches DISTINCTIVE business brand tokens (not generic stopwords)
+        INDUSTRY_STOP_WORDS = {
+            "food", "foods", "point", "house", "restaurant", "restaurants", "cafe", "roast",
+            "clinic", "clinics", "center", "centre", "medical", "hospital", "health",
+            "dental", "care", "surgery", "studio", "dentist", "dentists", "land", "solutions",
+            "boutique", "fashion", "fabrics", "hub", "wear", "clothes", "collection",
+            "salon", "spa", "beauty", "parlour", "grooming", "barber",
+            "auto", "autos", "workshop", "workshops", "repair", "service", "services", "mechanic", "electrician",
+            "furniture", "interior", "interiors", "decor", "home", "showroom",
+            "school", "schools", "academy", "academies", "college", "colleges", "group", "education",
+            "gym", "gyms", "fitness", "club", "sports", "lounge",
+            "estate", "estates", "realtors", "builders", "properties", "property", "advisor", "advisors",
+            "official", "website", "online", "pakistan", "lahore", "punjab"
+        }
+
+        name_tokens = [t for t in re.findall(r'[a-zA-Z0-9]{3,}', clean_name.lower())]
+        distinctive_tokens = [t for t in name_tokens if t not in INDUSTRY_STOP_WORDS and len(t) >= 4]
+
         matched_standalone = []
         for dom in standalone_domains:
-            dom_tokens = set(re.findall(r'[a-zA-Z0-9]{3,}', dom.lower()))
-            if name_tokens.intersection(dom_tokens):
-                matched_standalone.append(dom)
-            elif any(token in dom.lower() for token in name_tokens):
-                matched_standalone.append(dom)
+            dom_clean = dom.lower()
+            # Foreign TLDs (e.g. .in, .uk, .au) cannot be a local Pakistani single-location storefront
+            if any(dom_clean.endswith(tld) or f"{tld}/" in dom_clean for tld in (".in", ".uk", ".au", ".ca", ".de", ".fr", ".ru")):
+                continue
+
+            if distinctive_tokens:
+                # Require domain to contain at least one distinctive brand stem
+                if any(t in dom_clean for t in distinctive_tokens):
+                    matched_standalone.append(dom)
+            elif len(name_tokens) >= 2:
+                # If only common words, require consecutive tokens joined together
+                joined_tokens = ["".join(name_tokens[i:i+2]) for i in range(len(name_tokens)-1)]
+                if any(jt in dom_clean for jt in joined_tokens):
+                    matched_standalone.append(dom)
 
         # DECISION LOGIC:
         # 1. If an official matching standalone domain is discovered:
@@ -189,15 +245,15 @@ class MultiSearchVerifier:
                 "notes": f"All search engines timed out or encountered anti-bot barriers ({diagnostics}). Epistemic status: WEBSITE_STATUS_UNCLEAR."
             }
 
-        # 3. If at least 2 search engines successfully returned zero matching domains:
-        if successful_engines >= 2 and len(matched_standalone) == 0:
+        # 3. If at least 1 search engine successfully returned zero matching domains:
+        if successful_engines >= 1 and len(matched_standalone) == 0:
             return {
                 "status": "NO_WEBSITE",
                 "discovered_domains": [],
                 "top_candidate_domain": None,
                 "engine_diagnostics": diagnostics,
                 "successful_engines_count": successful_engines,
-                "notes": f"Multi-search consensus confirmed across {successful_engines} search engines (0 standalone domains found)."
+                "notes": f"Multi-search consensus confirmed across {successful_engines} search engine(s) (0 standalone domains found)."
             }
 
         # 4. Inconclusive (e.g. only 1 engine answered and found 0):

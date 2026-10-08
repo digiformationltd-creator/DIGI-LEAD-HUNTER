@@ -23,6 +23,7 @@ interface DashboardViewProps {
   onOpenFindLeads: () => void;
   onSelectLead: (lead: Lead) => void;
   onDownloadPackage: (leadId: string) => void;
+  onToggleUsed?: (leadId: string, currentlyUsed: boolean) => void;
   onViewAllLeads: () => void;
 }
 
@@ -33,40 +34,34 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onOpenFindLeads,
   onSelectLead,
   onDownloadPackage,
+  onToggleUsed,
   onViewAllLeads
 }) => {
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
+    <div className="space-y-5 animate-in fade-in duration-300">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-[#0A0F1D] p-8 shadow-2xl backdrop-blur-xl">
-        <div className="relative z-10 max-w-2xl space-y-3">
-          <div className="inline-flex items-center space-x-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-400">
-            <Sparkles className="h-3.5 w-3.5" />
+      <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-[#0A0F1D] px-6 py-5 shadow-xl backdrop-blur-xl">
+        <div className="relative z-10 max-w-2xl space-y-2">
+          <div className="inline-flex items-center space-x-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 text-xs font-semibold text-blue-400">
+            <Sparkles className="h-3 w-3" />
             <span>DIGIFORMATION LTD • Local Business Intelligence</span>
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">
+          <h1 className="text-2xl font-extrabold tracking-tight text-white">
             DIGI LEAD HUNTER Control Center
           </h1>
           <p className="text-xs text-slate-400 font-medium">
             by <strong className="text-slate-200">DIGIFORMATION LTD</strong> • Sponsored by Digi Biz OS
           </p>
-          <p className="text-xs text-slate-300 leading-relaxed pt-1">
-            Discover local businesses on Google Maps lacking official websites, verify direct WhatsApp channels, and automatically generate high-converting website architecture plans and ZIP opportunity packages.
+          <p className="text-xs text-slate-300 leading-relaxed">
+            Track, review, manage and export qualified local business opportunities. Review verified claims, manage used lead history, and access opportunity dossiers.
           </p>
-          <div className="pt-2 flex items-center space-x-3">
-            <button
-              onClick={onOpenFindLeads}
-              className="flex items-center space-x-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-5 py-2.5 font-bold text-xs text-white shadow-xl shadow-blue-600/25 transition-all hover:scale-[1.02]"
-            >
-              <Sparkles className="h-4 w-4 text-blue-200" />
-              <span>Launch New Lead Hunt</span>
-            </button>
+          <div className="pt-1 flex items-center space-x-3">
             <button
               onClick={onViewAllLeads}
-              className="flex items-center space-x-2 rounded-xl border border-slate-700 bg-slate-800/60 hover:bg-slate-800 px-4 py-2.5 font-semibold text-xs text-slate-200 transition-colors"
+              className="flex items-center space-x-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-4 py-2 font-bold text-xs text-white shadow-lg shadow-blue-600/20 transition-all hover:scale-[1.01]"
             >
-              <span>Explore All Leads</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <span>Explore All Tracked Leads</span>
+              <ArrowRight className="h-3.5 w-3.5 text-blue-200" />
             </button>
           </div>
         </div>
@@ -75,16 +70,16 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard
-          title="Total Researched"
+          title="Active Opportunities"
           value={analytics?.total_leads || 0}
-          subtitle="Unique verified businesses"
+          subtitle={analytics?.used_leads_count ? `${analytics.used_leads_count} lead(s) marked used` : "Available to outreach"}
           icon={Users}
           color="blue"
         />
         <KpiCard
           title="Priority 1 (Ready)"
           value={analytics?.p1_count || 0}
-          subtitle="No website + WhatsApp verified"
+          subtitle="Active build-ready opportunities"
           icon={Flame}
           color="emerald"
         />
@@ -129,6 +124,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           leads={recentLeads.slice(0, 6)}
           onSelectLead={onSelectLead}
           onDownloadPackage={onDownloadPackage}
+          onToggleUsed={onToggleUsed}
         />
       </div>
     </div>

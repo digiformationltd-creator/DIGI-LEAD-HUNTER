@@ -7,6 +7,7 @@ interface LeadsViewProps {
   leads: Lead[];
   onSelectLead: (lead: Lead) => void;
   onDownloadPackage?: (leadId: string) => void;
+  onToggleUsed?: (leadId: string, currentlyUsed: boolean) => void;
   onRefresh?: () => void;
   defaultPriority?: string;
 }
@@ -15,6 +16,7 @@ export const LeadsView: React.FC<LeadsViewProps> = ({
   leads,
   onSelectLead,
   onDownloadPackage,
+  onToggleUsed,
   onRefresh,
   defaultPriority = 'ALL'
 }) => {
@@ -23,7 +25,17 @@ export const LeadsView: React.FC<LeadsViewProps> = ({
   const [websiteFilter, setWebsiteFilter] = useState('ALL');
   const [whatsappFilter, setWhatsappFilter] = useState('ALL');
 
+  const [usedFilter, setUsedFilter] = useState<'ACTIVE' | 'USED' | 'ALL'>('ACTIVE');
+
+  // Compute counts for active vs used leads
+  const activeLeadsCount = leads.filter((l) => !l.is_used).length;
+  const usedLeadsCount = leads.filter((l) => !!l.is_used).length;
+
   const filteredLeads = leads.filter((lead) => {
+    // Used filter: By default, only show ACTIVE un-used leads (minus used)
+    if (usedFilter === 'ACTIVE' && lead.is_used) return false;
+    if (usedFilter === 'USED' && !lead.is_used) return false;
+
     // Priority filter
     if (priorityFilter !== 'ALL' && lead.priority !== priorityFilter) return false;
     // Website filter
@@ -47,25 +59,62 @@ export const LeadsView: React.FC<LeadsViewProps> = ({
         <div>
           <h2 className="text-2xl font-extrabold tracking-tight text-white">Verified Leads Database</h2>
           <p className="text-xs text-slate-400 mt-0.5">
-            Showing {filteredLeads.length} of {leads.length} qualified local business opportunities
+            Showing <strong className="text-emerald-400 font-bold">{filteredLeads.length}</strong> active opportunities (from {activeLeadsCount} available
+            {usedLeadsCount > 0 ? `, ${usedLeadsCount} deducted as used` : ''})
           </p>
         </div>
 
-        {onRefresh && (
-          <button
-            onClick={onRefresh}
-            className="flex items-center space-x-1.5 rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800 px-3.5 py-2 text-xs font-semibold text-slate-300 transition-colors self-start sm:self-auto"
-          >
-            <RefreshCw className="h-3.5 w-3.5" />
-            <span>Refresh Table</span>
-          </button>
-        )}
+        <div className="flex items-center space-x-2">
+          {/* Active vs Used Toggle Pill */}
+          <div className="inline-flex rounded-xl bg-slate-900/90 border border-slate-800 p-1 text-xs">
+            <button
+              onClick={() => setUsedFilter('ACTIVE')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                usedFilter === 'ACTIVE'
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              Active ({activeLeadsCount})
+            </button>
+            <button
+              onClick={() => setUsedFilter('USED')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                usedFilter === 'USED'
+                  ? 'bg-rose-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-rose-300'
+              }`}
+            >
+              Used ({usedLeadsCount})
+            </button>
+            <button
+              onClick={() => setUsedFilter('ALL')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                usedFilter === 'ALL'
+                  ? 'bg-slate-800 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              All ({leads.length})
+            </button>
+          </div>
+
+          {onRefresh && (
+            <button
+              onClick={onRefresh}
+              className="flex items-center space-x-1.5 rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800 px-3.5 py-2 text-xs font-semibold text-slate-300 transition-colors"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              <span>Refresh</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Priority Tabs */}
       <div className="flex border-b border-slate-800 space-x-2 text-xs font-semibold overflow-x-auto">
         {[
-          { id: 'ALL', label: 'All Leads' },
+          { id: 'ALL', label: 'All Categories' },
           { id: 'P1', label: 'Priority 1 (New Website)', color: 'text-emerald-400 border-emerald-500' },
           { id: 'P2', label: 'Priority 2 (Redesign / Rebuild)', color: 'text-blue-400 border-blue-500' },
           { id: 'EXCLUDED', label: 'Excluded', color: 'text-slate-400 border-slate-500' },
@@ -132,6 +181,7 @@ export const LeadsView: React.FC<LeadsViewProps> = ({
         leads={filteredLeads}
         onSelectLead={onSelectLead}
         onDownloadPackage={onDownloadPackage}
+        onToggleUsed={onToggleUsed}
       />
     </div>
   );

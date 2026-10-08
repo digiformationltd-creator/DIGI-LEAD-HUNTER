@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 SQLite Database Initialization & Connection
 """
@@ -69,12 +69,24 @@ def init_db():
         missing_info TEXT, -- JSON list
         offerings TEXT, -- JSON list of services/menu
         visual_signals TEXT, -- JSON
-        user_notes TEXT,
+        is_used INTEGER DEFAULT 0, -- 1 = MARKED AS USED
+        used_at TEXT,
+        usage_notes TEXT,
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL,
         FOREIGN KEY (run_id) REFERENCES runs (run_id)
     )
     """)
+
+    # Idempotent Column Migrations for leads table
+    cursor.execute("PRAGMA table_info(leads)")
+    existing_cols = [c[1] for c in cursor.fetchall()]
+    if "is_used" not in existing_cols:
+        cursor.execute("ALTER TABLE leads ADD COLUMN is_used INTEGER DEFAULT 0")
+    if "used_at" not in existing_cols:
+        cursor.execute("ALTER TABLE leads ADD COLUMN used_at TEXT")
+    if "usage_notes" not in existing_cols:
+        cursor.execute("ALTER TABLE leads ADD COLUMN usage_notes TEXT")
 
     # 3. Lead Evidence Table
     cursor.execute("""

@@ -17,25 +17,25 @@ export const AboutView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-300">
       {/* Brand Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-[#0A0F1D] p-8 shadow-2xl backdrop-blur-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+      <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-[#0A0F1D] px-6 py-5 shadow-xl backdrop-blur-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-5">
           <img 
             src="/digi-logo.png" 
             alt="DIGIFORMATION LTD Logo" 
-            className="h-20 w-20 rounded-2xl object-contain shadow-2xl border border-slate-700/60 bg-slate-900/60 p-1"
+            className="h-16 w-16 rounded-xl object-contain shadow-xl border border-slate-700/60 bg-slate-900/60 p-1"
           />
-          <div className="space-y-1.5">
-            <div className="inline-flex items-center space-x-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-400">
-              <Sparkles className="h-3.5 w-3.5" />
+          <div className="space-y-1">
+            <div className="inline-flex items-center space-x-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 text-xs font-semibold text-blue-400">
+              <Sparkles className="h-3 w-3" />
               <span>Official Product of DIGIFORMATION LTD</span>
             </div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-white">
+            <h1 className="text-2xl font-extrabold tracking-tight text-white">
               DIGI LEAD HUNTER
             </h1>
             <p className="text-xs text-slate-400 font-medium">
               by <strong className="text-white">DIGIFORMATION LTD</strong> • Sponsored by Digi Biz OS
             </p>
-            <p className="text-xs text-slate-300 max-w-xl leading-relaxed pt-1">
+            <p className="text-xs text-slate-300 max-w-xl leading-relaxed">
               AI-driven Local Business Lead Intelligence, Website Opportunity Research & Automated Packaging Engine.
             </p>
           </div>
@@ -100,51 +100,72 @@ export const AboutView: React.FC = () => {
         </div>
       </div>
 
-      {/* Official Web Portals */}
+      {/* Official Web Portals & Company Registry */}
       <div className="space-y-3">
         <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
           <Globe className="h-4 w-4 text-sky-400" />
           <span>Web Portals & Official Ecosystem</span>
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+          {/* Box 1: Official UK Companies House Registry */}
+          <a
+            href="https://find-and-update.company-information.service.gov.uk/company/16994903"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-between rounded-xl border border-blue-500/30 bg-blue-950/20 p-4 hover:border-blue-400/50 hover:bg-blue-900/30 transition-all hover:scale-[1.01] group"
+          >
+            <div>
+              <div className="font-bold text-white group-hover:text-blue-300 transition-colors">Companies House UK</div>
+              <div className="text-[11px] text-blue-300 font-mono">Company # 16994903</div>
+              <div className="text-[10px] text-slate-400 mt-0.5">Official UK Registry</div>
+            </div>
+            <ExternalLink className="h-4 w-4 text-blue-400 group-hover:text-blue-300 flex-shrink-0" />
+          </a>
+
+          {/* Box 2: DIGIFORMATION LTD Corporate Website */}
           <a
             href="https://www.digiformation.co.uk/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between rounded-xl border border-slate-800 bg-[#0F172A]/80 p-4 hover:border-slate-700 transition-all hover:scale-[1.01]"
+            className="flex items-center justify-between rounded-xl border border-slate-800 bg-[#0F172A]/80 p-4 hover:border-slate-700 hover:bg-slate-850 transition-all hover:scale-[1.01] group"
           >
             <div>
-              <div className="font-bold text-white">DIGIFORMATION LTD UK</div>
-              <div className="text-[11px] text-slate-400">www.digiformation.co.uk</div>
+              <div className="font-bold text-white group-hover:text-sky-300 transition-colors">DIGIFORMATION LTD</div>
+              <div className="text-[11px] text-slate-400 font-mono">www.digiformation.co.uk</div>
+              <div className="text-[10px] text-slate-500 mt-0.5">Corporate Website</div>
             </div>
-            <ExternalLink className="h-4 w-4 text-slate-500" />
+            <ExternalLink className="h-4 w-4 text-slate-500 group-hover:text-sky-400 flex-shrink-0" />
           </a>
 
+          {/* Box 3: Digi Biz OS Platform */}
           <a
             href="https://www.digibizos.co.uk/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between rounded-xl border border-slate-800 bg-[#0F172A]/80 p-4 hover:border-slate-700 transition-all hover:scale-[1.01]"
+            className="flex items-center justify-between rounded-xl border border-slate-800 bg-[#0F172A]/80 p-4 hover:border-slate-700 hover:bg-slate-850 transition-all hover:scale-[1.01] group"
           >
             <div>
-              <div className="font-bold text-white">Digi Biz OS Platform</div>
-              <div className="text-[11px] text-slate-400">www.digibizos.co.uk</div>
+              <div className="font-bold text-white group-hover:text-indigo-300 transition-colors">Digi Biz OS Platform</div>
+              <div className="text-[11px] text-slate-400 font-mono">www.digibizos.co.uk</div>
+              <div className="text-[10px] text-slate-500 mt-0.5">Business OS Suite</div>
             </div>
-            <ExternalLink className="h-4 w-4 text-slate-500" />
+            <ExternalLink className="h-4 w-4 text-slate-500 group-hover:text-indigo-400 flex-shrink-0" />
           </a>
 
+          {/* Box 4: Official Linktree */}
           <a
             href="https://linktr.ee/digiformationltd"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between rounded-xl border border-slate-800 bg-[#0F172A]/80 p-4 hover:border-slate-700 transition-all hover:scale-[1.01]"
+            className="flex items-center justify-between rounded-xl border border-slate-800 bg-[#0F172A]/80 p-4 hover:border-slate-700 hover:bg-slate-850 transition-all hover:scale-[1.01] group"
           >
             <div>
-              <div className="font-bold text-white">Official Linktree</div>
-              <div className="text-[11px] text-slate-400">linktr.ee/digiformationltd</div>
+              <div className="font-bold text-white group-hover:text-emerald-300 transition-colors">Official Linktree</div>
+              <div className="text-[11px] text-slate-400 font-mono">linktr.ee/digiformationltd</div>
+              <div className="text-[10px] text-slate-500 mt-0.5">All Verified Links</div>
             </div>
-            <ExternalLink className="h-4 w-4 text-slate-500" />
+            <ExternalLink className="h-4 w-4 text-slate-500 group-hover:text-emerald-400 flex-shrink-0" />
           </a>
         </div>
       </div>

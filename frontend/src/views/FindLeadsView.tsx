@@ -229,6 +229,68 @@ export const FindLeadsView: React.FC<FindLeadsViewProps> = ({ onStartRun }) => {
           />
         </div>
 
+        {/* Priority Opportunity Selection (P1 & P2 Only) */}
+        <div className="space-y-3 pt-2">
+          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+            Target Opportunity Priority (P1 &amp; P2 Model)
+          </label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div
+              onClick={() => setP1(!p1)}
+              className={`cursor-pointer rounded-2xl border p-4 transition-all ${
+                p1 
+                  ? 'border-emerald-500/50 bg-emerald-950/20 shadow-lg shadow-emerald-950/30' 
+                  : 'border-slate-800 bg-slate-900/40 opacity-60 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="inline-flex items-center rounded-md bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30">
+                  Priority 1 • New Website
+                </span>
+                <input
+                  type="checkbox"
+                  checked={p1}
+                  onChange={() => {}}
+                  className="rounded accent-emerald-500 h-4 w-4 pointer-events-none"
+                />
+              </div>
+              <p className="text-xs text-slate-300 font-medium mt-2">
+                100% Genuine Business with <span className="text-emerald-400 font-semibold">NO Website</span>
+              </p>
+              <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                Active commercial entity, verified location, verified WhatsApp, zero official domain. Ready for brand-new digital storefront.
+              </p>
+            </div>
+
+            <div
+              onClick={() => setP2(!p2)}
+              className={`cursor-pointer rounded-2xl border p-4 transition-all ${
+                p2 
+                  ? 'border-blue-500/50 bg-blue-950/20 shadow-lg shadow-blue-950/30' 
+                  : 'border-slate-800 bg-slate-900/40 opacity-60 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="inline-flex items-center rounded-md bg-blue-500/10 px-2.5 py-1 text-xs font-bold text-blue-400 border border-blue-500/30">
+                  Priority 2 • Redesign / Rebuild
+                </span>
+                <input
+                  type="checkbox"
+                  checked={p2}
+                  onChange={() => {}}
+                  className="rounded accent-blue-500 h-4 w-4 pointer-events-none"
+                />
+              </div>
+              <p className="text-xs text-slate-300 font-medium mt-2">
+                Website Exists but is <span className="text-blue-400 font-semibold">Outdated / Inactive / Unfit</span>
+              </p>
+              <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                Inherits all P1 requirements (verified location, WhatsApp, real business), but current website is non-responsive, slow, or broken.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Submit Button */}
         <div className="pt-2">
           <button

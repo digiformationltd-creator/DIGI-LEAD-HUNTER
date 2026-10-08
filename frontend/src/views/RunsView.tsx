@@ -32,13 +32,6 @@ export const RunsView: React.FC<RunsViewProps> = ({
             <RefreshCw className="h-3.5 w-3.5" />
             <span>Refresh Runs</span>
           </button>
-          <button
-            onClick={onOpenFindLeads}
-            className="flex items-center space-x-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2 text-xs font-semibold text-white transition-colors"
-          >
-            <Play className="h-3.5 w-3.5 fill-white" />
-            <span>New Run</span>
-          </button>
         </div>
       </div>
 

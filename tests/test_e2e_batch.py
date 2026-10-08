@@ -9,8 +9,8 @@ import shutil
 
 from batch_hunter import BatchLeadHunter
 
-def test_full_autonomous_batch_pipeline():
-    test_target_dir = Path("C:/Users/user/Downloads/DIGI-LEAD-HUNTER/test_batch_run")
+def test_full_autonomous_batch_pipeline(tmp_path):
+    test_target_dir = tmp_path / "test_batch_run"
     test_target_dir.mkdir(parents=True, exist_ok=True)
 
     try:

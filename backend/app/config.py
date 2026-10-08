@@ -7,7 +7,8 @@ from pathlib import Path
 
 # Base Paths
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-DATA_DIR = BASE_DIR / "data"
+_custom_data_dir = os.getenv("DATA_DIR")
+DATA_DIR = Path(_custom_data_dir).resolve() if _custom_data_dir else (BASE_DIR / "data")
 DATABASE_DIR = DATA_DIR / "database"
 PACKAGES_DIR = DATA_DIR / "packages"
 ASSETS_DIR = DATA_DIR / "assets"

@@ -10,7 +10,7 @@ class PlanningService:
     def generate_plan(self, lead_data: Dict[str, Any], intelligence: Dict[str, Any]) -> Dict[str, Any]:
         """
         Creates a comprehensive, build-ready website architecture plan.
-        Adapts between P1 (Build-Ready), P2 (Consultation), and P3 (Redesign).
+        Adapts between P1 (New Website Build-Ready) and P2 (Website Redesign / Rebuild Opportunity).
         """
         priority = lead_data.get("priority", "P1")
         name = lead_data.get("business_name", "")

@@ -106,7 +106,6 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
         <div className="flex border-b border-slate-800 bg-[#080C14] px-6 overflow-x-auto text-xs font-semibold">
           {[
             { id: 'overview', label: 'Overview' },
-            { id: 'plan', label: 'Website Plan' },
             { id: 'whatsapp', label: 'WhatsApp & Contact' },
             { id: 'evidence', label: `Evidence (${evidence.length || lead.evidence_count})` },
             { id: 'missing', label: 'Missing Info' },
@@ -147,10 +146,14 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
                   <div className="text-[11px] font-semibold text-slate-400 uppercase">Google Maps Rating</div>
                   <div className="mt-1 font-bold text-amber-400 text-base flex items-center space-x-1">
                     <Star className="h-4 w-4 fill-amber-400" />
-                    <span>{lead.rating || 4.5}</span>
-                    <span className="text-xs text-slate-400 font-normal">({lead.review_count || 30} reviews)</span>
+                    <span>{lead.rating ? `${lead.rating} ★` : 'N/A'}</span>
+                    <span className="text-xs text-slate-400 font-normal">
+                      {lead.review_count ? `(${lead.review_count} reviews)` : '(No public reviews)'}
+                    </span>
                   </div>
-                  <p className="text-xs text-slate-400 mt-1">High public trust ready for social proof showcase.</p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {lead.rating ? 'Public trust rating from directory listing.' : 'Unrated local business profile.'}
+                  </p>
                 </div>
               </div>
 
@@ -168,17 +171,6 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
                     >
                       <MapPin className="h-3 w-3" />
                       <span>Google Maps</span>
-                      <ExternalLink className="h-2.5 w-2.5" />
-                    </a>
-                    <a
-                      href={lead.google_shop_url || `https://shopping.google.com/search?q=${encodeURIComponent(lead.business_name + ' ' + (lead.location || ''))}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 px-2 py-1 text-xs text-amber-400 border border-amber-500/20 transition-colors"
-                      title="Open Verified Google Shop"
-                    >
-                      <Globe className="h-3 w-3" />
-                      <span>Google Shop</span>
                       <ExternalLink className="h-2.5 w-2.5" />
                     </a>
                   </div>
@@ -213,54 +205,7 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
             </div>
           )}
 
-          {activeTab === 'plan' && (
-            <div className="space-y-6">
-              {plan ? (
-                <>
-                  <div className="rounded-xl border border-blue-500/20 bg-blue-950/20 p-4">
-                    <h4 className="text-xs font-bold text-blue-400 uppercase tracking-wider">Website Strategy Objective</h4>
-                    <ul className="mt-2 space-y-1.5 text-xs text-slate-300">
-                      {plan.objectives?.map((obj: string, i: number) => (
-                        <li key={i} className="flex items-start space-x-2">
-                          <span className="text-blue-400 font-bold">•</span>
-                          <span>{obj}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
 
-                  <div className="space-y-3">
-                    <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Information Architecture</h4>
-                    <div className="space-y-2">
-                      {plan.info_architecture?.map((page: any, idx: number) => (
-                        <div key={idx} className="rounded-xl border border-slate-800 bg-slate-900/60 p-3 text-xs">
-                          <div className="font-bold text-white flex items-center justify-between">
-                            <span>📄 Page: {page.page}</span>
-                          </div>
-                          <p className="mt-1 text-slate-400 text-[11px]">
-                            Sections: {page.sections?.join(' → ')}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 space-y-2">
-                    <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Homepage Hero Layout</h4>
-                    <p className="text-sm font-bold text-white">{plan.hero_plan?.headline}</p>
-                    <p className="text-xs text-slate-400">{plan.hero_plan?.subheadline}</p>
-                    <div className="mt-3 flex items-center space-x-2">
-                      <span className="rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 text-xs font-semibold">
-                        CTA: {plan.hero_plan?.cta_buttons?.[0]?.label}
-                      </span>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <div className="text-center py-10 text-slate-500">Plan details loading...</div>
-              )}
-            </div>
-          )}
 
           {activeTab === 'whatsapp' && (
             <div className="space-y-6">
@@ -271,7 +216,13 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
                   </div>
                   <div>
                     <h3 className="font-bold text-white text-base">Direct WhatsApp Channel</h3>
-                    <p className="text-xs text-emerald-400 font-medium">Status: {lead.whatsapp_status}</p>
+                    <p className="text-xs font-medium">
+                      {lead.whatsapp_confidence === 'CONFIRMED' || lead.whatsapp_verified ? (
+                        <span className="text-emerald-400 font-bold">✓ Confirmed WhatsApp (Live Web Match)</span>
+                      ) : (
+                        <span className="text-amber-400 font-medium">⚠️ Valid Carrier Format (Unconfirmed — Verify Before Outreach)</span>
+                      )}
+                    </p>
                   </div>
                 </div>
 
@@ -282,7 +233,15 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-400">Carrier Verification:</span>
-                    <span className="text-emerald-400 font-semibold">Valid Mobile Routing Signal</span>
+                    <span className="text-emerald-400 font-semibold">
+                      {lead.carrier_line_type ? `${lead.carrier_line_type} Line` : 'Valid Mobile Routing'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Verification Confidence:</span>
+                    <span className={lead.whatsapp_confidence === 'CONFIRMED' || lead.whatsapp_verified ? "text-emerald-400 font-bold" : "text-amber-400 font-semibold"}>
+                      {lead.whatsapp_confidence || (lead.whatsapp_verified ? 'CONFIRMED' : 'FORMAT_VALID_UNVERIFIED')}
+                    </span>
                   </div>
                 </div>
 

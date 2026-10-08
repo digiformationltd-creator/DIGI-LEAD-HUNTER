@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 Phase 04: Business & Asset Intelligence Engine
 """
@@ -15,17 +15,18 @@ class IntelligenceService:
         business_name = lead_data.get("business_name", "")
         location = lead_data.get("location", "")
 
-        # 1. Generate Contextual Offerings based on category
-        offerings = self._extract_offerings(category, business_name)
+        # 1. Generate Contextual Offerings based on category (preserving specific candidate offerings if provided)
+        offerings = lead_data.get("offerings") or self._extract_offerings(category, business_name)
 
         # 2. Extract Visual & Brand Signals
         visual_signals = self._extract_visual_signals(category)
 
         # 3. Create Asset References
+        lead_id = lead_data.get("id") or "lead_unknown"
         assets = [
             {
-                "id": f"ast_{lead_data['id']}_logo",
-                "lead_id": lead_data["id"],
+                "id": f"ast_{lead_id}_logo",
+                "lead_id": lead_id,
                 "asset_type": "LOGO",
                 "source_url": lead_data.get("google_maps_url"),
                 "local_path": "assets/logo-placeholder.svg",
@@ -34,8 +35,8 @@ class IntelligenceService:
                 "created_at": datetime.now().isoformat()
             },
             {
-                "id": f"ast_{lead_data['id']}_map",
-                "lead_id": lead_data["id"],
+                "id": f"ast_{lead_id}_map",
+                "lead_id": lead_id,
                 "asset_type": "MAP",
                 "source_url": lead_data.get("google_maps_url"),
                 "local_path": "assets/maps-location.png",
@@ -44,8 +45,8 @@ class IntelligenceService:
                 "created_at": datetime.now().isoformat()
             },
             {
-                "id": f"ast_{lead_data['id']}_catalog",
-                "lead_id": lead_data["id"],
+                "id": f"ast_{lead_id}_catalog",
+                "lead_id": lead_id,
                 "asset_type": "MENU_CATALOG",
                 "source_url": None,
                 "local_path": "assets/services-catalog.json",

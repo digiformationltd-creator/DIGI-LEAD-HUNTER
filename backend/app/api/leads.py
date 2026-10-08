@@ -72,6 +72,9 @@ def get_leads(
             offerings=json.loads(r["offerings"]) if r["offerings"] else [],
             visual_signals=json.loads(r["visual_signals"]) if r["visual_signals"] else {},
             user_notes=r["user_notes"],
+            is_used=bool(r["is_used"] if "is_used" in r.keys() else 0),
+            used_at=r["used_at"] if "used_at" in r.keys() else None,
+            usage_notes=r["usage_notes"] if "usage_notes" in r.keys() else None,
             created_at=r["created_at"],
             updated_at=r["updated_at"],
             has_package=bool(r["has_package"]),
@@ -79,6 +82,66 @@ def get_leads(
         ))
     conn.close()
     return leads
+
+@router.post("/{lead_id}/mark-used")
+def mark_lead_used(lead_id: str):
+    """
+    Marks a lead as permanently USED.
+    A used lead is permanently remembered and excluded from future fresh lead pools.
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, business_name FROM leads WHERE id = ?", (lead_id,))
+    row = cursor.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Lead not found")
+
+    from datetime import datetime
+    now_iso = datetime.now().isoformat()
+    cursor.execute("""
+        UPDATE leads 
+        SET is_used = 1, used_at = ?, updated_at = ?
+        WHERE id = ?
+    """, (now_iso, now_iso, lead_id))
+    conn.commit()
+    conn.close()
+    return {
+        "status": "success",
+        "lead_id": lead_id,
+        "is_used": True,
+        "used_at": now_iso,
+        "message": f"Lead '{row['business_name']}' permanently marked as USED."
+    }
+
+@router.post("/{lead_id}/unmark-used")
+def unmark_lead_used(lead_id: str):
+    """
+    Explicit reset action to unmark a lead if requested by user.
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, business_name FROM leads WHERE id = ?", (lead_id,))
+    row = cursor.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Lead not found")
+
+    from datetime import datetime
+    now_iso = datetime.now().isoformat()
+    cursor.execute("""
+        UPDATE leads 
+        SET is_used = 0, used_at = NULL, updated_at = ?
+        WHERE id = ?
+    """, (now_iso, lead_id))
+    conn.commit()
+    conn.close()
+    return {
+        "status": "success",
+        "lead_id": lead_id,
+        "is_used": False,
+        "message": f"Lead '{row['business_name']}' unmarked as used."
+    }
 
 @router.get("/{lead_id}")
 def get_lead_detail(lead_id: str):

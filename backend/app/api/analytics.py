@@ -1,4 +1,4 @@
-﻿"""
+"""
 DIGIFORMATION LTD — Lead Hunter
 Analytics & Dashboard KPI API
 """
@@ -13,16 +13,20 @@ def get_analytics():
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT COUNT(*) FROM leads")
-    total_leads = cursor.fetchone()[0]
+    # Exclude used leads from active tracking board counts (User rule: if 112 total and 1 marked used, active count becomes 111)
+    cursor.execute("SELECT COUNT(*) FROM leads WHERE is_used = 0 OR is_used IS NULL")
+    active_total_leads = cursor.fetchone()[0]
 
-    cursor.execute("SELECT COUNT(*) FROM leads WHERE priority = 'P1'")
+    cursor.execute("SELECT COUNT(*) FROM leads WHERE is_used = 1")
+    used_leads_count = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM leads WHERE priority = 'P1' AND (is_used = 0 OR is_used IS NULL)")
     p1_count = cursor.fetchone()[0]
 
-    cursor.execute("SELECT COUNT(*) FROM leads WHERE priority = 'P2'")
+    cursor.execute("SELECT COUNT(*) FROM leads WHERE priority = 'P2' AND (is_used = 0 OR is_used IS NULL)")
     p2_count = cursor.fetchone()[0]
 
-    cursor.execute("SELECT COUNT(*) FROM leads WHERE priority = 'P3'")
+    cursor.execute("SELECT COUNT(*) FROM leads WHERE priority = 'P3' AND (is_used = 0 OR is_used IS NULL)")
     p3_count = cursor.fetchone()[0]
 
     cursor.execute("SELECT COUNT(*) FROM runs WHERE status IN ('INITIALIZING', 'DISCOVERING', 'VERIFYING', 'PACKAGING')")
@@ -34,10 +38,10 @@ def get_analytics():
     cursor.execute("SELECT COUNT(*) FROM packages WHERE is_valid = 1")
     ready_packages = cursor.fetchone()[0]
 
-    cursor.execute("SELECT COUNT(*) FROM leads WHERE whatsapp_status IN ('WHATSAPP_VERIFIED', 'WHATSAPP_POSSIBLE')")
+    cursor.execute("SELECT COUNT(*) FROM leads WHERE whatsapp_status IN ('WHATSAPP_CONFIRMED', 'WHATSAPP_VERIFIED', 'WHATSAPP_POSSIBLE') AND (is_used = 0 OR is_used IS NULL)")
     wa_count = cursor.fetchone()[0]
 
-    cursor.execute("SELECT COUNT(*) FROM leads WHERE website_status = 'NO_WEBSITE'")
+    cursor.execute("SELECT COUNT(*) FROM leads WHERE website_status = 'NO_WEBSITE' AND (is_used = 0 OR is_used IS NULL)")
     no_web_count = cursor.fetchone()[0]
 
     cursor.execute("SELECT run_id, category, location, status, qualified_count, created_at FROM runs ORDER BY created_at DESC LIMIT 5")
@@ -46,7 +50,7 @@ def get_analytics():
     conn.close()
 
     return AnalyticsResponse(
-        total_leads=total_leads,
+        total_leads=active_total_leads,
         p1_count=p1_count,
         p2_count=p2_count,
         p3_count=p3_count,
@@ -55,5 +59,6 @@ def get_analytics():
         ready_packages=ready_packages,
         whatsapp_verified_count=wa_count,
         no_website_count=no_web_count,
+        used_leads_count=used_leads_count,
         recent_runs=recent_runs
     )

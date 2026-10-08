@@ -83,15 +83,10 @@ class DiscoveryService:
             augmented = self._get_verified_real_local_records(clean_cat, clean_loc, clean_country, target_count - len(candidates))
             candidates.extend(augmented)
 
-        # Step 3: Enforce Strict Shariah Filter & Chain Exclusion & Website Exclusion
+        # Step 3: Enforce Strict Shariah Filter & Chain Exclusion
         compliant_candidates = []
         for c in candidates:
             if self.is_chain(c["business_name"]):
-                continue
-
-            # Strict check: Must not have an official website
-            web = (c.get("website_url") or "").lower()
-            if web and not any(soc in web for soc in ["facebook.com", "instagram.com", "tiktok.com"]):
                 continue
 
             if SHARIAH_COMPLIANCE_REQUIRED:
@@ -101,8 +96,26 @@ class DiscoveryService:
             c["is_shariah_compliant"] = True
             compliant_candidates.append(c)
 
-        # Deduplicate
-        unique_candidates = self._deduplicate(compliant_candidates)
+        # Step 4: Permanent Identity Deduplication & Used Leads Exclusion
+        try:
+            from services.identity_engine import IdentityDeduplicationEngine
+            id_engine = IdentityDeduplicationEngine()
+            historical_leads = id_engine.get_historical_leads()
+        except Exception:
+            id_engine = None
+            historical_leads = []
+
+        fresh_candidates = []
+        for c in compliant_candidates:
+            if id_engine and historical_leads:
+                is_dup, match_reason, matched_lead = id_engine.is_duplicate(c, historical_leads)
+                if is_dup:
+                    # Exclude duplicate / used lead from new candidate pool
+                    continue
+            fresh_candidates.append(c)
+
+        # Step 5: Intra-batch Deduplicate
+        unique_candidates = self._deduplicate(fresh_candidates)
         # Prioritize candidates possessing verified direct phone channels
         unique_candidates.sort(key=lambda x: (bool(x.get("phone")), x.get("review_count", 0)), reverse=True)
         return unique_candidates[:target_count]
@@ -114,13 +127,24 @@ class DiscoveryService:
         with httpx.Client(timeout=25.0, headers=self.headers) as client:
             try:
                 geo_res = client.get(geocode_url)
-                if geo_res.status_code != 200 or not geo_res.json():
-                    return []
-                geo_data = geo_res.json()[0]
-                lat = float(geo_data["lat"])
-                lon = float(geo_data["lon"])
+                if geo_res.status_code == 200 and geo_res.json():
+                    geo_data = geo_res.json()[0]
+                    lat = float(geo_data["lat"])
+                    lon = float(geo_data["lon"])
+                else:
+                    # Retry with simplified city name if comma-separated query failed
+                    simplified_loc = location_query.split(',')[0].strip()
+                    retry_url = f"https://nominatim.openstreetmap.org/search?q={urllib.parse.quote(simplified_loc)}&format=json&limit=1"
+                    retry_res = client.get(retry_url)
+                    if retry_res.status_code == 200 and retry_res.json():
+                        geo_data = retry_res.json()[0]
+                        lat = float(geo_data["lat"])
+                        lon = float(geo_data["lon"])
+                    elif "lahore" in location_query.lower():
+                        lat, lon = 31.5204, 74.3587
+                    else:
+                        return []
             except Exception:
-                # Default fallback coordinates for Lahore
                 if "lahore" in location_query.lower():
                     lat, lon = 31.5204, 74.3587
                 else:
@@ -191,11 +215,6 @@ class DiscoveryService:
                     encoded_name = urllib.parse.quote(f"{name} {location_query}")
                     maps_url = f"https://www.google.com/maps/search/?api=1&query={encoded_name}"
 
-                    # Prioritize businesses without official websites
-                    if website and any(ext in website.lower() for ext in [".com", ".pk", ".org", ".net", ".co", "http"]):
-                        if not any(soc in website.lower() for soc in ["facebook.com", "instagram.com", "tiktok.com"]):
-                            continue
-
                     # Retain authentic phone with traceability, or mark pending if absent from registry
                     phone_source = "Google Maps / OpenStreetMap Direct Tag" if phone else "PUBLIC_REGISTRY_PENDING"
                     if not phone:
@@ -255,6 +274,12 @@ class DiscoveryService:
             return 'shop="car_repair"'
         if any(w in cat for w in ["clothing", "boutique", "fashion"]):
             return 'shop="clothes"'
+        if any(w in cat for w in ["furniture", "home decor", "decor", "furnishing"]):
+            return 'shop="furniture"'
+        if any(w in cat for w in ["school", "academy", "education", "college"]):
+            return 'amenity="school"'
+        if any(w in cat for w in ["real estate", "construction", "property", "builder"]):
+            return 'office="estate_agent"'
         return 'shop'
 
     def _get_verified_real_local_records(self, category: str, location: str, country: str, count: int) -> List[Dict[str, Any]]:
@@ -372,99 +397,7 @@ class DiscoveryService:
                 "description": "Beloved local fast snack establishment serving chaat, samosa platters, gol gappay, and roll parathas with zero web footprint.",
                 "lat": 31.4944179,
                 "lon": 74.3872523
-            },
-            {
-                "business_name": "Bistro 8",
-                "category": "Fast Food",
-                "address": "8 Main St, Lahore",
-                "phone": "+92 300 1234567",
-                "website_url": "http://bistro8.com",
-                "rating": 3.8,
-                "review_count": 20,
-                "business_hours": "10:00 AM - 10:00 PM Daily",
-                "description": "Cozy bistro with limited menu, website present but few assets.",
-                "lat": 31.5600000,
-                "lon": 74.3500000
-            },
-            {
-                "business_name": "Snack Corner",
-                "category": "Fast Food",
-                "address": "12 Market Rd, Lahore",
-                "phone": "+92 301 7654321",
-                "website_url": "",
-                "rating": 4.1,
-                "review_count": 30,
-                "business_hours": "09:00 AM - 09:00 PM Daily",
-                "description": "Small corner snack shop, no website, good reviews.",
-                "lat": 31.5700000,
-                "lon": 74.3400000
-            },
-            {
-                "business_name": "Cafe Delight",
-                "category": "Cafe",
-                "address": "5 Garden St, Lahore",
-                "phone": "+92 302 2223333",
-                "website_url": "https://cafedelight.pk",
-                "rating": 4.6,
-                "review_count": 120,
-                "business_hours": "07:00 AM - 11:00 PM Daily",
-                "description": "Popular café with website and strong online presence.",
-                "lat": 31.5800000,
-                "lon": 74.3600000
-            },
-            {
-                "business_name": "Old Town Diner",
-                "category": "Restaurant",
-                "address": "Old Town, Lahore",
-                "phone": "+92 303 4445555",
-                "website_url": "http://oldtowndiner.com",
-                "rating": 3.5,
-                "review_count": 10,
-                "business_hours": "12:00 PM - 10:00 PM Daily",
-                "description": "Legacy restaurant with outdated site, low rating.",
-                "lat": 31.5900000,
-                "lon": 74.3700000
-            },
-            {
-                "business_name": "Express Biryani",
-                "category": "Fast Food",
-                "address": "Express Rd, Lahore",
-                "phone": "+92 304 5556666",
-                "website_url": "",
-                "rating": 4.2,
-                "review_count": 45,
-                "business_hours": "10:00 AM - 11:00 PM Daily",
-                "description": "Well‑known biryani spot, no website.",
-                "lat": 31.6000000,
-                "lon": 74.3800000
-            },
-            {
-                "business_name": "Lahore Naan House",
-                "category": "Fast Food",
-                "address": "Naan Bazaar, Lahore",
-                "phone": "+92 305 7778888",
-                "website_url": "https://lahorenaanhouse.com",
-                "rating": 4.0,
-                "review_count": 60,
-                "business_hours": "08:00 AM - 08:00 PM Daily",
-                "description": "Popular naan and snack shop with functional website.",
-                "lat": 31.6100000,
-                "lon": 74.3900000
-            },
-            {
-                "business_name": "Fusion Kitchen",
-                "category": "Restaurant",
-                "address": "Fusion Ave, Lahore",
-                "phone": "+92 306 9990000",
-                "website_url": "https://fusionkitchen.pk",
-                "rating": 4.7,
-                "review_count": 200,
-                "business_hours": "11:00 AM - 12:00 AM Daily",
-                "description": "High‑end restaurant with strong online assets.",
-                "lat": 31.6200000,
-                "lon": 74.4000000
             }
-            
         ]
 
         results = []

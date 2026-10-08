@@ -81,13 +81,16 @@ class PhoneValidationService:
             carrier_str = carrier.name_for_number(parsed, "en") or ""
             geo_desc = geocoder.description_for_number(parsed, "en") or ""
 
-            # WhatsApp Status determination
+            # WhatsApp Status determination:
+            # Enforce strict zero-assumption rule:
+            # Only mark as WHATSAPP_CONFIRMED if explicitly verified or confirmed via click-to-chat.
+            # Plain mobile carrier numbers are marked as MOBILE_CARRIER_VALID without assuming active WhatsApp registration.
             digits_only = re.sub(r"\D", "", e164)
             if has_click_to_chat:
                 wa_status = "WHATSAPP_CONFIRMED"
                 wa_number = digits_only
             elif is_mobile:
-                wa_status = "MOBILE_CARRIER_VALID"
+                wa_status = "NOT_VERIFIED"
                 wa_number = digits_only
             elif line_type_str == "FIXED_LINE":
                 wa_status = "LANDLINE_ONLY"

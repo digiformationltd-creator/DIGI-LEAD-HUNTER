@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { WhatsAppWidget } from './components/WhatsAppWidget';
-import { FindLeadsModal } from './components/FindLeadsModal';
 import { LeadDetailDrawer } from './components/LeadDetailDrawer';
 
 import { DashboardView } from './views/DashboardView';
-import { FindLeadsView } from './views/FindLeadsView';
 import { LeadsView } from './views/LeadsView';
 import { RunsView } from './views/RunsView';
 import { PackagesView } from './views/PackagesView';
@@ -18,7 +16,6 @@ import { Lead, RunDetail, AnalyticsData } from './types';
 
 export const App: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<string>('dashboard');
-  const [isFindLeadsModalOpen, setIsFindLeadsModalOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -110,11 +107,36 @@ export const App: React.FC = () => {
     window.open(`/api/packages/lead/${leadId}/download`, '_blank');
   };
 
+  const handleToggleUsed = async (leadId: string, currentlyUsed: boolean) => {
+    try {
+      const endpoint = currentlyUsed 
+        ? `/api/leads/${leadId}/unmark-used` 
+        : `/api/leads/${leadId}/mark-used`;
+      const res = await fetch(endpoint, { method: 'POST' });
+      if (res.ok) {
+        // Optimistically update local state immediately
+        setLeads(prev => prev.map(l => {
+          if (l.id === leadId) {
+            return {
+              ...l,
+              is_used: !currentlyUsed,
+              used_at: !currentlyUsed ? new Date().toISOString() : undefined
+            };
+          }
+          return l;
+        }));
+        // Also refresh analytics / leads from server
+        fetchAnalytics();
+      }
+    } catch (err) {
+      console.error("Error toggling used status:", err);
+    }
+  };
+
   return (
     <div className="flex h-screen flex-col bg-[#080C14] text-slate-100 overflow-hidden">
       {/* Top Navbar */}
       <Navbar 
-        onOpenFindLeads={() => setIsFindLeadsModalOpen(true)}
         onNavigateAbout={() => setCurrentTab('about')}
       />
 
@@ -134,15 +156,11 @@ export const App: React.FC = () => {
               analytics={analytics}
               recentLeads={leads}
               activeRun={activeRun}
-              onOpenFindLeads={() => setIsFindLeadsModalOpen(true)}
               onSelectLead={(lead) => setSelectedLead(lead)}
               onDownloadPackage={handleDownloadPackage}
+              onToggleUsed={handleToggleUsed}
               onViewAllLeads={() => setCurrentTab('all-leads')}
             />
-          )}
-
-          {currentTab === 'find-leads' && (
-            <FindLeadsView onStartRun={handleStartRun} />
           )}
 
           {currentTab === 'all-leads' && (
@@ -150,6 +168,7 @@ export const App: React.FC = () => {
               leads={leads}
               onSelectLead={(lead) => setSelectedLead(lead)}
               onDownloadPackage={handleDownloadPackage}
+              onToggleUsed={handleToggleUsed}
               onRefresh={fetchLeads}
               defaultPriority="ALL"
             />
@@ -160,6 +179,7 @@ export const App: React.FC = () => {
               leads={leads}
               onSelectLead={(lead) => setSelectedLead(lead)}
               onDownloadPackage={handleDownloadPackage}
+              onToggleUsed={handleToggleUsed}
               onRefresh={fetchLeads}
               defaultPriority="P1"
             />
@@ -170,6 +190,7 @@ export const App: React.FC = () => {
               leads={leads}
               onSelectLead={(lead) => setSelectedLead(lead)}
               onDownloadPackage={handleDownloadPackage}
+              onToggleUsed={handleToggleUsed}
               onRefresh={fetchLeads}
               defaultPriority="P2"
             />
@@ -181,7 +202,6 @@ export const App: React.FC = () => {
               activeRun={activeRun}
               onRefresh={fetchRuns}
               onSelectRun={(runId) => fetchRunDetail(runId)}
-              onOpenFindLeads={() => setIsFindLeadsModalOpen(true)}
             />
           )}
 
@@ -205,13 +225,6 @@ export const App: React.FC = () => {
 
       {/* Floating WhatsApp Support Widget */}
       <WhatsAppWidget />
-
-      {/* Find Leads Modal */}
-      <FindLeadsModal
-        isOpen={isFindLeadsModalOpen}
-        onClose={() => setIsFindLeadsModalOpen(false)}
-        onStartRun={handleStartRun}
-      />
 
       {/* Lead Detail Drawer */}
       <LeadDetailDrawer

@@ -36,16 +36,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenFindLeads, onNavigateAbout
       <div className="flex items-center space-x-3">
         <div className="hidden md:flex items-center space-x-2 rounded-full bg-slate-900/80 px-3 py-1 text-xs border border-slate-800 text-slate-300">
           <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Engine Active (Localhost)</span>
+          <span>Lead Tracker Live</span>
         </div>
-
-        <button
-          onClick={onOpenFindLeads}
-          className="flex items-center space-x-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-600/20 transition-all hover:scale-[1.02]"
-        >
-          <Sparkles className="h-3.5 w-3.5 text-blue-200" />
-          <span>New Lead Hunt</span>
-        </button>
 
         <a
           href="https://wa.me/923164467464?text=Hello%20DIGIFORMATION%20LTD%2C%20I%20am%20using%20Digi%20Lead%20Hunter"
