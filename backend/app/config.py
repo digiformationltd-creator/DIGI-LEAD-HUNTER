@@ -4,9 +4,12 @@ Application Configuration & Brand Constants
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Base Paths
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+load_dotenv(BASE_DIR / ".env")
+
 _custom_data_dir = os.getenv("DATA_DIR")
 DATA_DIR = Path(_custom_data_dir).resolve() if _custom_data_dir else (BASE_DIR / "data")
 DATABASE_DIR = DATA_DIR / "database"

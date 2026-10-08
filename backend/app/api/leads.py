@@ -60,7 +60,7 @@ def get_leads(
             whatsapp_number=r["whatsapp_number"],
             whatsapp_status=r["whatsapp_status"],
             whatsapp_confidence=r["whatsapp_confidence"] if "whatsapp_confidence" in r.keys() else None,
-            whatsapp_verified=bool(r["whatsapp_verified"]) if "whatsapp_verified" in r.keys() and r["whatsapp_verified"] is not None else False,
+            whatsapp_verified=bool(r["whatsapp_verified"] in (1, "1", True, "true")) if "whatsapp_verified" in r.keys() and r["whatsapp_verified"] is not None else False,
             carrier_line_type=r["carrier_line_type"] if "carrier_line_type" in r.keys() else None,
             website_url=r["website_url"],
             website_status=r["website_status"],

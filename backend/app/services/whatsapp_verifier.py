@@ -24,18 +24,24 @@ every lead run is checked against the live WhatsApp network.
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from typing import Optional, Dict, Any
+from dotenv import load_dotenv
 
 import httpx
+
+# Load root .env
+_BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+load_dotenv(_BASE_DIR / ".env")
 
 _CACHE: Dict[str, Optional[bool]] = {}
 
 
 def whatsapp_check_configured() -> bool:
-    return bool((os.environ.get("WHATSAPP_CHECK_URL") or "").strip())
+    return bool((os.environ.get("WHATSAPP_CHECK_URL") or "http://127.0.0.1:8790/check").strip())
 
 
-def check_whatsapp(e164_number: str, timeout: float = 15.0) -> Dict[str, Any]:
+def check_whatsapp(e164_number: str, timeout: float = 6.0) -> Dict[str, Any]:
     """Return {"exists": True|False|None, "method": str}.
 
     True  = the number is registered on WhatsApp (verified against the network).
@@ -49,12 +55,13 @@ def check_whatsapp(e164_number: str, timeout: float = 15.0) -> Dict[str, Any]:
     if num in _CACHE:
         return {"exists": _CACHE[num], "method": "cache"}
 
-    url = (os.environ.get("WHATSAPP_CHECK_URL") or "").strip()
+    url = (os.environ.get("WHATSAPP_CHECK_URL") or "http://127.0.0.1:8790/check").strip()
     if not url:
         return {"exists": None, "method": "not-configured"}
 
     try:
-        r = httpx.get(url, params={"number": num}, timeout=timeout)
+        req_timeout = httpx.Timeout(timeout, connect=1.5)
+        r = httpx.get(url, params={"number": num}, timeout=req_timeout)
         if r.status_code != 200:
             return {"exists": None, "method": f"http-{r.status_code}"}
         data = r.json()

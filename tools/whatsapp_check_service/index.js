@@ -15,20 +15,38 @@
  */
 const express = require("express");
 const QR = require("qrcode-terminal");
+const QRCode = require("qrcode");
+const fs = require("fs");
+const path = require("path");
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require("@whiskeysockets/baileys");
 
 const PORT = process.env.PORT || 8790;
 let sock = null;
 let ready = false;
+let currentQR = null;
 
 async function start() {
   const { state, saveCreds } = await useMultiFileAuthState("./wa_auth");
   sock = makeWASocket({ auth: state, printQRInTerminal: false });
   sock.ev.on("creds.update", saveCreds);
-  sock.ev.on("connection.update", (u) => {
+  sock.ev.on("connection.update", async (u) => {
     const { connection, lastDisconnect, qr } = u;
-    if (qr) { console.log("\nScan this QR in WhatsApp → Linked Devices:\n"); QR.generate(qr, { small: true }); }
-    if (connection === "open") { ready = true; console.log("WhatsApp session READY. Check service live on /check"); }
+    if (qr) {
+      currentQR = qr;
+      console.log("\nScan this QR in WhatsApp → Linked Devices:\n");
+      QR.generate(qr, { small: true });
+      try {
+        await QRCode.toFile(path.join(__dirname, "qr.png"), qr, { width: 400 });
+        console.log("QR saved to qr.png and available on http://127.0.0.1:" + PORT + "/qr");
+      } catch (err) {
+        console.error("Failed to save QR png:", err);
+      }
+    }
+    if (connection === "open") {
+      ready = true;
+      currentQR = null;
+      console.log("WhatsApp session READY. Check service live on /check");
+    }
     if (connection === "close") {
       ready = false;
       const code = lastDisconnect?.error?.output?.statusCode;
@@ -40,6 +58,22 @@ async function start() {
 
 const app = express();
 app.get("/health", (_req, res) => res.json({ ok: true, ready }));
+app.get("/qr", async (_req, res) => {
+  if (ready) return res.send("<h2 style='font-family:sans-serif;color:green'>✓ WhatsApp session is already CONNECTED and ACTIVE!</h2>");
+  if (!currentQR) return res.send("<h2 style='font-family:sans-serif;color:orange'>Waiting for QR code generation... Please refresh in a few seconds.</h2>");
+  try {
+    const dataUrl = await QRCode.toDataURL(currentQR, { width: 350 });
+    res.send(`
+      <div style="font-family:sans-serif;text-align:center;padding:40px;">
+        <h2>Scan this QR in WhatsApp &rarr; Linked Devices</h2>
+        <img src="${dataUrl}" style="border:8px solid #eee;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,0.15);" />
+        <p style="color:#666;margin-top:16px;">Open WhatsApp on your phone &gt; Settings &gt; Linked Devices &gt; Link a Device</p>
+      </div>
+    `);
+  } catch (err) {
+    res.status(500).send("Error rendering QR: " + err.message);
+  }
+});
 app.get("/check", async (req, res) => {
   const digits = String(req.query.number || "").replace(/\D/g, "");
   if (!digits) return res.status(400).json({ error: "number required" });

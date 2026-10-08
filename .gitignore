@@ -18,6 +18,8 @@ yarn-error.log*
 
 # Runtime data & Generated packages (Keep local, never commit)
 data/
+tools/whatsapp_check_service/wa_auth/
+tools/whatsapp_check_service/qr.png
 *.db
 *.db-journal
 *.db-wal
