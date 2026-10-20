@@ -136,3 +136,17 @@ Lead Hunter is proudly developed and maintained by **DIGIFORMATION LTD**:
 - **DIGIFORMATION LTD UK:** [https://www.digiformation.co.uk/](https://www.digiformation.co.uk/)
 - **Digi Biz OS Ecosystem:** [https://www.digibizos.co.uk/](https://www.digibizos.co.uk/)
 - **Official Linktree:** [https://linktr.ee/digiformationltd](https://linktr.ee/digiformationltd)
+
+
+---
+
+## 📥 Downloads & Official Releases
+
+All verified production installers are hosted and distributed through the official DIGI BIZ OS Open-Source Portal:
+
+### ⚡ 1-Click Official Windows Installer (Recommended)
+👉 **[🚀 Download DIGI LEAD HUNTER Setup (.exe)](https://www.digibizos.co.uk/open-source/digi-lead-hunter)** — Standalone 1-click Windows installer with multi-threaded B2B local business prospecting, automated audit report generator, and desktop shortcuts.
+
+🌐 **[Explore all Open-Source Tools on DIGI BIZ OS](https://www.digibizos.co.uk/open-source)**
+
+---
