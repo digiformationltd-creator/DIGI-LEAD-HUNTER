@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="digi-lead-hunter-banner.jpg" alt="DIGI LEAD HUNTER" style="max-width: 720px; width: 100%; border-radius: 12px;" />
+  <img src="digi-lead-hunter-banner.png" alt="DIGI LEAD HUNTER — Find Local Businesses, No Website, Real Contacts" width="100%" style="border-radius: 12px; box-shadow: 0 12px 36px rgba(0,0,0,0.3);" />
 </p>
 
 # DIGI LEAD HUNTER
